@@ -1,9 +1,21 @@
+/**
+ * work-videos.js - Video Catalog Data
+ *
+ * Exports an array of YouTube videos to be displayed in the gallery
+ * Each video object contains:
+ * - youtubeURL: YouTube video ID (used to construct full URL)
+ * - title: Display title for the video
+ * - description: Short description of the video
+ *
+ * This data is imported and used by WorkYoutube.js component
+ */
+
 const videos = [
   {
     youtubeURL: "BJItzCl8b2w",
     title: "Until I Found You | Violin & Piano Duo",
     description: "Stephen Sanchez Until I Found You on the violin & piano"
-  }, 
+  },
   {
     youtubeURL: "4pVpf9lRLrA",
     title: "If I Ain't Got You | LOVUR Quartet",
@@ -19,7 +31,6 @@ const videos = [
     title: "Gimme! Gimme! Gimme! | LOVUR String Quartet",
     description: "An upbeat jam session covering ABBA's hit song"
   },
-
   {
     youtubeURL: "Pe0ogwgxjeQ",
     title: "If I Ain't Got You | Violin & Piano Duo",
@@ -32,5 +43,5 @@ const videos = [
   }
 ];
 
-
+// Export the videos array for use in other files
 export default videos;

@@ -1,86 +1,123 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
+/**
+ * MobileNavbar.js - Responsive Mobile Navigation Menu
+ *
+ * Provides:
+ * - Hamburger menu toggle button
+ * - Sliding navigation menu
+ * - Smooth scrolling to page sections
+ * - Navigation to Twilight concert page
+ * - Auto-closes menu after selection
+ */
+
 const MobileNavbar = () => {
+  // Track if hamburger menu is open or closed
   const [isOpen, setIsOpen] = useState(false);
+
+  // Next.js router for navigation
   const router = useRouter();
 
+  /**
+   * Handle navigation to a section
+   * Performs different actions based on current page:
+   * - If on main page: scroll directly to section
+   * - If on Twilight page: navigate to home with query param, then scroll
+   */
   const handleNavigation = (id) => {
     if (router.pathname === "/Twilight") {
-      // Navigate to the home page with a scrollTo query
+      // Currently on Twilight page, need to go back to home first
+      // Navigate to home page with scrollTo query parameter
       router.push(`/?scrollTo=${id}`).then(() => {
+        // After navigation completes, scroll to target
         const targetElement = document.getElementById(id);
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: "smooth" });
         }
       });
     } else {
-      // Scroll directly to the section on the same page
+      // Already on main page, just scroll directly
       const targetElement = document.getElementById(id);
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: "smooth" });
       }
     }
-    setIsOpen(false); // Close the menu after navigation
+
+    // Close menu after navigation
+    setIsOpen(false);
   };
 
+  /**
+   * Toggle hamburger menu visibility
+   */
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <>
-      <div
-        className={`navbar-toggle ${isOpen ? "open" : ""}`}
-        onClick={toggleNavbar}
-      >
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </div>
-      <div className={`sliding-menu-container ${isOpen ? "open" : ""}`}>
-        <ul className="mobile-navbar-list">
-          <li>
-            <button onClick={() => handleNavigation("home-section")}>
-              Home
-            </button>
-          </li>
-          <li>
-            <button onClick={() => handleNavigation("about-section")}>
-              About
-            </button>
-          </li>
-          <li>
-            <button onClick={() => handleNavigation("artists-section")}>
-              Our Artists
-            </button>
-          </li>
-          <li>
-            <button onClick={() => handleNavigation("work-section")}>
-              Our Work
-            </button>
-          </li>
-          <li>
-            <button onClick={() => handleNavigation("event-section")}>
-              Services
-            </button>
-          </li>
-          <li>
-            <button onClick={() => router.push("/Twilight")}>Twilight</button>
-          </li>
-          <li>
-            <button onClick={() => handleNavigation("estie-section")}>
-              The Founder
-            </button>
-          </li>
-          <li>
-            <button onClick={() => handleNavigation("contact-section")}>
-              Contact Us
-            </button>
-          </li>
-        </ul>
-      </div>
-    </>
+      <>
+        {/* Hamburger menu toggle button with 3 bars */}
+        <div
+            className={`navbar-toggle ${isOpen ? "open" : ""}`}
+            onClick={toggleNavbar}
+        >
+          {/* Top bar of hamburger */}
+          <span className="bar"></span>
+          {/* Middle bar of hamburger */}
+          <span className="bar"></span>
+          {/* Bottom bar of hamburger */}
+          <span className="bar"></span>
+        </div>
+
+        {/* Sliding menu container - shown/hidden based on isOpen state */}
+        <div className={`sliding-menu-container ${isOpen ? "open" : ""}`}>
+          {/* Navigation menu items */}
+          <ul className="mobile-navbar-list">
+            <li>
+              <button onClick={() => handleNavigation("home-section")}>
+                Home
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigation("about-section")}>
+                About
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigation("artists-section")}>
+                Our Artists
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigation("work-section")}>
+                Our Work
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigation("event-section")}>
+                Services
+              </button>
+            </li>
+            <li>
+              {/* Navigate to separate Twilight concert page */}
+              <button onClick={() => router.push("/Twilight")}>
+                Twilight
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigation("estie-section")}>
+                The Founder
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigation("contact-section")}>
+                Contact Us
+              </button>
+            </li>
+          </ul>
+        </div>
+      </>
   );
 };
 
