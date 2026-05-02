@@ -85,9 +85,8 @@ const Contact = () => {
             Interested in booking us? Fill out{" "}
             <span className="hyperlink-text contact">
             <a
-                href="https://forms.gle/6DmoDgb2Y3CPDU2C6"
+                href="/pricing"
                 rel="noreferrer"
-                target="_blank"
             >
               this quick form.
             </a>
