@@ -13,26 +13,6 @@ export default function SuccessScreen({ clientName, clientEmail, onReset }) {
                     We'll be in touch shortly!
                 </p>
                 <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
-                    <button
-                        onClick={onReset}
-                        style={{
-                            padding: "12px 32px",
-                            background: "#3d2e1e",
-                            color: "#f5f0e8",
-                            border: "none",
-                            borderRadius: "4px",
-                            fontFamily: "'Playfair Display', serif",
-                            fontSize: "16px",
-                            fontStyle: "italic",
-                            cursor: "pointer",
-                            letterSpacing: "0.03em",
-                            transition: "background 0.2s",
-                        }}
-                        onMouseEnter={(e) => e.target.style.background = "#2e2216"}
-                        onMouseLeave={(e) => e.target.style.background = "#3d2e1e"}
-                    >
-                        Submit Another Quote
-                    </button>
                     <a
                         href="/"
                         style={{
@@ -55,6 +35,26 @@ export default function SuccessScreen({ clientName, clientEmail, onReset }) {
                     >
                         Back to Home
                     </a>
+                    <button
+                        onClick={onReset}
+                        style={{
+                            padding: "12px 32px",
+                            background: "#3d2e1e",
+                            color: "#f5f0e8",
+                            border: "none",
+                            borderRadius: "4px",
+                            fontFamily: "'Playfair Display', serif",
+                            fontSize: "16px",
+                            fontStyle: "italic",
+                            cursor: "pointer",
+                            letterSpacing: "0.03em",
+                            transition: "background 0.2s",
+                        }}
+                        onMouseEnter={(e) => e.target.style.background = "#2e2216"}
+                        onMouseLeave={(e) => e.target.style.background = "#3d2e1e"}
+                    >
+                        Submit Another Quote
+                    </button>
                 </div>
             </div>
         </div>

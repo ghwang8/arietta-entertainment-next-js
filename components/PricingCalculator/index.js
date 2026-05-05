@@ -87,11 +87,43 @@ export default function PricingCalculator() {
         : duration;
 
     // Get all locations including "Other"
-    const locations = Object.keys(zonePricing[ensemble] || {});
+    const locations = ensemble ? Object.keys(zonePricing[ensemble] || {}) : Object.keys(zonePricing["String Solo"] || {});
     const ensembles = Object.keys(ensemblePricing);
 
     const [customOccasion, setCustomOccasion] = useState("");
     const [errors, setErrors] = useState({});
+
+    // Reset function for "Submit Another Quote"
+    const handleReset = () => {
+        // Pricing State
+        setEnsemble("");
+        setDuration("");
+        setCustomHours("");
+        setLocation("");
+        setCustomLocation("");
+        setCustomSongs(0);
+        setAudioSystem(false);
+        setMicOfficiant(false);
+        setRecording(false);
+
+        // Event Info State
+        setClientName("");
+        setOccasion("");
+        setEventDate("");
+        setStartTime("");
+        setEndTime("");
+        setVenueName("");
+        setOutdoorIndoor("");
+        setNotes("");
+        setClientEmail("");
+
+        // Other State
+        setCustomOccasion("");
+        setErrors({});
+
+        // Return to form
+        setSubmitted(false);
+    };
 
     /**
      * Calculate pricing based on selections
@@ -210,7 +242,7 @@ ${pricingSection}`;
 
     // Show success screen after submission
     if (submitted) {
-        return <SuccessScreen clientName={clientName} clientEmail={clientEmail} onReset={() => setSubmitted(false)} />;
+        return <SuccessScreen clientName={clientName} clientEmail={clientEmail} onReset={handleReset} />;
     }
 
     const validateEmail = (email) => {
@@ -463,13 +495,14 @@ ${pricingSection}`;
                         </div>
                         <select
                             value={location}
-                            onChange={(v) => {
-                                setLocation(v);
+                            onChange={(e) => {
+                                setLocation(e.target.value);
                                 setCustomLocation("");
                                 if (errors.location) {
                                     setErrors(prev => ({ ...prev, location: null }));
                                 }
                             }}
+
                             style={{ width: "100%", padding: "12px 16px", background: location ? "#fffdf9" : "#faf8f4", border: errors.location ? "2px solid #c0392b" : "1px solid #ddd0bb", borderRadius: "4px", fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: location ? "#3d2e1e" : "#b8a88a", outline: "none", boxSizing: "border-box", cursor: "pointer", appearance: "none", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b8956a' strokeWidth='1.5' fill='none' strokeLinecap='round'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 14px center", backgroundSize: "12px", paddingRight: "40px" }}>
                             <option value="" disabled>Select your city…</option>
                             {[...locations, "Other"].map((l) => <option key={l} value={l}>{l}</option>)}
@@ -580,12 +613,6 @@ ${pricingSection}`;
                                     setErrors(prev => ({ ...prev, clientEmail: null }));
                                 }
                             }}
-                            onBlur={() => {
-                                // Validate email on blur if it has a value
-                                if (clientEmail && !validateEmail(clientEmail)) {
-                                    setErrors(prev => ({ ...prev, clientEmail: "Invalid email format" }));
-                                }
-                            }}
                             placeholder="your@email.com"
                             style={{
                                 width: "100%",
@@ -601,6 +628,7 @@ ${pricingSection}`;
                                 transition: "border-color 0.2s"
                             }}
                         />
+
                         {errors.clientEmail && (
                             <p style={{ color: "#c0392b", fontSize: "12px", marginTop: "6px", margin: "6px 0 0" }}>
                                 {errors.clientEmail}
