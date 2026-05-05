@@ -31,7 +31,38 @@ export const zonePricing = {
         "Pitt Meadows": 210, "Abbotsford": 210, "Mission": 260, "Chilliwack": 310,
         "Squamish": 410, "Whistler": 610,
     },
-    // ... rest of ensemble pricing zones
+    "String Duo": {
+        "Vancouver": 0, "Burnaby": 80, "Richmond": 80, "North Vancouver": 100,
+        "West Vancouver": 100, "New Westminster": 120, "Coquitlam": 120,
+        "Port Coquitlam": 120, "Port Moody": 120, "Surrey": 150, "Delta": 150,
+        "Ladner": 150, "Tsawwassen": 150, "Langley": 200, "Maple Ridge": 280,
+        "Pitt Meadows": 280, "Abbotsford": 280, "Mission": 330, "Chilliwack": 400,
+        "Squamish": 520, "Whistler": 800,
+    },
+    "Violin & Piano Duo": {
+        "Vancouver": 0, "Burnaby": 90, "Richmond": 90, "North Vancouver": 110,
+        "West Vancouver": 110, "New Westminster": 130, "Coquitlam": 130,
+        "Port Coquitlam": 130, "Port Moody": 130, "Surrey": 170, "Delta": 170,
+        "Ladner": 170, "Tsawwassen": 170, "Langley": 220, "Maple Ridge": 300,
+        "Pitt Meadows": 300, "Abbotsford": 300, "Mission": 360, "Chilliwack": 430,
+        "Squamish": 560, "Whistler": 850,
+    },
+    "String Trio": {
+        "Vancouver": 0, "Burnaby": 110, "Richmond": 110, "North Vancouver": 130,
+        "West Vancouver": 130, "New Westminster": 160, "Coquitlam": 160,
+        "Port Coquitlam": 160, "Port Moody": 160, "Surrey": 200, "Delta": 200,
+        "Ladner": 200, "Tsawwassen": 200, "Langley": 260, "Maple Ridge": 340,
+        "Pitt Meadows": 340, "Abbotsford": 340, "Mission": 410, "Chilliwack": 490,
+        "Squamish": 640, "Whistler": 980,
+    },
+    "String Quartet": {
+        "Vancouver": 0, "Burnaby": 140, "Richmond": 140, "North Vancouver": 170,
+        "West Vancouver": 170, "New Westminster": 200, "Coquitlam": 200,
+        "Port Coquitlam": 200, "Port Moody": 200, "Surrey": 260, "Delta": 260,
+        "Ladner": 260, "Tsawwassen": 260, "Langley": 340, "Maple Ridge": 440,
+        "Pitt Meadows": 440, "Abbotsford": 440, "Mission": 530, "Chilliwack": 640,
+        "Squamish": 840, "Whistler": 1280,
+    },
 };
 
 export const ensembleMusicians = {

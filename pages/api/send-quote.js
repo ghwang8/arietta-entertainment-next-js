@@ -2,14 +2,13 @@
  * API Route: send-quote
  *
  * This backend endpoint handles:
- * 1. Sending email via EmailJS (with secrets safe from client)
- * 2. Saving quote to Firebase database
+ * 1. Formatting the quote email
+ * 2. (Email sending to be added later)
  *
  * Called from component via: fetch('/api/send-quote', { method: 'POST', ... })
  */
 
-import { loadEmailJS, formatQuoteEmail } from "../../utils/emailService";
-import { saveQuoteToFirebase } from "../../utils/firebase";
+import { formatQuoteEmail } from "../../utils/emailService";
 
 export default async function handler(req, res) {
     // Only allow POST requests
@@ -19,51 +18,29 @@ export default async function handler(req, res) {
 
     try {
         const { clientEmail, clientName, quoteData, lineItems, totals } = req.body;
+        console.log("📨 Received request:", { clientEmail, clientName });
 
         // Validate required fields
         if (!clientEmail || !clientName) {
+            console.log("❌ Missing required fields");
             return res.status(400).json({ error: "Missing required fields" });
         }
 
-        // Initialize EmailJS (server-side - secrets are safe)
-        await loadEmailJS();
-
         // Format professional email
+        console.log("📝 Formatting email body...");
         const emailBody = formatQuoteEmail(quoteData, lineItems, totals);
-
-        // Send email via EmailJS
-        await window.emailjs.send(
-            process.env.EMAILJS_SERVICE_ID,
-            process.env.EMAILJS_TEMPLATE_ID,
-            {
-                to_email: clientEmail,
-                cc_email: process.env.ARIETTA_EMAIL,
-                to_name: clientName,
-                from_name: "Arietta Entertainment",
-                reply_to: process.env.ARIETTA_EMAIL,
-                subject: `Your Arietta Quote — ${quoteData.occasion || "Event"}`,
-                message: emailBody,
-            }
-        );
-
-        // Save quote to Firebase
-        const quoteId = await saveQuoteToFirebase({
-            clientName,
-            clientEmail,
-            ...quoteData,
-            lineItems,
-            totals,
-        });
+        console.log("✅ Email body formatted");
+        console.log("📧 Email preview:", emailBody);
 
         return res.status(200).json({
             success: true,
-            quoteId,
-            message: "Quote sent successfully",
+            message: "Quote received successfully",
         });
     } catch (error) {
-        console.error("Error in send-quote API:", error);
+        console.error("❌ Error in send-quote API:", error.message);
+        console.error("Full error:", error);
         return res.status(500).json({
-            error: "Failed to send quote. Please try again or contact us directly.",
+            error: "Failed to process quote. Please try again or contact us directly.",
         });
     }
 }

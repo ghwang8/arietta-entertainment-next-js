@@ -5,11 +5,9 @@
  */
 
 import { useState, useMemo } from "react";
+import emailjs from "@emailjs/browser";
 import { ensemblePricing, zonePricing, ensembleMusicians } from "../../data/pricing";
 import {
-    DURATIONS,
-    OCCASIONS,
-    TIME_OPTIONS,
     AUDIO_SYSTEM_PER_MUSICIAN,
     CUSTOM_SONG_PRICE,
     MIC_OFFICIANT_PRICE,
@@ -18,8 +16,12 @@ import {
     fmt,
 } from "../../data/constants";
 import PricingForm from "./PricingForm";
-import PricingSummary from "./PricingSummary";
 import SuccessScreen from "./SuccessScreen";
+
+// Initialize EmailJS once
+if (typeof window !== "undefined") {
+    emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+}
 
 export default function PricingCalculator() {
     // ── Pricing State ────────────────────────────────────────────────────────
@@ -51,7 +53,7 @@ export default function PricingCalculator() {
      * Calculate pricing based on selections
      * Memoized to prevent unnecessary recalculations
      */
-    const { subtotal, gst, total, ready, lineItems } = useMemo(() => {
+    const { subtotal, gst, total, lineItems } = useMemo(() => {
         const ready = ensemble && duration && location;
         if (!ready) return { ready: false, subtotal: 0, gst: 0, total: 0, lineItems: [] };
 
@@ -81,7 +83,7 @@ export default function PricingCalculator() {
 
     /**
      * Handle form submission
-     * Sends quote to API endpoint which handles email + database
+     * Sends quote via EmailJS directly from the client
      */
     const handleSubmit = async () => {
         if (!clientEmail) return;
@@ -90,38 +92,66 @@ export default function PricingCalculator() {
         setSubmitError("");
 
         try {
-            const response = await fetch("/api/send-quote", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    clientEmail,
-                    clientName,
-                    quoteData: {
-                        ensemble,
-                        duration,
-                        location,
-                        occasion,
-                        eventDate,
-                        startTime,
-                        endTime,
-                        venueName,
-                        outdoorIndoor,
-                        notes,
-                    },
-                    lineItems,
-                    totals: { subtotal, gst, total },
-                }),
-            });
+            console.log("📨 Sending email via EmailJS...");
 
-            const data = await response.json();
+            // Format email body
+            const formattedDate = eventDate
+                ? new Date(eventDate + "T00:00:00").toLocaleDateString("en-CA", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                })
+                : "—";
 
-            if (!response.ok) {
-                throw new Error(data.error || "Failed to send quote");
-            }
+            const breakdownRows = lineItems.map(({ label, val }) => `  ${label}: ${fmt(val)}`).join("\n");
 
+            const emailBody = `Hi ${clientName || "there"},
+
+Thank you for your inquiry with Arietta Entertainment! Here is a summary of your quote:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CLIENT INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Event Date: ${formattedDate}
+Start Time: ${startTime || "—"}
+End Time: ${endTime || "—"}
+Location: ${location || "—"}
+Venue: ${venueName || "—"}
+Notes: ${notes || "—"}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICING SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${breakdownRows}
+
+Subtotal: ${fmt(subtotal)}
+GST (5%): ${fmt(gst)}
+TOTAL: ${fmt(total)}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+We will be in touch shortly to confirm your booking.
+
+Warm regards,
+Arietta Entertainment`;
+
+            // Send email via EmailJS
+            const response = await emailjs.send(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+                {
+                    to_email: clientEmail,
+                    to_name: clientName,
+                    from_name: "Arietta Entertainment",
+                    subject: `Your Arietta Quote — ${occasion || "Event"}`,
+                    message: emailBody,
+                }
+            );
+
+            console.log("✅ Email sent successfully:", response);
             setSubmitted(true);
         } catch (error) {
-            console.error(error);
+            console.error("❌ Error sending email:", error);
             setSubmitError(error.message || "Something went wrong. Please try again.");
         } finally {
             setSubmitting(false);
