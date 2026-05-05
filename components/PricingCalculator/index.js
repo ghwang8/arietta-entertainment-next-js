@@ -163,7 +163,7 @@ export default function PricingCalculator() {
             // Build pricing section based on whether manual quote is needed
             const pricingSection = needsManualQuote || duration === "other"
                 ? `We'll review your details and get back to you shortly with a personalized quote.`
-                : `TOTAL: ${fmt(subtotal)} + GST (5%) = ${fmt(subtotal + (subtotal * GST))}`;
+                : `TOTAL: ${fmt(subtotal)} + GST (5%)`;
 
             const emailBody = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLIENT INFORMATION
