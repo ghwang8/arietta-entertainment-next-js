@@ -579,7 +579,6 @@ ${pricingSection}`;
                         onSelectionsChange={setWeddingSelections}
                     />
 
-                    {/* Step 4: Add-Ons - Change 6: "Recording for Wedding Rehearsal/Video" */}
                     {/* Step 5: Add-Ons */}
                     <div style={{ marginBottom: "24px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
@@ -588,15 +587,7 @@ ${pricingSection}`;
                             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Add-Ons (Optional)</span>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                            {/* Custom songs stepper */}
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", border: "1.5px solid #ddd0bb", borderRadius: "4px", background: "#faf8f4" }}>
-                                <span style={{ fontSize: "16px", color: "#3d2e1e", fontFamily: "'Cormorant Garamond', serif" }}>Custom Song</span>
-                                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                                    <button onClick={() => setCustomSongs(Math.max(0, customSongs - 1))} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: customSongs > 0 ? "#3d2e1e" : "#f0ebe2", color: customSongs > 0 ? "#f5f0e8" : "#b8a88a", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>−</button>
-                                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", color: "#3d2e1e", minWidth: "20px", textAlign: "center" }}>{customSongs}</span>
-                                    <button onClick={() => setCustomSongs(customSongs + 1)} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: "#3d2e1e", color: "#f5f0e8", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>+</button>
-                                </div>
-                            </div>
+
                             {[
                                 { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
                                 { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },

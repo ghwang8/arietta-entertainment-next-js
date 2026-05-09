@@ -17,15 +17,12 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
     const [filterGenre, setFilterGenre] = useState("All");
     const [activeMoment, setActiveMoment] = useState(null);
     const [showSummary, setShowSummary] = useState(false);
-    const [includeSigningSong, setIncludeSigningSong] = useState(false);
+    const [customSongs, setCustomSongs] = useState({});
 
     const allSongs = useSongData();
     const filtered = useSongFiltering(allSongs, search, sortBy, filterGenre);
 
-    const visibleMoments = useMemo(() =>
-            MOMENTS.filter(m => m.key !== "signing_song" || includeSigningSong),
-        [includeSigningSong]
-    );
+    const visibleMoments = useMemo(() => MOMENTS, []);
 
     const toggleSong = (song) => {
         if (!activeMoment) return;
@@ -53,7 +50,33 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
         return null;
     };
 
-    const totalSelected = visibleMoments.reduce((acc, m) => acc + (selections[m.key] || []).length, 0);
+    const addCustomSong = (momentKey) => {
+        setCustomSongs(prev => ({
+            ...prev,
+            [momentKey]: [...(prev[momentKey] || []), { name: "", artist: "" }]
+        }));
+    };
+
+    const removeCustomSong = (momentKey, index) => {
+        setCustomSongs(prev => ({
+            ...prev,
+            [momentKey]: prev[momentKey].filter((_, i) => i !== index)
+        }));
+    };
+
+    const updateCustomSong = (momentKey, index, field, value) => {
+        setCustomSongs(prev => {
+            const updated = [...prev[momentKey]];
+            updated[index] = { ...updated[index], [field]: value };
+            return { ...prev, [momentKey]: updated };
+        });
+    };
+
+    const totalSelected = visibleMoments.reduce((acc, m) => {
+        const libraryCount = (selections[m.key] || []).length;
+        const customCount = (customSongs[m.key] || []).length;
+        return acc + libraryCount + customCount;
+    }, 0);
 
     const genres = ["All", "Classical", "Film & Musical", "Disney", "Pop & Contemporary"];
 
@@ -91,31 +114,21 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
 
                 {/* Pre-Ceremony */}
                 <div style={{ marginBottom: 10 }}>
-                    <MomentButton moment={MOMENTS[0]} active={activeMoment === MOMENTS[0].key} count={(selections[MOMENTS[0].key] || []).length} onClick={() => setActiveMoment(activeMoment === MOMENTS[0].key ? null : MOMENTS[0].key)} />
+                    <MomentButton moment={MOMENTS[0]} active={activeMoment === MOMENTS[0].key} count={(selections[MOMENTS[0].key] || []).length + (customSongs[MOMENTS[0].key] || []).length} onClick={() => setActiveMoment(activeMoment === MOMENTS[0].key ? null : MOMENTS[0].key)} />
                 </div>
 
                 {/* Ceremony group */}
                 <div style={{ border: "1px solid #e0d5c0", borderRadius: 10, padding: "14px 16px", marginBottom: 10, background: "#fff" }}>
-                    <div style={{ fontSize: 9, letterSpacing: "0.3em", color: "#b8956a", marginBottom: 12, fontFamily: "'Cinzel', serif", textAlign: "center" }}>CEREMONY</div>
+                    <div style={{ fontSize: 9, letterSpacing: "0.3em", color: "#b8956a", marginBottom: 12, fontFamily: "'Cinzel", textAlign: "center" }}>CEREMONY</div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 8 }}>
                         {visibleMoments.filter(m => CEREMONY_MOMENTS.includes(m.key)).map(m => (
-                            <MomentButton key={m.key} moment={m} active={activeMoment === m.key} count={(selections[m.key] || []).length} onClick={() => setActiveMoment(activeMoment === m.key ? null : m.key)} />
+                            <MomentButton key={m.key} moment={m} active={activeMoment === m.key} count={(selections[m.key] || []).length + (customSongs[m.key] || []).length} onClick={() => setActiveMoment(activeMoment === m.key ? null : m.key)} />
                         ))}
-                    </div>
-                    <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid #ece6d8", display: "flex", alignItems: "center", gap: 10 }}>
-                        <div onClick={() => { setIncludeSigningSong(v => !v); if (includeSigningSong && activeMoment === "signing_song") setActiveMoment(null); }}
-                             style={{ width: 36, height: 20, borderRadius: 10, background: includeSigningSong ? "#c8a96e" : "#ddd0b5", position: "relative", transition: "background 0.2s", cursor: "pointer", flexShrink: 0 }}>
-                            <div style={{ position: "absolute", top: 3, left: includeSigningSong ? 18 : 3, width: 14, height: 14, borderRadius: "50%", background: "#fff", transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
-                        </div>
-                        <span style={{ fontSize: 12, color: "#7a6030", fontFamily: "'Cinzel', serif", letterSpacing: "0.06em", cursor: "pointer", userSelect: "none" }}
-                              onClick={() => { setIncludeSigningSong(v => !v); if (includeSigningSong && activeMoment === "signing_song") setActiveMoment(null); }}>
-                            ✒ Include a Signing Song <span style={{ color: "#b8a080", fontStyle: "italic", fontSize: 11, fontFamily: "'Cormorant Garamond', serif" }}>(optional)</span>
-                        </span>
                     </div>
                 </div>
 
                 {/* After Ceremony */}
-                <MomentButton moment={MOMENTS[5]} active={activeMoment === MOMENTS[5].key} count={(selections[MOMENTS[5].key] || []).length} onClick={() => setActiveMoment(activeMoment === MOMENTS[5].key ? null : MOMENTS[5].key)} />
+                <MomentButton moment={MOMENTS[5]} active={activeMoment === MOMENTS[5].key} count={(selections[MOMENTS[5].key] || []).length + (customSongs[MOMENTS[5].key] || []).length} onClick={() => setActiveMoment(activeMoment === MOMENTS[5].key ? null : MOMENTS[5].key)} />
             </div>
 
             {activeMoment && (
@@ -155,17 +168,77 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
                 {filtered.length} SONG{filtered.length !== 1 ? "S" : ""} {totalSelected > 0 && `— ${totalSelected} SELECTED`}
             </div>
 
-            {/* Song List - Scrollable Container */}
-            <div style={{ maxHeight: "300px", overflowY: "auto", marginBottom: 40 }}>
-                <SongList
-                    songs={allSongs}
-                    filtered={filtered}
-                    activeMoment={activeMoment}
-                    isSelected={isSelected}
-                    momentOf={momentOf}
-                    toggleSong={toggleSong}
-                    selections={selections}
-                />
+            {/* Fixed Header and Custom Songs Section */}
+            <div style={{ marginBottom: 20 }}>
+                {/* Fixed Header */}
+                <div style={{ display: "flex", padding: "10px 20px", background: "#f5efe3", borderBottom: "1px solid #e8dfc8", fontSize: 10, letterSpacing: "0.2em", color: "#a8956a", fontFamily: "'Cinzel', serif", justifyContent: "space-between", alignItems: "center", borderRadius: "10px 10px 0 0" }}>
+                    <div style={{ flex: 1 }}>TITLE</div>
+                    <div style={{ flex: 0.8, textAlign: "left" }}>ARTIST</div>
+                    <div style={{ flex: 0.6, textAlign: "left" }}>GENRE</div>
+                    <div style={{ flex: 0.6, textAlign: "right" }}>ASSIGNED TO</div>
+                </div>
+
+                {/* Song List - Scrollable Container */}
+                <div style={{ maxHeight: "450px", overflowY: "auto", border: "1px solid #e8dfc8", borderRadius: "0 0 10px 10px", background: "#fff", marginBottom: 20 }}>
+                    <SongList
+                        songs={allSongs}
+                        filtered={filtered}
+                        activeMoment={activeMoment}
+                        isSelected={isSelected}
+                        momentOf={momentOf}
+                        toggleSong={toggleSong}
+                        selections={selections}
+                    />
+                </div>
+            </div>
+
+            {/* Custom Songs Section */}
+            <div style={{ background: "#fdf9f2", border: "1px solid #e0d5c0", borderRadius: 10, padding: "16px", marginBottom: (customSongs[activeMoment] || []).length > 0 ? 20 : 0, opacity: activeMoment ? 1 : 0.4, transition: "opacity 0.2s ease", pointerEvents: activeMoment ? "auto" : "none" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: (customSongs[activeMoment] || []).length > 0 ? 16 : 0 }}>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Custom Songs <span style={{ fontSize: "12px", color: "#a8956a" }}>[costs extra]</span></span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", color: "#3d2e1e", minWidth: "20px", textAlign: "center" }}>{(customSongs[activeMoment] || []).length}</span>
+                        <button onClick={() => activeMoment && addCustomSong(activeMoment)} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: "#3d2e1e", color: "#f5f0e8", cursor: activeMoment ? "pointer" : "not-allowed", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>+</button>
+                    </div>
+                </div>
+
+                {/* Custom Song Inputs */}
+                {activeMoment && (customSongs[activeMoment] || []).map((song, idx) => (
+                    <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
+                        <span style={{ fontSize: 18, color: "#c8a96e", flexShrink: 0 }}>•</span>
+                        <div style={{ flex: 1, display: "flex", gap: 12, alignItems: "center" }}>
+                            <input
+                                type="text"
+                                value={song.name}
+                                onChange={(e) => updateCustomSong(activeMoment, idx, "name", e.target.value)}
+                                placeholder="Insert song name"
+                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: "#fff" }}
+                            />
+                            <input
+                                type="text"
+                                value={song.artist}
+                                onChange={(e) => updateCustomSong(activeMoment, idx, "artist", e.target.value)}
+                                placeholder="Song author"
+                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: "#fff" }}
+                            />
+                            <button
+                                onClick={() => removeCustomSong(activeMoment, idx)}
+                                style={{
+                                    background: "none",
+                                    border: "none",
+                                    color: "#c0392b",
+                                    cursor: "pointer",
+                                    fontSize: 18,
+                                    padding: "0 8px",
+                                    lineHeight: 1,
+                                    flexShrink: 0
+                                }}
+                            >
+                                ×
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             {/* Summary Modal */}
@@ -174,7 +247,9 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
                 onClose={() => setShowSummary(false)}
                 visibleMoments={visibleMoments}
                 selections={selections}
+                customSongs={customSongs}
                 onSelectionsChange={onSelectionsChange}
+                onRemoveCustomSong={removeCustomSong}
             />
         </div>
     );

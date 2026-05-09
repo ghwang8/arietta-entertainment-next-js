@@ -17,16 +17,7 @@ export default function SongList({ songs, filtered, activeMoment, isSelected, mo
     };
 
     return (
-        <div style={{ background: "#fff", border: "1px solid #e8dfc8", borderRadius: 10, overflow: "hidden", marginBottom: 40 }}>
-            {/* Header */}
-            <div style={{ display: "flex", padding: "10px 20px", background: "#f5efe3", borderBottom: "1px solid #e8dfc8", fontSize: 10, letterSpacing: "0.2em", color: "#a8956a", fontFamily: "'Cinzel', serif", justifyContent: "space-between", alignItems: "center" }}>
-                <div style={{ flex: 1 }}>TITLE</div>
-                <div style={{ flex: 0.8, textAlign: "left" }}>ARTIST</div>
-                <div style={{ flex: 0.6, textAlign: "left" }}>GENRE</div>
-                <div style={{ flex: 0.6, textAlign: "right" }}>ASSIGNED TO</div>
-            </div>
-
-            {/* Songs */}
+        <>
             {filtered.map(song => {
                 const sel = isSelected(song);
                 const assignedMoments = getAllMomentsForSong(song);
@@ -49,6 +40,6 @@ export default function SongList({ songs, filtered, activeMoment, isSelected, mo
                     </div>
                 );
             })}
-        </div>
+        </>
     );
 }
