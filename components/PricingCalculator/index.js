@@ -16,6 +16,7 @@ import {
     fmt,
 } from "../../data/constants";
 import SuccessScreen from "./SuccessScreen";
+import WeddingSongSelector from "./WeddingSongSelector";
 
 // Initialize EmailJS once
 if (typeof window !== "undefined") {
@@ -94,6 +95,7 @@ export default function PricingCalculator() {
     const [errors, setErrors] = useState({});
 
     const [expandedAddOn, setExpandedAddOn] = useState([]);
+    const [weddingSelections, setWeddingSelections] = useState({});
 
     // Reset function for "Submit Another Quote"
     const handleReset = () => {
@@ -565,10 +567,24 @@ ${pricingSection}`;
 
                     </div>
 
+                    {/* ── Wedding Song Selector ── */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "30px 0 26px" }}>
+                        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #e0d4c0)" }} />
+                        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", letterSpacing: "0.2em", color: "#b8956a", textTransform: "uppercase", whiteSpace: "nowrap" }}>Song Selection</span>
+                        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, #e0d4c0, transparent)" }} />
+                    </div>
+
+                    <WeddingSongSelector
+                        selections={weddingSelections}
+                        onSelectionsChange={setWeddingSelections}
+                    />
+
                     {/* Step 4: Add-Ons - Change 6: "Recording for Wedding Rehearsal/Video" */}
+                    {/* Step 5: Add-Ons */}
                     <div style={{ marginBottom: "24px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>4</div>
+                            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>5</div>
+
                             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Add-Ons (Optional)</span>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
