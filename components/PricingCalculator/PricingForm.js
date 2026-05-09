@@ -12,6 +12,7 @@
 import { DURATIONS, OCCASIONS, TIME_OPTIONS, fmt } from "../../data/constants";
 import { ensemblePricing, zonePricing } from "../../data/pricing";
 import PricingSummary from "./PricingSummary";
+import { useState, useEffect } from "react";
 
 export default function PricingForm({
                                         // Pricing state
@@ -39,6 +40,11 @@ export default function PricingForm({
                                     }) {
     const ensembles = Object.keys(ensemblePricing);
     const locations = Object.keys(zonePricing[ensemble] || {});
+    const [expandedAddOn, setExpandedAddOn] = useState(null);
+
+    useEffect(() => {
+        console.log("expandedAddOn state updated:", expandedAddOn);
+    }, [expandedAddOn]);
 
     const SelectBox = ({ value, onChange, options, placeholder }) => (
         <select
@@ -230,27 +236,60 @@ export default function PricingForm({
                                     </button>
                                     <span className="pricing-stepper-value">{customSongs}</span>
                                     <button
-                                        className="pricing-stepper-btn active"
+                                        className={`pricing-stepper-btn ${customSongs >= 0 ? "active" : ""}`}
                                         onClick={() => setCustomSongs(customSongs + 1)}
                                     >
                                         +
                                     </button>
+
                                 </div>
                             </div>
 
                             {[
-                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem) },
-                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant) },
-                                { label: "Recording", active: recording, toggle: () => setRecording(!recording) },
-                            ].map(({ label, active, toggle }) => (
-                                <button
-                                    key={label}
-                                    className={`pricing-addon-btn ${active ? "active" : ""}`}
-                                    onClick={toggle}
-                                >
-                                    {label}
-                                </button>
+                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
+                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },
+                                { label: "Recording", active: recording, toggle: () => setRecording(!recording), description: "Professional audio recording of your event." },
+                            ].map(({ label, active, toggle, description }) => (
+                                <div key={label} style={{ marginBottom: "12px" }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                        <button
+                                            className={`pricing-addon-btn ${active ? "active" : ""}`}
+                                            onClick={toggle}
+                                            style={{ flex: 1 }}
+                                        >
+                                            {label}
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                console.log("Info button clicked for:", label);
+                                                console.log("Current expandedAddOn:", expandedAddOn);
+                                                setExpandedAddOn(expandedAddOn === label ? null : label);
+                                            }}
+                                            style={{
+                                                width: "36px",
+                                                height: "36px",
+                                                border: "1px solid #ddd0bb",
+                                                borderRadius: "4px",
+                                                background: "#faf8f4",
+                                                cursor: "pointer",
+                                                fontSize: "18px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            {expandedAddOn === label ? "✕" : "?"}
+                                        </button>
+
+                                    </div>
+                                    {expandedAddOn === label && (
+                                        <div style={{ marginTop: "8px", padding: "12px", background: "#fffdf9", border: "1px solid #ddd0bb", borderRadius: "4px", fontSize: "14px", color: "#8a7560" }}>
+                                            {description}
+                                        </div>
+                                    )}
+                                </div>
                             ))}
+
                         </div>
                     </div>
 
