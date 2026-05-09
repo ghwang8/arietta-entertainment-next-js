@@ -1,6 +1,6 @@
 export default function SuccessScreen({ clientName, clientEmail, onReset }) {
     return (
-        <div style={{ minHeight: "100vh", width: "100%", background: "#f5f0e8", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
+        <div style={{ minHeight: "100vh", width: "100%", background: "#f5f0e8", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 20px", boxSizing: "border-box", overflow: "hidden" }}>
             <div style={{ textAlign: "center", maxWidth: 460 }}>
                 <div style={{ fontSize: "52px", marginBottom: "22px" }}>🎻</div>
                 <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "34px", fontWeight: 400, color: "#3d2e1e", margin: "0 0 14px" }}>Quote Sent!</h2>
