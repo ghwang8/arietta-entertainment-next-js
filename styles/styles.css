@@ -2692,6 +2692,9 @@ html, body {
   color: #3d2e1e;
   outline: none;
   box-sizing: border-box;
+  appearance: none;  /* ← ADD THIS */
+  -webkit-appearance: none;  /* ← ADD THIS for full iOS support */
+  -moz-appearance: none;
 }
 
 .pricing-input-base:focus {
@@ -3101,6 +3104,12 @@ html, body {
   font-size: 18px;
   font-weight: 600;
   color: #3d2e1e;
+}
+
+@media (max-width: 768px) {
+  .pricing-input-base {
+    padding: 22px 16px;
+  }
 }
 
 /* Fonts and global overrides */

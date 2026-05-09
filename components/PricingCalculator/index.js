@@ -371,7 +371,8 @@ ${pricingSection}`;
                                 }
                             }}
                             min={new Date().toISOString().split('T')[0]}
-                            style={{ width: "100%", padding: "12px 16px", background: eventDate ? "#fffdf9" : "#faf8f4", border: errors.eventDate ? "2px solid #c0392b" : "1px solid #ddd0bb", borderRadius: "4px", fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: "#3d2e1e", outline: "none", boxSizing: "border-box", cursor: "pointer" }}
+                            className={`pricing-input-base ${eventDate ? "pricing-input-filled" : "pricing-input-empty"} ${errors.eventDate ? "pricing-input-error" : ""}`}
+                            style={{ cursor: "pointer" }}
                         />
 
                     </div>
