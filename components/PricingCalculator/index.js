@@ -93,6 +93,8 @@ export default function PricingCalculator() {
     const [customOccasion, setCustomOccasion] = useState("");
     const [errors, setErrors] = useState({});
 
+    const [expandedAddOn, setExpandedAddOn] = useState([]);
+
     // Reset function for "Submit Another Quote"
     const handleReset = () => {
         // Pricing State
@@ -576,16 +578,75 @@ ${pricingSection}`;
                                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                                     <button onClick={() => setCustomSongs(Math.max(0, customSongs - 1))} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: customSongs > 0 ? "#3d2e1e" : "#f0ebe2", color: customSongs > 0 ? "#f5f0e8" : "#b8a88a", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>−</button>
                                     <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", color: "#3d2e1e", minWidth: "20px", textAlign: "center" }}>{customSongs}</span>
-                                    <button onClick={() => setCustomSongs(customSongs + 1)} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #3d2e1e", background: "#3d2e1e", color: "#f5f0e8", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>+</button>
+                                    <button onClick={() => setCustomSongs(customSongs + 1)} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: "#3d2e1e", color: "#f5f0e8", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>+</button>
                                 </div>
                             </div>
                             {[
-                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem) },
-                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant) },
-                                { label: "Recording for Wedding Rehearsal/Video", active: recording, toggle: () => setRecording(!recording) },
-                            ].map(({ label, active, toggle }) => (
-                                <button key={label} onClick={toggle} style={{ padding: "12px 16px", border: active ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb", background: active ? "#3d2e1e" : "#faf8f4", color: active ? "#f5f0e8" : "#3d2e1e", borderRadius: "4px", cursor: "pointer", fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", textAlign: "left", transition: "all 0.15s", width: "100%" }}>{label}</button>
+                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
+                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },
+                                { label: "Recording for Wedding Rehearsal/Video", active: recording, toggle: () => setRecording(!recording), description: "Professional audio and video recording of your event." },
+                            ].map(({ label, active, toggle, description }) => (
+                                <div key={label} style={{ marginBottom: "0" }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: expandedAddOn.includes(label) ? "0" : "0" }}>
+                                        <button
+                                            onClick={toggle}
+                                            style={{
+                                                padding: "12px 16px",
+                                                border: active ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb",
+                                                background: active ? "#3d2e1e" : "#faf8f4",
+                                                color: active ? "#f5f0e8" : "#3d2e1e",
+                                                borderRadius: expandedAddOn.includes(label) ? "4px 4px 0 0" : "4px",
+                                                cursor: "pointer",
+                                                fontFamily: "'Cormorant Garamond', serif",
+                                                fontSize: "16px",
+                                                textAlign: "left",
+                                                transition: "all 0.15s",
+                                                flex: 1,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <span>{label}</span>
+                                            <div
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    console.log("Info button clicked for:", label);
+                                                    setExpandedAddOn(prev =>
+                                                        prev.includes(label)
+                                                            ? prev.filter(l => l !== label)
+                                                            : [...prev, label]
+                                                    );
+                                                }}
+
+                                                style={{
+                                                    width: "28px",
+                                                    height: "28px",
+                                                    borderRadius: "50%",
+                                                    border: "1.5px solid #ddd0bb",
+                                                    background: expandedAddOn.includes(label) ? "#3d2e1e" : "#faf8f4",
+                                                    color: expandedAddOn.includes(label) ? "#f5f0e8" : "#8a7560",
+                                                    cursor: "pointer",
+                                                    fontSize: "16px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    transition: "all 0.15s",
+                                                    flexShrink: 0
+                                                }}
+                                            >
+                                                {expandedAddOn.includes(label) ? "✕" : "?"}
+                                            </div>
+                                        </button>
+                                    </div>
+                                    {expandedAddOn.includes(label) && (
+                                        <div style={{ marginTop: "0", padding: "12px", background: "#fffdf9", border: "1px solid #ddd0bb", borderRadius: "0 0 4px 4px", fontSize: "14px", color: "#8a7560", borderTop: "none" }}>
+                                            {description}
+                                        </div>
+                                    )}
+                                </div>
                             ))}
+
                         </div>
                     </div>
 
