@@ -16,7 +16,7 @@ import {
     fmt,
 } from "../../data/constants";
 import SuccessScreen from "./SuccessScreen";
-import WeddingSongSelector from "./WeddingSongSelector";
+import SongSearchSelector from "../SongSearchSelector";
 
 // Initialize EmailJS once
 if (typeof window !== "undefined") {
@@ -56,7 +56,7 @@ export default function PricingCalculator() {
     const [customHours, setCustomHours] = useState("");
     const [location, setLocation] = useState("");
     const [customLocation, setCustomLocation] = useState("");
-    const [customSongs, setCustomSongs] = useState(0);
+    const [customSongs, setCustomSongs] = useState([]);
     const [audioSystem, setAudioSystem] = useState(false);
     const [micOfficiant, setMicOfficiant] = useState(false);
     const [recording, setRecording] = useState(false);
@@ -95,7 +95,6 @@ export default function PricingCalculator() {
     const [errors, setErrors] = useState({});
 
     const [expandedAddOn, setExpandedAddOn] = useState([]);
-    const [weddingSelections, setWeddingSelections] = useState({});
 
     // Reset function for "Submit Another Quote"
     const handleReset = () => {
@@ -105,7 +104,7 @@ export default function PricingCalculator() {
         setCustomHours("");
         setLocation("");
         setCustomLocation("");
-        setCustomSongs(0);
+        setCustomSongs([]);
         setAudioSystem(false);
         setMicOfficiant(false);
         setRecording(false);
@@ -150,7 +149,7 @@ export default function PricingCalculator() {
         const travel = zonePricing[ensemble][location] ?? 0;
         const musicians = ensembleMusicians[ensemble] ?? 1;
         const audioSystemPrice = audioSystem ? musicians * AUDIO_SYSTEM_PER_MUSICIAN : 0;
-        const customSongTotal = customSongs * CUSTOM_SONG_PRICE;
+        const customSongTotal = customSongs.length * CUSTOM_SONG_PRICE;
         const micPrice = micOfficiant ? MIC_OFFICIANT_PRICE : 0;
         const recordingPrice = recording ? RECORDING_PRICE : 0;
 
@@ -161,7 +160,7 @@ export default function PricingCalculator() {
         const lineItems = [
             { label: `${ensemble} — ${durationLabel}`, val: base },
             ...(travel > 0 ? [{ label: `Travel (${location})`, val: travel }] : []),
-            ...(customSongs > 0 ? [{ label: `Custom Song${customSongs > 1 ? "s" : ""} ×${customSongs}`, val: customSongTotal }] : []),
+            ...(customSongs.length > 0 ? [{ label: `Custom Song${customSongs.length > 1 ? "s" : ""} ×${customSongs.length}`, val: customSongTotal }] : []),
             ...(audioSystem ? [{ label: `Audio System (${musicians} musician${musicians > 1 ? "s" : ""})`, val: audioSystemPrice }] : []),
             ...(micOfficiant ? [{ label: "Mic for Officiant", val: MIC_OFFICIANT_PRICE }] : []),
             ...(recording ? [{ label: "Recording for Wedding Rehearsal/Video", val: RECORDING_PRICE }] : []),
@@ -567,27 +566,73 @@ ${pricingSection}`;
 
                     </div>
 
-                    {/* ── Wedding Song Selector ── */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "30px 0 26px" }}>
-                        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #e0d4c0)" }} />
-                        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", letterSpacing: "0.2em", color: "#b8956a", textTransform: "uppercase", whiteSpace: "nowrap" }}>Song Selection</span>
-                        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, #e0d4c0, transparent)" }} />
-                    </div>
-
-                    <WeddingSongSelector
-                        selections={weddingSelections}
-                        onSelectionsChange={setWeddingSelections}
-                    />
-
-                    {/* Step 5: Add-Ons */}
+                    {/* Step 4: Add-Ons */}
                     <div style={{ marginBottom: "24px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>5</div>
-
+                            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>4</div>
                             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Add-Ons (Optional)</span>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
 
+                            {/* Custom Songs - Expandable */}
+                            <div style={{ marginBottom: "0" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                    <button
+                                        onClick={() => setExpandedAddOn(prev =>
+                                            prev.includes("Custom Songs")
+                                                ? prev.filter(l => l !== "Custom Songs")
+                                                : [...prev, "Custom Songs"]
+                                        )}
+                                        style={{
+                                            padding: "12px 16px",
+                                            border: customSongs.length > 0 ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb",
+                                            background: customSongs.length > 0 ? "#3d2e1e" : "#faf8f4",
+                                            color: customSongs.length > 0 ? "#f5f0e8" : "#3d2e1e",
+                                            borderRadius: expandedAddOn.includes("Custom Songs") ? "4px 4px 0 0" : "4px",
+                                            cursor: "pointer",
+                                            fontFamily: "'Cormorant Garamond', serif",
+                                            fontSize: "16px",
+                                            textAlign: "left",
+                                            transition: "all 0.15s",
+                                            flex: 1,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "space-between"
+                                        }}
+                                    >
+                                        <span>Custom Songs</span>
+                                        <div
+                                            style={{
+                                                width: "28px",
+                                                height: "28px",
+                                                borderRadius: "50%",
+                                                border: "1.5px solid #ddd0bb",
+                                                background: expandedAddOn.includes("Custom Songs") ? "#3d2e1e" : "#faf8f4",
+                                                color: expandedAddOn.includes("Custom Songs") ? "#f5f0e8" : "#8a7560",
+                                                cursor: "pointer",
+                                                fontSize: "16px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                transition: "all 0.15s",
+                                                flexShrink: 0
+                                            }}
+                                        >
+                                            {expandedAddOn.includes("Custom Songs") ? "✕" : "?"}
+                                        </div>
+                                    </button>
+                                </div>
+                                {expandedAddOn.includes("Custom Songs") && (
+                                    <div style={{ marginTop: "0", padding: "12px", background: "#fffdf9", border: "1px solid #ddd0bb", borderRadius: "0 0 4px 4px", fontSize: "14px", color: "#8a7560", borderTop: "none" }}>
+                                        <SongSearchSelector
+                                            customSongs={customSongs}
+                                            onCustomSongsChange={setCustomSongs}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Audio System, Mic for Officiant, Recording */}
                             {[
                                 { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
                                 { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },
@@ -618,14 +663,12 @@ ${pricingSection}`;
                                             <div
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    console.log("Info button clicked for:", label);
                                                     setExpandedAddOn(prev =>
                                                         prev.includes(label)
                                                             ? prev.filter(l => l !== label)
                                                             : [...prev, label]
                                                     );
                                                 }}
-
                                                 style={{
                                                     width: "28px",
                                                     height: "28px",
