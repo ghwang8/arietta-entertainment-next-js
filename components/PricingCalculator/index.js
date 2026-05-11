@@ -281,6 +281,18 @@ ${pricingSection}`;
             newErrors.clientEmail = "Invalid email format";
         }
 
+        // Validate custom songs - each must have both name and artist
+        const hasIncompleteCustomSongs = customSongs.some(song => !song.name.trim() || !song.artist.trim());
+        if (customSongs.length > 0 && hasIncompleteCustomSongs) {
+            newErrors.customSongs = "Each custom song must have both a name and artist";
+            // Auto-open Custom Songs tab if there are errors
+            setExpandedAddOn(prev =>
+                prev.includes("Custom Songs")
+                    ? prev
+                    : [...prev, "Custom Songs"]
+            );
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -585,7 +597,7 @@ ${pricingSection}`;
                                         )}
                                         style={{
                                             padding: "12px 16px",
-                                            border: customSongs.length > 0 ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb",
+                                            border: errors.customSongs ? "2px solid #c0392b" : (customSongs.length > 0 ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb"),
                                             background: customSongs.length > 0 ? "#3d2e1e" : "#faf8f4",
                                             color: customSongs.length > 0 ? "#f5f0e8" : "#3d2e1e",
                                             borderRadius: expandedAddOn.includes("Custom Songs") ? "4px 4px 0 0" : "4px",
