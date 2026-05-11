@@ -600,7 +600,7 @@ ${pricingSection}`;
                                             justifyContent: "space-between"
                                         }}
                                     >
-                                        <span>Custom Songs</span>
+                                        <span>Custom Song Arrangement</span>
                                         <div
                                             style={{
                                                 width: "28px",
@@ -634,9 +634,9 @@ ${pricingSection}`;
 
                             {/* Audio System, Mic for Officiant, Recording */}
                             {[
-                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
-                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },
-                                { label: "Recording for Wedding Rehearsal/Video", active: recording, toggle: () => setRecording(!recording), description: "Professional audio and video recording of your event." },
+                                { label: "Enhanced Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "All bookings include a complimentary audio system suitable for up to 80 guests. For events with more than 80 guests, we recommend selecting this add-on to ensure optimal sound coverage for up to 200 guests. Includes instrument microphones, speakers, speaker stands, mixer, and all necessary cables." },
+                                { label: "Wireless Microphone for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Select this add-on if you would like a wireless microphone provided for your officiant during the ceremony." },
+                                { label: "Professional Audio Recording", active: recording, toggle: () => setRecording(!recording), description: "Select this option if you would like a professionally recorded version of your wedding song. Perfect for wedding rehearsals, wedding videos, and sharing on social media." },
                             ].map(({ label, active, toggle, description }) => (
                                 <div key={label} style={{ marginBottom: "0" }}>
                                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: expandedAddOn.includes(label) ? "0" : "0" }}>
