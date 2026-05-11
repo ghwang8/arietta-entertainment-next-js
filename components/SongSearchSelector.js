@@ -12,6 +12,7 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState("alpha");
     const [filterGenre, setFilterGenre] = useState("All");
+    const [selectedSong, setSelectedSong] = useState(null); // Track selected song for modal
 
     const allSongs = useSongData();
     const filtered = useSongFiltering(allSongs, search, sortBy, filterGenre);
@@ -34,6 +35,134 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
 
     return (
         <div style={{ background: "#fdf9f2", border: "1px solid #e0d5c0", borderRadius: 10, padding: "16px" }}>
+            {/* Modal Backdrop */}
+            {selectedSong && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(0, 0, 0, 0.5)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1000
+                }}
+                     onClick={() => setSelectedSong(null)}
+                >
+                    {/* Modal */}
+                    <div style={{
+                        background: "#fff",
+                        borderRadius: "8px",
+                        padding: "32px",
+                        maxWidth: "400px",
+                        width: "90%",
+                        boxShadow: "0 10px 40px rgba(61,46,30,0.2)",
+                        position: "relative",
+                        zIndex: 1001,
+                    }}
+                         onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setSelectedSong(null)}
+                            style={{
+                                position: "absolute",
+                                top: "16px",
+                                right: "16px",
+                                background: "none",
+                                border: "none",
+                                fontSize: "28px",
+                                color: "#c0392b",
+                                cursor: "pointer",
+                                padding: "0",
+                                width: "32px",
+                                height: "32px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                lineHeight: 1
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        {/* Modal Content */}
+                        <div style={{ paddingRight: "24px" }}>
+                            <div style={{
+                                fontFamily: "'Cormorant Garamond', serif",
+                                fontSize: "12px",
+                                letterSpacing: "0.1em",
+                                color: "#b8956a",
+                                textTransform: "uppercase",
+                                marginBottom: "6px"
+                            }}>
+                                Title
+                            </div>
+                            <h2 style={{
+                                fontFamily: "'Playfair Display', serif",
+                                fontSize: "24px",
+                                color: "#3d2e1e",
+                                marginTop: 0,
+                                marginBottom: "16px",
+                                lineHeight: 1.3,
+                                wordBreak: "break-word"
+                            }}>
+                                {selectedSong.title}
+                            </h2>
+
+                            <div style={{ marginBottom: "16px" }}>
+                                <div style={{
+                                    fontFamily: "'Cormorant Garamond', serif",
+                                    fontSize: "12px",
+                                    letterSpacing: "0.1em",
+                                    color: "#b8956a",
+                                    textTransform: "uppercase",
+                                    marginBottom: "6px"
+                                }}>
+                                    Artist
+                                </div>
+                                <div style={{
+                                    fontFamily: "'Cormorant Garamond', serif",
+                                    fontSize: "16px",
+                                    color: "#3d2e1e",
+                                    wordBreak: "break-word"
+                                }}>
+                                    {selectedSong.artist}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style={{
+                                    fontFamily: "'Cormorant Garamond', serif",
+                                    fontSize: "12px",
+                                    letterSpacing: "0.1em",
+                                    color: "#b8956a",
+                                    textTransform: "uppercase",
+                                    marginBottom: "6px"
+                                }}>
+                                    Genre
+                                </div>
+                                <div style={{
+                                    display: "inline-block",
+                                    padding: "4px 12px",
+                                    borderRadius: 20,
+                                    background: "#8a7a5a",
+                                    color: "#fff",
+                                    fontSize: "12px",
+                                    fontFamily: "'Cinzel', serif",
+                                    letterSpacing: "0.05em"
+                                }}>
+                                    {selectedSong.genre}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
             {/* Custom Songs Section - MOVED TO TOP */}
             <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: customSongs.length > 0 ? 16 : 12 }}>
@@ -137,7 +266,21 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
                         {/* Song List */}
                         <div style={{ maxHeight: "300px", overflowY: "auto", border: "1px solid #e8dfc8", borderRadius: "0 0 8px 8px", background: "#fff" }}>
                             {filtered.map(song => (
-                                <div key={song.id} style={{ display: "flex", padding: "11px 16px", borderBottom: "1px solid #ece6d8", gap: "12px", alignItems: "center", cursor: "default", transition: "all 0.2s ease" }} onMouseEnter={e => e.currentTarget.style.background = "#faf6f0"} onMouseLeave={e => e.currentTarget.style.background = "white"}>
+                                <div
+                                    key={song.id}
+                                    onClick={() => setSelectedSong(song)}
+                                    style={{
+                                        display: "flex",
+                                        padding: "11px 16px",
+                                        borderBottom: "1px solid #ece6d8",
+                                        gap: "12px",
+                                        alignItems: "center",
+                                        cursor: "pointer",
+                                        transition: "all 0.2s ease"
+                                    }}
+                                    onMouseEnter={e => e.currentTarget.style.background = "#faf6f0"}
+                                    onMouseLeave={e => e.currentTarget.style.background = "white"}
+                                >
                                     <div style={{ flex: 1, fontWeight: 500, fontSize: 14, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.title}</div>
                                     <div style={{ flex: 0.8, fontSize: 13, color: "#6a5530", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.artist}</div>
                                     <div style={{ flex: 0.6, fontSize: 11, padding: "2px 8px", borderRadius: 20, background: "#8a7a5a", color: "#fff", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.genre}</div>
