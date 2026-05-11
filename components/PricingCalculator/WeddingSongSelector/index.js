@@ -130,7 +130,7 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
 
             await emailjs.send(
                 process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+                process.env.NEXT_PUBLIC_EMAILJS_WEDDING_SONG_SELECTOR_TEMPLATE_ID,
                 {
                     to_email: summaryEmail,
                     cc_email: "arietta.entertainment@gmail.com",
