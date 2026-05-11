@@ -16,6 +16,7 @@ import {
     fmt,
 } from "../../data/constants";
 import SuccessScreen from "./SuccessScreen";
+import SongSearchSelector from "../SongSearchSelector";
 
 // Initialize EmailJS once
 if (typeof window !== "undefined") {
@@ -55,7 +56,7 @@ export default function PricingCalculator() {
     const [customHours, setCustomHours] = useState("");
     const [location, setLocation] = useState("");
     const [customLocation, setCustomLocation] = useState("");
-    const [customSongs, setCustomSongs] = useState(0);
+    const [customSongs, setCustomSongs] = useState([]);
     const [audioSystem, setAudioSystem] = useState(false);
     const [micOfficiant, setMicOfficiant] = useState(false);
     const [recording, setRecording] = useState(false);
@@ -94,6 +95,7 @@ export default function PricingCalculator() {
     const [errors, setErrors] = useState({});
 
     const [expandedAddOn, setExpandedAddOn] = useState([]);
+    const [customSongErrors, setCustomSongErrors] = useState({});
 
     // Reset function for "Submit Another Quote"
     const handleReset = () => {
@@ -103,7 +105,7 @@ export default function PricingCalculator() {
         setCustomHours("");
         setLocation("");
         setCustomLocation("");
-        setCustomSongs(0);
+        setCustomSongs([]);
         setAudioSystem(false);
         setMicOfficiant(false);
         setRecording(false);
@@ -148,7 +150,7 @@ export default function PricingCalculator() {
         const travel = zonePricing[ensemble][location] ?? 0;
         const musicians = ensembleMusicians[ensemble] ?? 1;
         const audioSystemPrice = audioSystem ? musicians * AUDIO_SYSTEM_PER_MUSICIAN : 0;
-        const customSongTotal = customSongs * CUSTOM_SONG_PRICE;
+        const customSongTotal = customSongs.length * CUSTOM_SONG_PRICE;
         const micPrice = micOfficiant ? MIC_OFFICIANT_PRICE : 0;
         const recordingPrice = recording ? RECORDING_PRICE : 0;
 
@@ -159,7 +161,7 @@ export default function PricingCalculator() {
         const lineItems = [
             { label: `${ensemble} — ${durationLabel}`, val: base },
             ...(travel > 0 ? [{ label: `Travel (${location})`, val: travel }] : []),
-            ...(customSongs > 0 ? [{ label: `Custom Song${customSongs > 1 ? "s" : ""} ×${customSongs}`, val: customSongTotal }] : []),
+            ...(customSongs.length > 0 ? [{ label: `Custom Song${customSongs.length > 1 ? "s" : ""} ×${customSongs.length}`, val: customSongTotal }] : []),
             ...(audioSystem ? [{ label: `Audio System (${musicians} musician${musicians > 1 ? "s" : ""})`, val: audioSystemPrice }] : []),
             ...(micOfficiant ? [{ label: "Mic for Officiant", val: MIC_OFFICIANT_PRICE }] : []),
             ...(recording ? [{ label: "Recording for Wedding Rehearsal/Video", val: RECORDING_PRICE }] : []),
@@ -199,7 +201,17 @@ export default function PricingCalculator() {
                 ? `We'll review your details and get back to you shortly with a personalized quote.`
                 : `TOTAL: ${fmt(subtotal)} + GST (5%)`;
 
-            const emailBody = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Format custom songs section
+            const customSongsSection = customSongs.length > 0
+                ? `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CUSTOM SONGS (${customSongs.length})
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+` + customSongs.map((song, idx) =>
+                `${idx + 1}. "${song.name}" by ${song.artist}`
+            ).join("\n")
+                : "";
+
+            const emailBody = `━━━━━━━━━━━━━━━━━
 CLIENT INFORMATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Event Date: ${formattedDate}
@@ -215,6 +227,8 @@ BOOKING DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Ensemble: ${ensemble || "—"}
 Duration: ${durationLabel || "—"}
+
+${customSongsSection}
 
 ${pricingSection}`;
 
@@ -253,6 +267,14 @@ ${pricingSection}`;
         return emailRegex.test(email);
     };
 
+    const clearCustomSongFieldError = (index, field) => {
+        setCustomSongErrors(prev => {
+            const updated = { ...prev };
+            delete updated[`${index}_${field}`];
+            return updated;
+        });
+    };
+
     const validateForm = () => {
         const requiredFields = {
             clientName: "First and Last Name",
@@ -275,13 +297,40 @@ ${pricingSection}`;
             if (!eval(field)) newErrors[field] = requiredFields[field];
         });
 
-        // If email exists, also validate format (even if other fields are missing)
+        // If email exists, also validate format
         if (clientEmail && !validateEmail(clientEmail)) {
             newErrors.clientEmail = "Invalid email format";
         }
 
+        // Validate custom songs - set field-level errors for each incomplete song
+        if (customSongs.length > 0) {
+            const songErrors = {};
+            customSongs.forEach((song, idx) => {
+                if (!song.name.trim()) {
+                    songErrors[`${idx}_name`] = true;
+                }
+                if (!song.artist.trim()) {
+                    songErrors[`${idx}_artist`] = true;
+                }
+            });
+
+            if (Object.keys(songErrors).length > 0) {
+                setExpandedAddOn(prev =>
+                    prev.includes("Custom Songs")
+                        ? prev
+                        : [...prev, "Custom Songs"]
+                );
+                newErrors.customSongs = "Each custom song must have both a name and artist";
+            }
+
+            setCustomSongErrors(songErrors);  // ← MOVED HERE, always update
+        } else {
+            setCustomSongErrors({});  // Clear if no custom songs
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
+
     };
 
     // Main form
@@ -565,26 +614,79 @@ ${pricingSection}`;
 
                     </div>
 
-                    {/* Step 4: Add-Ons - Change 6: "Recording for Wedding Rehearsal/Video" */}
+                    {/* Step 4: Add-Ons */}
                     <div style={{ marginBottom: "24px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
                             <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>4</div>
                             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Add-Ons (Optional)</span>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                            {/* Custom songs stepper */}
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", border: "1.5px solid #ddd0bb", borderRadius: "4px", background: "#faf8f4" }}>
-                                <span style={{ fontSize: "16px", color: "#3d2e1e", fontFamily: "'Cormorant Garamond', serif" }}>Custom Song</span>
-                                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                                    <button onClick={() => setCustomSongs(Math.max(0, customSongs - 1))} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: customSongs > 0 ? "#3d2e1e" : "#f0ebe2", color: customSongs > 0 ? "#f5f0e8" : "#b8a88a", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>−</button>
-                                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", color: "#3d2e1e", minWidth: "20px", textAlign: "center" }}>{customSongs}</span>
-                                    <button onClick={() => setCustomSongs(customSongs + 1)} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: "#3d2e1e", color: "#f5f0e8", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>+</button>
+
+                            {/* Custom Songs - Expandable */}
+                            <div style={{ marginBottom: "0" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                    <button
+                                        onClick={() => setExpandedAddOn(prev =>
+                                            prev.includes("Custom Songs")
+                                                ? prev.filter(l => l !== "Custom Songs")
+                                                : [...prev, "Custom Songs"]
+                                        )}
+                                        style={{
+                                            padding: "12px 16px",
+                                            border: "1.5px solid #ddd0bb",
+                                            background: customSongs.length > 0 ? "#3d2e1e" : "#faf8f4",
+                                            color: customSongs.length > 0 ? "#f5f0e8" : "#3d2e1e",
+                                            borderRadius: expandedAddOn.includes("Custom Songs") ? "4px 4px 0 0" : "4px",
+                                            cursor: "pointer",
+                                            fontFamily: "'Cormorant Garamond', serif",
+                                            fontSize: "16px",
+                                            textAlign: "left",
+                                            transition: "all 0.15s",
+                                            flex: 1,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "space-between"
+                                        }}
+                                    >
+                                        <span>Custom Song Arrangement</span>
+                                        <div
+                                            style={{
+                                                width: "28px",
+                                                height: "28px",
+                                                borderRadius: "50%",
+                                                border: "1.5px solid #ddd0bb",
+                                                background: expandedAddOn.includes("Custom Songs") ? "#3d2e1e" : "#faf8f4",
+                                                color: expandedAddOn.includes("Custom Songs") ? "#f5f0e8" : "#8a7560",
+                                                cursor: "pointer",
+                                                fontSize: "16px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                transition: "all 0.15s",
+                                                flexShrink: 0
+                                            }}
+                                        >
+                                            {expandedAddOn.includes("Custom Songs") ? "✕" : "?"}
+                                        </div>
+                                    </button>
                                 </div>
+                                {expandedAddOn.includes("Custom Songs") && (
+                                    <div style={{ marginTop: "0", padding: "12px", background: "#fffdf9", border: "1px solid #ddd0bb", borderRadius: "0 0 4px 4px", fontSize: "14px", color: "#8a7560", borderTop: "none" }}>
+                                        <SongSearchSelector
+                                            customSongs={customSongs}
+                                            onCustomSongsChange={setCustomSongs}
+                                            customSongErrors={customSongErrors}  // Pass error state
+                                            onClearCustomSongFieldError={clearCustomSongFieldError}  // Pass error clearing function
+                                        />
+                                    </div>
+                                )}
                             </div>
+
+                            {/* Audio System, Mic for Officiant, Recording */}
                             {[
-                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
-                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },
-                                { label: "Recording for Wedding Rehearsal/Video", active: recording, toggle: () => setRecording(!recording), description: "Professional audio and video recording of your event." },
+                                { label: "Enhanced Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "All bookings include a complimentary audio system suitable for up to 80 guests. For events with more than 80 guests, we recommend selecting this add-on to ensure optimal sound coverage for up to 200 guests. Includes instrument microphones, speakers, speaker stands, mixer, and all necessary cables." },
+                                { label: "Wireless Microphone for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Select this add-on if you would like a wireless microphone provided for your officiant during the ceremony." },
+                                { label: "Professional Audio Recording", active: recording, toggle: () => setRecording(!recording), description: "Select this option if you would like a professionally recorded version of your wedding song. Perfect for wedding rehearsals, wedding videos, and sharing on social media." },
                             ].map(({ label, active, toggle, description }) => (
                                 <div key={label} style={{ marginBottom: "0" }}>
                                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: expandedAddOn.includes(label) ? "0" : "0" }}>
@@ -611,14 +713,12 @@ ${pricingSection}`;
                                             <div
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    console.log("Info button clicked for:", label);
                                                     setExpandedAddOn(prev =>
                                                         prev.includes(label)
                                                             ? prev.filter(l => l !== label)
                                                             : [...prev, label]
                                                     );
                                                 }}
-
                                                 style={{
                                                     width: "28px",
                                                     height: "28px",
