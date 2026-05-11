@@ -12,13 +12,18 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState("alpha");
     const [filterGenre, setFilterGenre] = useState("All");
-    const [selectedSong, setSelectedSong] = useState(null); // Track selected song for modal
+    const [selectedSong, setSelectedSong] = useState(null);
 
     const allSongs = useSongData();
     const filtered = useSongFiltering(allSongs, search, sortBy, filterGenre);
 
     const addCustomSong = () => {
-        onCustomSongsChange([...customSongs, { name: "", artist: "" }]);
+        const newSong = {
+            name: "",
+            artist: "",
+            id: `song-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        };
+        onCustomSongsChange([...customSongs, newSong]);
     };
 
     const removeCustomSong = (index) => {
@@ -179,22 +184,26 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
                 </div>
 
                 {customSongs.map((song, idx) => (
-                    <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
+                    <div key={song.id} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
                         <span style={{ fontSize: 18, color: "#c8a96e", flexShrink: 0 }}>•</span>
                         <div style={{ flex: 1, display: "flex", gap: 12, alignItems: "center", minWidth: 0 }}>
                             <input
                                 type="text"
                                 value={song.name}
-                                onChange={(e) => updateCustomSong(idx, "name", e.target.value)}
+                                onChange={(e) => {
+                                    updateCustomSong(idx, "name", e.target.value);
+                                }}
                                 placeholder="Song name"
-                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: "#fff", minWidth: "80px" }}
+                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: song.name ? "#fffdf9" : "#fff", minWidth: "80px" }}
                             />
                             <input
                                 type="text"
                                 value={song.artist}
-                                onChange={(e) => updateCustomSong(idx, "artist", e.target.value)}
+                                onChange={(e) => {
+                                    updateCustomSong(idx, "artist", e.target.value);
+                                }}
                                 placeholder="Artist"
-                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: "#fff", minWidth: "80px" }}
+                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: song.artist ? "#fffdf9" : "#fff", minWidth: "80px" }}
                             />
                             <button
                                 onClick={() => removeCustomSong(idx)}
@@ -205,6 +214,7 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
                         </div>
                     </div>
                 ))}
+
             </div>
 
             {/* Search Song Library Section */}

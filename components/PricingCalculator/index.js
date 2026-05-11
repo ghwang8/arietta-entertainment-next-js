@@ -95,6 +95,7 @@ export default function PricingCalculator() {
     const [errors, setErrors] = useState({});
 
     const [expandedAddOn, setExpandedAddOn] = useState([]);
+    const [customSongErrors, setCustomSongErrors] = useState({});
 
     // Reset function for "Submit Another Quote"
     const handleReset = () => {
@@ -254,6 +255,14 @@ ${pricingSection}`;
         return emailRegex.test(email);
     };
 
+    const clearCustomSongFieldError = (index, field) => {
+        setCustomSongErrors(prev => {
+            const updated = { ...prev };
+            delete updated[`${index}_${field}`];
+            return updated;
+        });
+    };
+
     const validateForm = () => {
         const requiredFields = {
             clientName: "First and Last Name",
@@ -276,16 +285,19 @@ ${pricingSection}`;
             if (!eval(field)) newErrors[field] = requiredFields[field];
         });
 
-        // If email exists, also validate format (even if other fields are missing)
+        // If email exists, also validate format
         if (clientEmail && !validateEmail(clientEmail)) {
             newErrors.clientEmail = "Invalid email format";
         }
 
         // Validate custom songs - each must have both name and artist
-        const hasIncompleteCustomSongs = customSongs.some(song => !song.name.trim() || !song.artist.trim());
+        const hasIncompleteCustomSongs = customSongs.some((song) => {
+            return !song.name.trim() || !song.artist.trim();
+        });
+
         if (customSongs.length > 0 && hasIncompleteCustomSongs) {
             newErrors.customSongs = "Each custom song must have both a name and artist";
-            // Auto-open Custom Songs tab if there are errors
+            // Auto-open Custom Songs tab
             setExpandedAddOn(prev =>
                 prev.includes("Custom Songs")
                     ? prev
@@ -597,7 +609,7 @@ ${pricingSection}`;
                                         )}
                                         style={{
                                             padding: "12px 16px",
-                                            border: errors.customSongs ? "2px solid #c0392b" : (customSongs.length > 0 ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb"),
+                                            border: "1.5px solid #ddd0bb",
                                             background: customSongs.length > 0 ? "#3d2e1e" : "#faf8f4",
                                             color: customSongs.length > 0 ? "#f5f0e8" : "#3d2e1e",
                                             borderRadius: expandedAddOn.includes("Custom Songs") ? "4px 4px 0 0" : "4px",
@@ -639,6 +651,8 @@ ${pricingSection}`;
                                         <SongSearchSelector
                                             customSongs={customSongs}
                                             onCustomSongsChange={setCustomSongs}
+                                            customSongErrors={customSongErrors}
+                                            onClearCustomSongFieldError={clearCustomSongFieldError}
                                         />
                                     </div>
                                 )}
