@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useSongData } from "./PricingCalculator/WeddingSongSelector/useSongData";
 import { useSongFiltering } from "./PricingCalculator/WeddingSongSelector/useSongFiltering";
 
-export default function SongSearchSelector({ customSongs = [], onCustomSongsChange = () => {} }) {
+export default function SongSearchSelector({ customSongs = [], onCustomSongsChange = () => {}, customSongErrors = {}, onClearCustomSongFieldError = () => {} }) {
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState("alpha");
     const [filterGenre, setFilterGenre] = useState("All");
@@ -192,18 +192,49 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
                                 value={song.name}
                                 onChange={(e) => {
                                     updateCustomSong(idx, "name", e.target.value);
+                                    // Clear error on first keystroke
+                                    if (customSongErrors[`${idx}_name`]) {
+                                        onClearCustomSongFieldError(idx, "name");
+                                    }
                                 }}
                                 placeholder="Song name"
-                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: song.name ? "#fffdf9" : "#fff", minWidth: "80px" }}
+                                style={{
+                                    flex: 1,
+                                    padding: "10px 12px",
+                                    border: customSongErrors[`${idx}_name`] ? "2px solid #c0392b" : "1px solid #ddd0b5",
+                                    borderRadius: 6,
+                                    fontSize: 14,
+                                    fontFamily: "'Cormorant Garamond', serif",
+                                    outline: "none",
+                                    color: "#2c2415",
+                                    background: song.name ? "#fffdf9" : "#fff",
+                                    minWidth: "80px"
+                                }}
                             />
+
                             <input
                                 type="text"
                                 value={song.artist}
                                 onChange={(e) => {
                                     updateCustomSong(idx, "artist", e.target.value);
+                                    // Clear error on first keystroke
+                                    if (customSongErrors[`${idx}_artist`]) {
+                                        onClearCustomSongFieldError(idx, "artist");
+                                    }
                                 }}
                                 placeholder="Artist"
-                                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd0b5", borderRadius: 6, fontSize: 14, fontFamily: "'Cormorant Garamond', serif", outline: "none", color: "#2c2415", background: song.artist ? "#fffdf9" : "#fff", minWidth: "80px" }}
+                                style={{
+                                    flex: 1,
+                                    padding: "10px 12px",
+                                    border: customSongErrors[`${idx}_artist`] ? "2px solid #c0392b" : "1px solid #ddd0b5",
+                                    borderRadius: 6,
+                                    fontSize: 14,
+                                    fontFamily: "'Cormorant Garamond', serif",
+                                    outline: "none",
+                                    color: "#2c2415",
+                                    background: song.artist ? "#fffdf9" : "#fff",
+                                    minWidth: "80px"
+                                }}
                             />
                             <button
                                 onClick={() => removeCustomSong(idx)}

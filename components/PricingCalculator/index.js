@@ -290,23 +290,35 @@ ${pricingSection}`;
             newErrors.clientEmail = "Invalid email format";
         }
 
-        // Validate custom songs - each must have both name and artist
-        const hasIncompleteCustomSongs = customSongs.some((song) => {
-            return !song.name.trim() || !song.artist.trim();
-        });
+        // Validate custom songs - set field-level errors for each incomplete song
+        if (customSongs.length > 0) {
+            const songErrors = {};
+            customSongs.forEach((song, idx) => {
+                if (!song.name.trim()) {
+                    songErrors[`${idx}_name`] = true;
+                }
+                if (!song.artist.trim()) {
+                    songErrors[`${idx}_artist`] = true;
+                }
+            });
 
-        if (customSongs.length > 0 && hasIncompleteCustomSongs) {
-            newErrors.customSongs = "Each custom song must have both a name and artist";
-            // Auto-open Custom Songs tab
-            setExpandedAddOn(prev =>
-                prev.includes("Custom Songs")
-                    ? prev
-                    : [...prev, "Custom Songs"]
-            );
+            if (Object.keys(songErrors).length > 0) {
+                setExpandedAddOn(prev =>
+                    prev.includes("Custom Songs")
+                        ? prev
+                        : [...prev, "Custom Songs"]
+                );
+                newErrors.customSongs = "Each custom song must have both a name and artist";
+            }
+
+            setCustomSongErrors(songErrors);  // ← MOVED HERE, always update
+        } else {
+            setCustomSongErrors({});  // Clear if no custom songs
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
+
     };
 
     // Main form
@@ -651,8 +663,8 @@ ${pricingSection}`;
                                         <SongSearchSelector
                                             customSongs={customSongs}
                                             onCustomSongsChange={setCustomSongs}
-                                            customSongErrors={customSongErrors}
-                                            onClearCustomSongFieldError={clearCustomSongFieldError}
+                                            customSongErrors={customSongErrors}  // Pass error state
+                                            onClearCustomSongFieldError={clearCustomSongFieldError}  // Pass error clearing function
                                         />
                                     </div>
                                 )}
