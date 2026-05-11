@@ -12,6 +12,8 @@
 import { DURATIONS, OCCASIONS, TIME_OPTIONS, fmt } from "../../data/constants";
 import { ensemblePricing, zonePricing } from "../../data/pricing";
 import PricingSummary from "./PricingSummary";
+import { useState, useEffect } from "react";
+import SongSearchSelector from "../SongSearchSelector";
 
 export default function PricingForm({
                                         // Pricing state
@@ -39,6 +41,11 @@ export default function PricingForm({
                                     }) {
     const ensembles = Object.keys(ensemblePricing);
     const locations = Object.keys(zonePricing[ensemble] || {});
+    const [expandedAddOn, setExpandedAddOn] = useState(null);
+
+    useEffect(() => {
+        console.log("expandedAddOn state updated:", expandedAddOn);
+    }, [expandedAddOn]);
 
     const SelectBox = ({ value, onChange, options, placeholder }) => (
         <select
@@ -218,39 +225,89 @@ export default function PricingForm({
                     <div style={{ marginBottom: "24px" }}>
                         <Step n="4" label="Add-Ons (Optional)" />
                         <div className="pricing-addons-container">
-                            {/* Custom Songs stepper */}
-                            <div className="pricing-stepper-container">
-                                <span className="pricing-stepper-label">Custom Song</span>
-                                <div className="pricing-stepper-controls">
-                                    <button
-                                        className={`pricing-stepper-btn ${customSongs > 0 ? "active" : ""}`}
-                                        onClick={() => setCustomSongs(Math.max(0, customSongs - 1))}
-                                    >
-                                        −
-                                    </button>
-                                    <span className="pricing-stepper-value">{customSongs}</span>
-                                    <button
-                                        className="pricing-stepper-btn active"
-                                        onClick={() => setCustomSongs(customSongs + 1)}
-                                    >
-                                        +
-                                    </button>
-                                </div>
+
+                            {/* Custom Songs - Expandable (no ? button) */}
+                            <div style={{ marginBottom: "0" }}>
+                                <button
+                                    onClick={() => setExpandedAddOn(prev =>
+                                        prev.includes("Custom Songs")
+                                            ? prev.filter(l => l !== "Custom Songs")
+                                            : [...prev, "Custom Songs"]
+                                    )}
+                                    style={{
+                                        padding: "12px 16px",
+                                        border: expandedAddOn.includes("Custom Songs") ? "1.5px solid #3d2e1e" : "1.5px solid #ddd0bb",
+                                        background: expandedAddOn.includes("Custom Songs") ? "#3d2e1e" : "#faf8f4",
+                                        color: expandedAddOn.includes("Custom Songs") ? "#f5f0e8" : "#3d2e1e",
+                                        borderRadius: expandedAddOn.includes("Custom Songs") ? "4px 4px 0 0" : "4px",
+                                        cursor: "pointer",
+                                        fontFamily: "'Cormorant Garamond', serif",
+                                        fontSize: "16px",
+                                        textAlign: "left",
+                                        transition: "all 0.15s",
+                                        width: "100%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "flex-start"
+                                    }}
+                                >
+                                    Custom Songs
+                                </button>
+                                {expandedAddOn.includes("Custom Songs") && (
+                                    <div style={{ marginTop: "0", padding: "16px", background: "#fffdf9", border: "1px solid #ddd0bb", borderRadius: "0 0 4px 4px", borderTop: "none" }}>
+                                        <SongSearchSelector
+                                            customSongs={customSongs}
+                                            onCustomSongsChange={setCustomSongs}
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             {[
-                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem) },
-                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant) },
-                                { label: "Recording", active: recording, toggle: () => setRecording(!recording) },
-                            ].map(({ label, active, toggle }) => (
-                                <button
-                                    key={label}
-                                    className={`pricing-addon-btn ${active ? "active" : ""}`}
-                                    onClick={toggle}
-                                >
-                                    {label}
-                                </button>
+                                { label: "Audio System", active: audioSystem, toggle: () => setAudioSystem(!audioSystem), description: "High-quality speaker system for clear sound throughout your venue." },
+                                { label: "Mic for Officiant", active: micOfficiant, toggle: () => setMicOfficiant(!micOfficiant), description: "Wireless microphone for the officiant to be heard clearly." },
+                                { label: "Recording", active: recording, toggle: () => setRecording(!recording), description: "Professional audio recording of your event." },
+                            ].map(({ label, active, toggle, description }) => (
+                                <div key={label} style={{ marginBottom: "12px" }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                        <button
+                                            className={`pricing-addon-btn ${active ? "active" : ""}`}
+                                            onClick={toggle}
+                                            style={{ flex: 1 }}
+                                        >
+                                            {label}
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                console.log("Info button clicked for:", label);
+                                                console.log("Current expandedAddOn:", expandedAddOn);
+                                                setExpandedAddOn(expandedAddOn === label ? null : label);
+                                            }}
+                                            style={{
+                                                width: "36px",
+                                                height: "36px",
+                                                border: "1px solid #ddd0bb",
+                                                borderRadius: "4px",
+                                                background: "#faf8f4",
+                                                cursor: "pointer",
+                                                fontSize: "18px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            {expandedAddOn === label ? "✕" : "?"}
+                                        </button>
+
+                                    </div>
+                                    {expandedAddOn === label && (
+                                        <div style={{ marginTop: "8px", padding: "12px", background: "#fffdf9", border: "1px solid #ddd0bb", borderRadius: "4px", fontSize: "14px", color: "#8a7560" }}>
+                                            {description}
+                                        </div>
+                                    )}
+                                </div>
                             ))}
+
                         </div>
                     </div>
 
