@@ -4,12 +4,19 @@
  */
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/router";
+import emailjs from "@emailjs/browser";
 import { MOMENTS, CEREMONY_MOMENTS } from "./constants";
 import { useSongData } from "./useSongData";
 import { useSongFiltering } from "./useSongFiltering";
 import MomentButton from "./MomentButton";
 import SongList from "./SongList";
 import SummaryModal from "./SummaryModal";
+
+// Initialize EmailJS once
+if (typeof window !== "undefined") {
+    emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+}
 
 export default function WeddingSongSelector({ selections = {}, onSelectionsChange = () => {} }) {
     const [search, setSearch] = useState("");
@@ -18,6 +25,9 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
     const [activeMoment, setActiveMoment] = useState(null);
     const [showSummary, setShowSummary] = useState(false);
     const [customSongs, setCustomSongs] = useState({});
+    const [summaryEmail, setSummaryEmail] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const router = useRouter();
 
     const allSongs = useSongData();
     const filtered = useSongFiltering(allSongs, search, sortBy, filterGenre);
@@ -80,13 +90,71 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
 
     const genres = ["All", "Classical", "Film & Musical", "Disney", "Pop & Contemporary"];
 
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isEmailValid = summaryEmail.trim() ? emailRegex.test(summaryEmail) : false;
+
+    // Build summary content
+    const buildSummaryContent = () => {
+        let summaryContent = "";
+        let momentIndex = 1;
+
+        visibleMoments.forEach(m => {
+            const list = selections[m.key] || [];
+            const customList = customSongs[m.key] || [];
+            const allSongs = [...list, ...customList.map((s, idx) => ({ ...s, isCustom: true, customIdx: idx }))];
+
+            if (allSongs.length > 0) {
+                summaryContent += `${momentIndex}. ${m.label.toUpperCase()}\n`;
+                summaryContent += "─".repeat(40) + "\n";
+                allSongs.forEach(s => {
+                    const customTag = s.isCustom ? " (custom)" : "";
+                    summaryContent += `• ${s.name || s.title} by ${s.artist}${customTag}\n`;
+                });
+                summaryContent += "\n";
+                momentIndex++;
+            }
+        });
+        return summaryContent;
+    };
+
+    // Handle main page send summary
+    const handleMainPageSendSummary = async () => {
+        if (!isEmailValid) return;
+
+        setIsSubmitting(true);
+
+        try {
+            const summaryContent = buildSummaryContent();
+            const emailBody = `Thank you for using our Wedding Song Selector!\n\nHere is your selected music programme:\n\n${summaryContent}`;
+
+            await emailjs.send(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+                {
+                    to_email: summaryEmail,
+                    cc_email: "arietta.entertainment@gmail.com",
+                    to_name: "Customer",
+                    from_name: "Arietta Entertainment",
+                    subject: `Wedding Song Selector for ${summaryEmail}`,
+                    message: emailBody,
+                }
+            );
+
+            // Redirect to success page
+            router.push("/wedding-song-selector-success");
+        } catch (error) {
+            console.error("❌ Error sending email:", error);
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div style={{ minHeight: "auto", background: "transparent" }}>
-            {/* Step 4: Song Selection with View and Edit Summary Button */}
+            {/* Wedding Song Selection with View and Edit Summary Button */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>4</div>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Wedding Song Selection (Optional)</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Wedding Song Selection</span>
                 </div>
                 <button
                     onClick={() => setShowSummary(true)}
@@ -195,7 +263,7 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
             {/* Custom Songs Section */}
             <div style={{ background: "#fdf9f2", border: "1px solid #e0d5c0", borderRadius: 10, padding: "16px", marginBottom: (customSongs[activeMoment] || []).length > 0 ? 20 : 0, opacity: activeMoment ? 1 : 0.4, transition: "opacity 0.2s ease", pointerEvents: activeMoment ? "auto" : "none" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: (customSongs[activeMoment] || []).length > 0 ? 16 : 0 }}>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Custom Songs <span style={{ fontSize: "12px", color: "#a8956a" }}>[costs extra]</span></span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Custom Songs</span>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                         <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", color: "#3d2e1e", minWidth: "20px", textAlign: "center" }}>{(customSongs[activeMoment] || []).length}</span>
                         <button onClick={() => activeMoment && addCustomSong(activeMoment)} style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd0bb", background: "#3d2e1e", color: "#f5f0e8", cursor: activeMoment ? "pointer" : "not-allowed", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>+</button>
@@ -241,6 +309,51 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
                 ))}
             </div>
 
+            {/* Email Summary - Bottom Section */}
+            <div style={{ marginTop: 28, padding: "24px", background: "#f5efe3", borderRadius: 10, border: "1px solid #e8dfc8" }}>
+                <div style={{ fontFamily: "'Cinzel', serif", fontSize: 11, letterSpacing: "0.2em", color: "#6a5530", marginBottom: 12, textAlign: "center" }}>✉ EMAIL THIS SUMMARY</div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <input
+                        value={summaryEmail}
+                        onChange={(e) => setSummaryEmail(e.target.value)}
+                        placeholder="Your email address"
+                        style={{
+                            flex: "1 1 200px",
+                            padding: "10px 14px",
+                            border: summaryEmail.trim() && !isEmailValid ? "2px solid #c0392b" : "1px solid #ddd0b5",
+                            borderRadius: 6,
+                            fontSize: 14,
+                            fontFamily: "'Cormorant Garamond', serif",
+                            outline: "none",
+                            color: "#2c2415",
+                            background: "#fff",
+                            transition: "border-color 0.2s"
+                        }}
+                    />
+                    <button
+                        onClick={handleMainPageSendSummary}
+                        disabled={!isEmailValid || isSubmitting}
+                        style={{
+                            padding: "10px 20px",
+                            background: isEmailValid && !isSubmitting ? "#2c2415" : "#c9bfaf",
+                            border: "none",
+                            borderRadius: 6,
+                            color: "#c8a96e",
+                            fontFamily: "'Cinzel', serif",
+                            fontSize: 11,
+                            letterSpacing: "0.1em",
+                            cursor: (isEmailValid && !isSubmitting) ? "pointer" : "not-allowed",
+                            whiteSpace: "nowrap",
+                            transition: "all 0.2s",
+                            opacity: isEmailValid ? 1 : 0.5
+                        }}
+                    >
+                        {isSubmitting ? "SENDING…" : "SEND SUMMARY"}
+                    </button>
+                </div>
+                <div style={{ color: "#a8956a", fontSize: 12, marginTop: 8 }}>A copy will also be sent to Arietta Entertainment.</div>
+            </div>
+
             {/* Summary Modal */}
             <SummaryModal
                 showSummary={showSummary}
@@ -250,6 +363,7 @@ export default function WeddingSongSelector({ selections = {}, onSelectionsChang
                 customSongs={customSongs}
                 onSelectionsChange={onSelectionsChange}
                 onRemoveCustomSong={removeCustomSong}
+                customerEmail={summaryEmail}
             />
         </div>
     );

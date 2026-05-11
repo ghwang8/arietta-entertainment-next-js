@@ -5,13 +5,19 @@
  */
 
 import { useState } from "react";
+import { useRouter } from "next/router";
 import WeddingSongSelector from "../components/PricingCalculator/WeddingSongSelector";
 
 export default function WeddingSongSelectorPage() {
     const [selections, setSelections] = useState({});
+    const router = useRouter();
 
     const handleSelectionsChange = (newSelections) => {
         setSelections(newSelections);
+    };
+
+    const handleReturnHome = () => {
+        router.push("/");
     };
 
     return (
