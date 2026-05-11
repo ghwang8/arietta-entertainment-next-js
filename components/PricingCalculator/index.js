@@ -201,7 +201,17 @@ export default function PricingCalculator() {
                 ? `We'll review your details and get back to you shortly with a personalized quote.`
                 : `TOTAL: ${fmt(subtotal)} + GST (5%)`;
 
-            const emailBody = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Format custom songs section
+            const customSongsSection = customSongs.length > 0
+                ? `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CUSTOM SONGS (${customSongs.length})
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+` + customSongs.map((song, idx) =>
+                `${idx + 1}. "${song.name}" by ${song.artist}`
+            ).join("\n")
+                : "";
+
+            const emailBody = `━━━━━━━━━━━━━━━━━
 CLIENT INFORMATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Event Date: ${formattedDate}
@@ -217,6 +227,8 @@ BOOKING DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Ensemble: ${ensemble || "—"}
 Duration: ${durationLabel || "—"}
+
+${customSongsSection}
 
 ${pricingSection}`;
 
