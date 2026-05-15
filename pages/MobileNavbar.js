@@ -72,6 +72,7 @@ const MobileNavbar = () => {
 
         {/* Sliding menu container - shown/hidden based on isOpen state */}
         <div className={`sliding-menu-container ${isOpen ? "open" : ""}`}>
+          <div className="mobile-navbar-content">
           {/* Navigation menu items */}
           <ul className="mobile-navbar-list">
             <li>
@@ -116,6 +117,7 @@ const MobileNavbar = () => {
               </button>
             </li>
           </ul>
+        </div>
         </div>
       </>
   );
