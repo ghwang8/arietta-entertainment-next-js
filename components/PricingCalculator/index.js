@@ -47,7 +47,7 @@ const timeOptions = (() => {
 })();
 
 const OCCASIONS = ["Wedding", "Proposal", "Birthday Party", "Corporate Event", "Other"];
-const STANDARD_DURATIONS = ["1 hr", "1.5 hr", "2 hr", "2.5 hr", "3 hr", "5 hr"];
+const STANDARD_DURATIONS = ["1 hr", "1.5 hr", "2 hr", "2.5 hr", "3 hr", "4 hr"];
 
 export default function PricingCalculator() {
     // ── Pricing State ────────────────────────────────────────────────────────
@@ -343,7 +343,7 @@ ${pricingSection}`;
                 <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #b8956a, transparent)", margin: "14px auto" }} />
                 {/* Change 2: Subtitle updated */}
                 <p style={{ color: "#8a7560", fontSize: "16px", fontStyle: "italic", fontWeight: 300, margin: 0, lineHeight: 1.7 }}>
-                    Please complete the form below, and we'll be in touch shortly with a quote!
+                    Please complete the form below, and we'll be in touch shortly with a quote! Limited 2026 availability remaining.
                 </p>
             </div>
 
@@ -461,12 +461,11 @@ ${pricingSection}`;
                         </div>
                     </div>
 
-                    {/* ── Pricing ── */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "30px 0 26px" }}>
-                        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #e0d4c0)" }} />
-                        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", letterSpacing: "0.2em", color: "#b8956a", textTransform: "uppercase", whiteSpace: "nowrap" }}>Pricing</span>
-                        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, #e0d4c0, transparent)" }} />
-                    </div>
+                    {/*<div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "30px 0 26px" }}>*/}
+                    {/*    <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #e0d4c0)" }} />*/}
+                    {/*    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", letterSpacing: "0.2em", color: "#b8956a", textTransform: "uppercase", whiteSpace: "nowrap" }}>Select Ensemble</span>*/}
+                    {/*    <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, #e0d4c0, transparent)" }} />*/}
+                    {/*</div>*/}
 
                     {/* Step 1: Ensemble */}
                     <div style={{ marginBottom: "24px" }}>
@@ -539,10 +538,16 @@ ${pricingSection}`;
                         )}
                     </div>
 
+                    {/*<div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "30px 0 26px" }}>*/}
+                    {/*    <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #e0d4c0)" }} />*/}
+                    {/*    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", letterSpacing: "0.2em", color: "#b8956a", textTransform: "uppercase", whiteSpace: "nowrap" }}>Location</span>*/}
+                    {/*    <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, #e0d4c0, transparent)" }} />*/}
+                    {/*</div>*/}
+
                     {/* Step 3: Event Location - Change 5: "Other" location option */}
                     <div style={{ marginBottom: location === "Other" ? "10px" : "24px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>3</div>
+                            {/*<div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #b8956a, #d4af7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "#fff", flexShrink: 0, fontFamily: "'Playfair Display', serif" }}>3</div>*/}
                             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>Event Location <span style={{ color: "#c0392b" }}>*</span></span>
                         </div>
                         <select
@@ -613,6 +618,12 @@ ${pricingSection}`;
                         </div>
 
                     </div>
+
+                    {/*<div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "30px 0 26px" }}>*/}
+                    {/*    <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #e0d4c0)" }} />*/}
+                    {/*    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", letterSpacing: "0.2em", color: "#b8956a", textTransform: "uppercase", whiteSpace: "nowrap" }}>Additonal Features</span>*/}
+                    {/*    <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, #e0d4c0, transparent)" }} />*/}
+                    {/*</div>*/}
 
                     {/* Step 4: Add-Ons */}
                     <div style={{ marginBottom: "24px" }}>
