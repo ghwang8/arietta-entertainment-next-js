@@ -174,7 +174,7 @@ export default function SongSearchSelector({ customSongs = [], onCustomSongsChan
                     <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", letterSpacing: "0.08em", color: "#8a7560", textTransform: "uppercase" }}>
                         Custom Songs
                         <span style={{ fontSize: "12px", color: "#a8956a", fontWeight: "normal", display: "block", marginTop: "4px", textTransform: "none", letterSpacing: "normal" }}>
-                            Don't see the song in our list? Click the + button
+                            Don't see the song in our list? Click the + button. If you don’t need a custom song, please skip this option.
                         </span>
                     </span>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
