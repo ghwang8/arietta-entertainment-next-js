@@ -530,7 +530,7 @@ ${pricingSection}`;
                                     step="0.5"
                                     value={customHours}
                                     onChange={(e) => setCustomHours(e.target.value)}
-                                    placeholder="e.g. 4"
+                                    placeholder="e.g. 5"
                                     style={{ width: "120px", padding: "12px 16px", background: customHours ? "#fffdf9" : "#faf8f4", border: "1px solid #ddd0bb", borderRadius: "4px", fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: "#3d2e1e", outline: "none", boxSizing: "border-box" }}
                                 />
                                 <span style={{ color: "#8a7560", fontSize: "16px" }}>hours</span>
