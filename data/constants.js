@@ -5,10 +5,10 @@
  */
 
 // Pricing add-ons
-export const AUDIO_SYSTEM_PER_MUSICIAN = 80;
-export const CUSTOM_SONG_PRICE = 45;
-export const MIC_OFFICIANT_PRICE = 35;
-export const RECORDING_PRICE = 150;
+export const AUDIO_SYSTEM_PER_MUSICIAN = 100;
+export const CUSTOM_SONG_PRICE = 50;
+export const MIC_OFFICIANT_PRICE = 50;
+export const RECORDING_PRICE = 100;
 
 // Tax
 export const GST = 0.05;
