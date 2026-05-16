@@ -6,7 +6,7 @@
 
 import { useState, useMemo } from "react";
 import emailjs from "@emailjs/browser";
-import { ensemblePricing, zonePricing, ensembleMusicians } from "../../data/pricing";
+import { ensemblePricing, zonePricing } from "../../data/pricing";
 import {
     AUDIO_SYSTEM_PER_MUSICIAN,
     CUSTOM_SONG_PRICE,
@@ -23,14 +23,14 @@ if (typeof window !== "undefined") {
     emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
 }
 
-// Hourly rates for custom durations
-const ensembleHourlyRate = {
-    "String Solo": 850,
-    "Piano Solo": 900,
-    "String Duo": 1150,
-    "Violin & Piano Duo": 1200,
-    "String Trio": 1300,
-    "String Quartet": 1500,
+// Incremental rate per hour for custom durations above 4.5 hours
+const incrementalRatePerHour = {
+    "String Solo": 400,           // 200 per 0.5 hr
+    "Piano Solo": 500,            // 250 per 0.5 hr
+    "String Duo": 500,            // 250 per 0.5 hr
+    "Violin & Piano Duo": 500,    // 250 per 0.5 hr
+    "String Trio": 700,           // 350 per 0.5 hr
+    "String Quartet": 700,        // 350 per 0.5 hr
 };
 
 // Generate time options (every 30 min)
@@ -47,7 +47,7 @@ const timeOptions = (() => {
 })();
 
 const OCCASIONS = ["Wedding", "Proposal", "Birthday Party", "Corporate Event", "Other"];
-const STANDARD_DURATIONS = ["1 hr", "1.5 hr", "2 hr", "2.5 hr", "3 hr", "4 hr"];
+const STANDARD_DURATIONS = ["1 hr", "1.5 hr", "2 hr", "2.5 hr", "3 hr", "3.5 hr", "4 hr", "4.5 hr"];
 
 export default function PricingCalculator() {
     // ── Pricing State ────────────────────────────────────────────────────────
@@ -142,14 +142,16 @@ export default function PricingCalculator() {
         let base;
         if (duration === "other") {
             const hrs = parseFloat(customHours);
-            base = Math.round((ensembleHourlyRate[ensemble] || 0) * hrs);
+            const basePrice = ensemblePricing[ensemble]["4.5 hr"];
+            const hoursAbove4_5 = hrs - 4.5;
+            const rate = incrementalRatePerHour[ensemble] || 0;
+            base = Math.round(basePrice + (hoursAbove4_5 * rate));
         } else {
             base = ensemblePricing[ensemble][duration];
         }
 
         const travel = zonePricing[ensemble][location] ?? 0;
-        const musicians = ensembleMusicians[ensemble] ?? 1;
-        const audioSystemPrice = audioSystem ? musicians * AUDIO_SYSTEM_PER_MUSICIAN : 0;
+        const audioSystemPrice = audioSystem ? AUDIO_SYSTEM_PER_MUSICIAN : 0;
         const customSongTotal = customSongs.length * CUSTOM_SONG_PRICE;
         const micPrice = micOfficiant ? MIC_OFFICIANT_PRICE : 0;
         const recordingPrice = recording ? RECORDING_PRICE : 0;
@@ -162,7 +164,7 @@ export default function PricingCalculator() {
             { label: `${ensemble} — ${durationLabel}`, val: base },
             ...(travel > 0 ? [{ label: `Travel (${location})`, val: travel }] : []),
             ...(customSongs.length > 0 ? [{ label: `Custom Song${customSongs.length > 1 ? "s" : ""} ×${customSongs.length}`, val: customSongTotal }] : []),
-            ...(audioSystem ? [{ label: `Audio System (${musicians} musician${musicians > 1 ? "s" : ""})`, val: audioSystemPrice }] : []),
+            ...(audioSystem ? [{ label: "Audio System", val: audioSystemPrice }] : []),
             ...(micOfficiant ? [{ label: "Mic for Officiant", val: MIC_OFFICIANT_PRICE }] : []),
             ...(recording ? [{ label: "Recording for Wedding Rehearsal/Video", val: RECORDING_PRICE }] : []),
         ];
@@ -196,8 +198,9 @@ export default function PricingCalculator() {
                 ? `Other — ${customLocation || "unspecified"}`
                 : location || "—";
 
-            // Build pricing section based on whether manual quote is needed
-            const pricingSection = needsManualQuote || duration === "other"
+            const isValidCustomHours = customHours && !isNaN(parseFloat(customHours)) && (parseFloat(customHours) * 2) % 1 === 0;
+
+            const pricingSection = needsManualQuote || (duration === "other" && !isValidCustomHours)
                 ? `We'll review your details and get back to you shortly with a personalized quote.`
                 : `TOTAL: ${fmt(subtotal)} + GST (5%)`;
 
@@ -211,7 +214,13 @@ CUSTOM SONGS (${customSongs.length})
             ).join("\n")
                 : "";
 
-            const emailBody = `━━━━━━━━━━━━━━━━━
+            const addOnsSection = (audioSystem || micOfficiant || recording)
+                ? `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ADD-ONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${audioSystem ? "✓ Audio System\n" : ""}${micOfficiant ? "✓ Mic for Officiant\n" : ""}${recording ? "✓ Recording for Wedding Rehearsal/Video\n" : ""}`
+                : "";
+
+            const emailBody = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLIENT INFORMATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Event Date: ${formattedDate}
@@ -229,6 +238,8 @@ Ensemble: ${ensemble || "—"}
 Duration: ${durationLabel || "—"}
 
 ${customSongsSection}
+
+${addOnsSection}
 
 ${pricingSection}`;
 
@@ -526,13 +537,16 @@ ${pricingSection}`;
                             <div style={{ marginTop: "10px", display: "flex", alignItems: "center", gap: "10px" }}>
                                 <input
                                     type="number"
-                                    min="0.5"
+                                    min="5"
+                                    max="12"
                                     step="0.5"
                                     value={customHours}
                                     onChange={(e) => setCustomHours(e.target.value)}
-                                    placeholder="e.g. 5"
+                                    inputMode="decimal"
+                                    placeholder="e.g. 5.5"
                                     style={{ width: "120px", padding: "12px 16px", background: customHours ? "#fffdf9" : "#faf8f4", border: "1px solid #ddd0bb", borderRadius: "4px", fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: "#3d2e1e", outline: "none", boxSizing: "border-box" }}
                                 />
+
                                 <span style={{ color: "#8a7560", fontSize: "16px" }}>hours</span>
                             </div>
                         )}
