@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Lora&family=Playfair+Display:wght@400;500;600&family=Poppins:wght@100;200;400;500;700&display=swap");
 
+/* Or if you have local font files, use: */
+@font-face {
+  font-family: 'The Seasons';
+  src: url('/fonts/theseasons-reg.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'The Seasons Italic';
+  src: url('/fonts/theseasons-it.otf') format('opentype');
+}
+
 /* Global Styles */
 :root {
   --black: #000000;
@@ -8,6 +19,7 @@
   --orange-brown: #ac5134;
   --brass-brown: rgb(159, 111, 69);
   --vh: 1vh;
+  --cream: #F4F0E8;
 }
 body,
 html {
@@ -1297,6 +1309,7 @@ nav ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 }
 .hyperlink-text.contact {
   font-weight: 600;
@@ -1305,9 +1318,14 @@ nav ul {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 90%;
-  height: 40%;
+  width: 100%;
+  height: 60vh;
+  background-image: url('/images/LOVUR_Quartet.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 .contact-link-container h1 {
   font-size: 2.6rem;
   font-weight: 400;
@@ -1318,8 +1336,8 @@ nav ul {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 60%;
-  background-color: var(--tan-gold);
+  height: 50vh;
+  background-color: var(--cream);
 }
 .contact-details-container {
   display: flex;
@@ -1328,7 +1346,7 @@ nav ul {
   justify-content: center;
   width: 100%;
   height: auto;
-  background-color: var(--tan-gold);
+  background-color: var(--cream);
   padding-top: 1rem;
 }
 
@@ -1344,7 +1362,110 @@ nav ul {
   width: 90%;
 }
 
+.contact-booking-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
 
+.contact-booking-content h1 {
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'The Seasons', serif;
+  font-size: 3rem;
+  max-width: 80%;
+  line-height: 1.4;
+}
+
+.book-now-button {
+  background-color: #C08C41;
+  color: white;
+  padding: 10px 35px;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Poppins', sans-serif;  /* Use system font or another available font */
+  text-decoration: none;
+  border-radius: 2px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.book-now-button:hover {
+  background-color: #a87635;
+}
+
+.contact-details-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
+  background-color: var(--tan-gold);
+  padding: 2rem;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  gap: 0;
+}
+
+.footer-logos {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-logos img {
+  height: 60px;
+  width: auto;
+}
+
+.footer-contact-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.contact-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.contact-value {
+  font-size: 1rem;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.footer-right a {
+  color: var(--black);
+  text-decoration: none;
+  font-weight: 500;
+}
 
 /* Smartphones that have shorter lengths (ie. iPhone SE, Pixel 5) */
 @media (max-height: 830px) {
@@ -2331,14 +2452,19 @@ nav ul {
     transform:translateY(12%);
   }
   /* Contact */
- 
+
   .contact-details-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    width: 70%;
-    height: 55%;
-    padding-left: 7rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 80%;
+    background-color: var(--cream);
+    padding: 2rem;
+    margin: 4rem;
   }
+
   .contact-info-section-container {
     display: flex;
     align-items: center;

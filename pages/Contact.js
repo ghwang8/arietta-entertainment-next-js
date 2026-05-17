@@ -81,27 +81,50 @@ const Contact = () => {
       <div className="component-container contact" id="contact-section">
         {/* Booking call-to-action */}
         <div className="contact-link-container">
-          <h1>
-            Interested in booking us? Fill out{" "}
-            <span className="hyperlink-text contact">
-            <a
-                href="/pricing"
-                rel="noreferrer"
-            >
-              this quick form.
+          <div className="contact-booking-content">
+            <h1>READY TO <em style={{fontFamily: "'The Seasons Italic', serif"}}>elevate</em> YOUR EVENT <br /> WITH <em style={{fontFamily: "'The Seasons Italic', serif"}}>timeless</em> MUSIC?</h1>
+            <a href="/pricing" className="book-now-button">
+              BOOK NOW
             </a>
-          </span>
-          </h1>
+          </div>
         </div>
 
         {/* Contact information grid */}
         <div className="contact-info-background">
           <div className="contact-details-container">
             {/* Rendered contact boxes */}
-            {ContactInfo}
+            {/* Left Side */}
+            <div className="footer-left">
+              {/* Top Middle - Logos */}
+              <div className="footer-logos">
+                <img src="/images/placeholder.png" alt="Arietta Logo Placeholder" />
+                <img src="/images/ARIETTA Logo - Black Font no graphic.png" alt="Arietta Logo Black" />
+              </div>
+
+              {/* Bottom Middle - Contact Info Grid */}
+              <div className="footer-contact-grid">
+                <div className="contact-item">
+                  <div className="contact-label">PHONE</div>
+                  <div className="contact-value">778 887 2018</div>
+                </div>
+                <div className="contact-item">
+                  <div className="contact-label">EMAIL</div>
+                  <div className="contact-value">arietta.entertainment@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Social Links */}
+            <div className="footer-right">
+              <a href="https://www.youtube.com/@estiehwang">YouTube</a>
+              <a href="https://www.instagram.com/arietta.entertainment/">Instagram</a>
+              <a href="">Spotify</a>
+            </div>
+
           </div>
         </div>
       </div>
+
   );
 };
 
