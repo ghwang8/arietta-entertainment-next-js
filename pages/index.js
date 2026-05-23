@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import MobileNavbar from "./MobileNavbar";
 import DesktopNavbar from "./DesktopNavbar";
 import Home from "./Home";
-import ShowcaseVideo from "./ShowcaseVideo";
 import About from "./About";
 import Artists from "./Artists";
 import Artists2 from "./Artists2";
@@ -97,9 +96,6 @@ export default function IndexPage() {
 
             {/* Hero section with logo and tagline */}
             <Home id="home-section" />
-
-            {/* Video showcase section */}
-            <ShowcaseVideo id="showcase-video-section" />
 
             {/* About the company description */}
             <About id="about-section" />

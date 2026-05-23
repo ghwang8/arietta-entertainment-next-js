@@ -472,6 +472,7 @@ nav ul {
   text-align: center;
   justify-content: center;
   align-content: center;
+  margin-top: 8rem;
 }
 
 /* Showcase */
@@ -1670,15 +1671,19 @@ nav ul {
       height: 4rem;
       padding: 0;
       background-color: var(--white);
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
       margin-right: 1rem;
+      background-color: transparent;
     }
     .desktop-navbar-list {
       display: flex;
       height: 100%;
       align-content: center;
       justify-content: center;
+      gap: 5rem;
     }
+  .desktop-navbar-list button {
+    color: white;
+  }
     .desktop-navbar-list li {
       font-family: 'Playfair Display', Serif;
       padding: 0 1rem;
@@ -1729,7 +1734,7 @@ nav ul {
     justify-content: center;
     align-content: center;
     height: 50vh;
-    padding-top: 7rem;
+    padding-top: 14.5rem;
   }
   .slogan-container {
     display: flex;
@@ -1737,6 +1742,7 @@ nav ul {
     height: 30%;
     align-content: center;
     justify-content: center;
+    margin-top: 8rem;
   }
   .component-container.home {
     flex-direction: column;
@@ -3262,6 +3268,16 @@ html, body {
   margin-left: 1rem;
 }
 
+@media (max-width: 960px) {
+  .slogan-container {
+    margin-top: 25rem;
+  }
+
+  .logo-container.home {
+    margin-top: 17rem;  /* adjust this value as needed */
+  }
+}
+
 @media (max-width: 800px) {
   .footer-logos img:last-child {
     margin-left: 0;
@@ -3322,6 +3338,31 @@ html, body {
 
   .contact-info-background {
     height: auto;  /* changed from 40vh */
+  }
+
+}
+
+@media (max-width: 789px) {
+  .logo-container.home {
+    margin-top: 8rem;  /* adjust this value as needed */
+  }
+
+  .slogan-container {
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .slogan-container h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .slogan-container div {
+    padding: 0 1rem;  /* additional padding for the location text */
+    margin-bottom: 1.5rem;
   }
 }
 

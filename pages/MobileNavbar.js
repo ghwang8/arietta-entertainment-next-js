@@ -74,49 +74,33 @@ const MobileNavbar = () => {
         <div className={`sliding-menu-container ${isOpen ? "open" : ""}`}>
           <div className="mobile-navbar-content">
           {/* Navigation menu items */}
-          <ul className="mobile-navbar-list">
-            <li>
-              <button onClick={() => handleNavigation("home-section")}>
-                Home
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("about-section")}>
-                About
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("artists-section")}>
-                Our Artists
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("work-section")}>
-                Our Work
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("event-section")}>
-                Services
-              </button>
-            </li>
-            <li>
-              {/* Navigate to separate Twilight concert page */}
-              <button onClick={() => router.push("/Twilight")}>
-                Twilight
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("estie-section")}>
-                The Founder
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("contact-section")}>
-                Contact Us
-              </button>
-            </li>
-          </ul>
+            <ul className="mobile-navbar-list">
+              <li>
+                <button onClick={() => handleNavigation("home-section")}>
+                  HOME
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigation("about-section")}>
+                  ABOUT
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigation("work-section")}>
+                  OUR WORK
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigation("artists-section")}>
+                  THE MUSICIANS
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigation("contact-section")}>
+                  INQUIRE
+                </button>
+              </li>
+            </ul>
         </div>
         </div>
       </>

@@ -38,67 +38,29 @@ const DesktopNavbar = () => {
       <nav className="desktop-navbar-nav">
         {/* Horizontal menu list */}
         <ul className="desktop-navbar-list">
-
-          {/* Home link */}
           <li>
             <button onClick={() => handleNavigation("home-section")}>
-              Home
+              HOME
             </button>
           </li>
-
-          {/* About section link */}
           <li>
             <button onClick={() => handleNavigation("about-section")}>
-              About
+              ABOUT
             </button>
           </li>
-
-          {/* Featured artists section link */}
-          <li>
-            <button onClick={() => handleNavigation("artists-section")}>
-              Our Artists
-            </button>
-          </li>
-
-          {/* Video gallery section link */}
           <li>
             <button onClick={() => handleNavigation("work-section")}>
-              Our Work
+              OUR WORK
             </button>
           </li>
-
-          {/* Services section link */}
           <li>
-            <button onClick={() => handleNavigation("event-section")}>
-              Services
+            <button onClick={() => handleNavigation("artists-section")}>
+              THE MUSICIANS
             </button>
           </li>
-
-          {/* Navigate to Twilight concert page */}
-          <li>
-            <button onClick={() => router.push("/Twilight")}>
-              Twilight
-            </button>
-          </li>
-
-          {/* Founder biography section */}
-          <li>
-            <button onClick={() => handleNavigation("estie-section")}>
-              The Founder
-            </button>
-
-            {/* Commented out: submenu code (not currently in use) */}
-            {/* <ul className={`desktop-submenu ${activeSubMenu === "founders-submenu" ? "active" : ""}`}>
-            <li><button>Creators</button></li>
-            <li><button>Estie</button></li>
-            <li><button>Georgy</button></li>
-          </ul> */}
-          </li>
-
-          {/* Contact section link */}
           <li>
             <button onClick={() => handleNavigation("contact-section")}>
-              Contact Us
+              INQUIRE
             </button>
           </li>
         </ul>

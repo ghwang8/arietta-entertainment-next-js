@@ -17,9 +17,6 @@ const Home = () => {
     // Fallback black color if image doesn't load
     backgroundColor: "#000000",
 
-    // Background image URL (served from public/images folder)
-    backgroundImage: "url(/images/temp-home-bg.png)",
-
     // Image fills the entire container proportionally
     backgroundSize: "cover",
 
@@ -45,19 +42,44 @@ const Home = () => {
           className="component-container home"
           id="home-section"
       >
-        {/* Logo container - displays ARIETTA logo */}
-        <div className="logo-container home">
-          <img src="/images/arietta-logo.svg" alt="arietta logo" />
+        {/* Background video */}
+        <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+              filter: 'brightness(0.6)'
+            }}
+        >
+          <source src="/videos/ARIETTA Website Video.mp4" type="video/mp4" />
+        </video>
+
+        {/* Logo container */}
+        <div className="logo-container home" style={{position: 'relative', zIndex: 1}}>
+          <img src="/images/ARIETTA%20Logo%20-%20White%20Font%20no%20graphic.png" alt="arietta logo" />
         </div>
 
-        {/* Company tagline/slogan */}
-        <div className="slogan-container">
-          <h2 className="secondary-text slogan">
-            Where live music and entertainment meet excellence.
-          </h2>
+        {/* Tagline */}
+        <div className="slogan-container" style={{position: 'relative', zIndex: 1}}>
+            <h2 className="secondary-text slogan" style={{fontFamily: "'The Seasons', serif", color: 'white'}}>
+                <em style={{fontFamily: "'The Seasons Italic', serif"}}>Elevating</em> EVENTS with <em style={{fontFamily: "'The Seasons Italic', serif"}}>timeless</em> MUSIC.
+            </h2>
+
+            <div style={{color: 'white', fontSize: '0.9rem', letterSpacing: '2px', marginTop: '1rem'}}>
+                VANCOUVER • SQUAMISH • WHISTLER • VICTORIA • VANCOUVER ISLAND • THE OKANAGAN • AND BEYOND
+            </div>
         </div>
       </div>
   );
+
 };
 
 export default Home;

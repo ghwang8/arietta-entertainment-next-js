@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 import MobileNavbar from "./MobileNavbar";
 import Home from "./Home";
-import ShowcaseVideo from "./ShowcaseVideo";
 import About from "./About";
 import Artists from "./Artists";
 import Artists2 from "./Artists2";
@@ -67,7 +66,6 @@ export default function App() {
             <MobileNavbar />
             <DesktopNavbar />
             <Home />
-            <ShowcaseVideo />
             <About />
             <Artists/>
             <Artists2/>
