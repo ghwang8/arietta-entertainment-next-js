@@ -97,7 +97,7 @@ const Contact = () => {
             <div className="footer-left">
               {/* Top Middle - Logos */}
               <div className="footer-logos">
-                <img src="/images/placeholder.png" alt="Arietta Logo Placeholder" />
+                <img src="/images/Arietta-Logo-black-no-text.png" alt="Arietta Logo Placeholder" />
                 <img src="/images/ARIETTA Logo - Black Font no graphic.png" alt="Arietta Logo Black" />
               </div>
 
@@ -118,7 +118,7 @@ const Contact = () => {
             <div className="footer-right">
               <a href="https://www.youtube.com/@estiehwang">YouTube</a>
               <a href="https://www.instagram.com/arietta.entertainment/">Instagram</a>
-              <a href="">Spotify</a>
+              <a href="https://open.spotify.com/artist/0HJkJhSSyp7IVB7DPOLHj2">Spotify</a>
             </div>
 
           </div>

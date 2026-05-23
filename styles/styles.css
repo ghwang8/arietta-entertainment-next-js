@@ -1391,6 +1391,7 @@ nav ul {
   border-radius: 2px;
   text-align: center;
   transition: background-color 0.3s ease;
+  margin: 1rem 0;
 }
 
 .book-now-button:hover {
@@ -3257,9 +3258,84 @@ html, body {
   color: #3d2e1e;
 }
 
-@media (max-width: 768px) {
+.footer-logos img:last-child {
+  margin-left: 1rem;
+}
+
+@media (max-width: 800px) {
+  .footer-logos img:last-child {
+    margin-left: 0;
+  }
+
   .pricing-input-base {
     padding: 22px 16px;
+  }
+
+  .contact-details-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;  /* changed from 100% */
+    padding: 2rem;
+  }
+
+  .footer-left {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
+
+  .footer-logos {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .footer-contact-grid {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .contact-item {
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-right {
+    align-items: center;
+    width: 100%;
+  }
+
+  .component-container.contact {
+    height: auto;  /* let it expand naturally */
+  }
+
+  .contact-booking-content {
+    height: 60vh;  /* reduced from 65vh */
+  }
+
+  .contact-info-background {
+    height: auto;  /* changed from 40vh */
+  }
+}
+
+@media (max-width: 589px) {
+  .component-container.contact {
+    height: auto;  /* let it expand naturally */
+  }
+
+  .contact-link-container {
+    height: 60vh;
+  }
+
+  .contact-booking-content {
+    height: 100%;
   }
 }
 
