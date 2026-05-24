@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import MobileNavbar from "./MobileNavbar";
 import Home from "./Home";
 import About from "./About";
-import Artists from "./Artists";
-import Artists2 from "./Artists2";
+import OurWork1 from "./OurWork1";
+import OurWork2 from "./OurWork2";
 import OtherArtists from "./OtherArtists";
 import WorkYoutube from "./WorkYoutube";
 import ServiceSetlist from "./ServiceSetlist";
@@ -67,8 +67,8 @@ export default function App() {
             <DesktopNavbar />
             <Home />
             <About />
-            <Artists/>
-            <Artists2/>
+            <OurWork1/>
+            <OurWork2/>
             <OtherArtists/>
             <WorkYoutube />
             <ServiceSetlist />

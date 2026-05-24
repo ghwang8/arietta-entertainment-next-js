@@ -20,6 +20,7 @@
   --brass-brown: rgb(159, 111, 69);
   --vh: 1vh;
   --cream: #F4F0E8;
+  --dark-gray: #262626;
 }
 body,
 html {
@@ -69,7 +70,7 @@ html {
 }
 
 .App {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none;  /* changed from "y mandatory" */
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
@@ -95,6 +96,104 @@ html {
   position: relative;
   scroll-snap-align: start;
   background-color: var(--white);
+}
+
+/* OurWork1 */
+.component-container.our-work-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+}
+
+/* OurWork2 */
+.component-container.our-work-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-gray);
+  position: relative;
+  padding: 2rem;
+}
+
+.our-work-modal {
+  position: relative;  /* changed from fixed */
+  background-color: var(--cream);
+  color: var(--black);
+  width: 60%;
+  max-width: 600px;
+  min-height: 200px;  /* add this to increase height */
+  padding: 3rem;
+  margin: -100px auto 4rem auto;  /* use percentage of viewport height */
+  text-align: center;
+  border-radius: 0;
+  z-index: 10;
+}
+
+/* Grid wrapper - flex column for top/bottom grouping */
+.our-work-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1200px;
+  z-index: 5;
+  margin: 0 auto;
+}
+
+/* Each group - flex row for left/right items */
+.our-work-group {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.our-work-video-container {
+  background-color: var(--cream);
+  width: 300px;
+  height: 175px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: var(--black);
+  font-weight: 600;
+}
+
+.our-work-video-container p {
+  font-size: 18px;
+  margin: 0;
+}
+
+.see-more-link {
+    font-size: 12px;
+    text-decoration: underline;
+    color: var(--black);
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.our-work-modal p {
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.6;
+  height: auto;
+}
+
+.our-work-modal h3 {
+  font-family: 'The Seasons', serif;
+  font-size: 40px;
+  margin: 0.5rem 0 1rem 0;
+  height: auto;
+}
+
+.our-work-modal p:first-child {
+  margin-bottom: 0.5rem;
 }
 
 .component-container.no-snap-scroll {
@@ -460,6 +559,7 @@ nav ul {
   height: 80%;
   padding-top: 3rem;
 }
+
 .logo-container img {
   width: 28rem;
   height: auto;
@@ -1641,7 +1741,6 @@ nav ul {
     justify-content: center;
     align-content: center;
     height: calc(100vh - 4rem);
-    padding-top: 4rem;
     flex-shrink: 0;
   }
   .card-text-content.footer {
@@ -1734,7 +1833,7 @@ nav ul {
     justify-content: center;
     align-content: center;
     height: 50vh;
-    padding-top: 14.5rem;
+    padding-top: 21rem;
   }
   .slogan-container {
     display: flex;
@@ -1742,7 +1841,7 @@ nav ul {
     height: 30%;
     align-content: center;
     justify-content: center;
-    margin-top: 8rem;
+    margin-top: 12rem;
   }
   .component-container.home {
     flex-direction: column;
@@ -2486,6 +2585,13 @@ nav ul {
     font-size: 1rem;
   }
 }
+/* 1406px and above */
+@media (min-width: 1406px) {
+  .our-work-modal {
+    min-height: 300px;
+  }
+}
+
 /* Hi-res Desktop */
 @media (min-width: 1281px) {
   /* Global */
@@ -3274,7 +3380,7 @@ html, body {
   }
 
   .logo-container.home {
-    margin-top: 17rem;  /* adjust this value as needed */
+    margin-top: 12rem;  /* adjust this value as needed */
   }
 }
 
@@ -3343,6 +3449,10 @@ html, body {
 }
 
 @media (max-width: 789px) {
+  .our-work-modal {
+    min-height: auto;
+  }
+
   .logo-container.home {
     margin-top: 8rem;  /* adjust this value as needed */
   }
@@ -3363,6 +3473,16 @@ html, body {
   .slogan-container div {
     padding: 0 1rem;  /* additional padding for the location text */
     margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 618px) {
+  .component-container.our-work-2 {
+    height: 175vh;  /* adjust as needed */
+  }
+
+  .our-work-modal {
+    margin: -250px auto 4rem auto;
   }
 }
 
@@ -3472,4 +3592,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 * {
   box-sizing: border-box;
+}
+
+@media (max-width: 788px) {
+  .our-work-grid-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .our-work-group {
+    flex-direction: column;  /* stack items vertically */
+    width: 100%;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .our-work-video-container {
+    min-width: 150px;
+  }
 }

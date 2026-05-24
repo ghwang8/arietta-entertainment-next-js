@@ -5,8 +5,8 @@ import MobileNavbar from "./MobileNavbar";
 import DesktopNavbar from "./DesktopNavbar";
 import Home from "./Home";
 import About from "./About";
-import Artists from "./Artists";
-import Artists2 from "./Artists2";
+import OurWork1 from "./OurWork1";
+import OurWork2 from "./OurWork2";
 import OtherArtists from "./OtherArtists";
 import WorkYoutube from "./WorkYoutube";
 import ServiceEvent from "./ServiceEvent";
@@ -100,11 +100,8 @@ export default function IndexPage() {
             {/* About the company description */}
             <About id="about-section" />
 
-            {/* LOVUR String Quartet featured artists */}
-            <Artists id="artists-section" />
-
-            {/* LOVUR Quartet detailed info and photos */}
-            <Artists2 id="artists2-section" />
+            <OurWork1 id="work-section" />
+            <OurWork2 />
 
             {/* Other musicians: string and piano rosters */}
             <OtherArtists id="other-artists-section" />
