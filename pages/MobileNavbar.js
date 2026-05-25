@@ -76,27 +76,27 @@ const MobileNavbar = () => {
           {/* Navigation menu items */}
             <ul className="mobile-navbar-list">
               <li>
-                <button onClick={() => handleNavigation("home-section")}>
+                <button className="urbanist" onClick={() => handleNavigation("home-section")}>
                   HOME
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNavigation("about-section")}>
+                <button className="urbanist" onClick={() => handleNavigation("about-section")}>
                   ABOUT
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNavigation("work-section")}>
+                <button className="urbanist" onClick={() => handleNavigation("work-section")}>
                   OUR WORK
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNavigation("artists-section")}>
+                <button className="urbanist" onClick={() => handleNavigation("artists-section")}>
                   THE MUSICIANS
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNavigation("contact-section")}>
+                <button className="urbanist" onClick={() => handleNavigation("contact-section")}>
                   INQUIRE
                 </button>
               </li>

@@ -15,9 +15,9 @@ const OurWork2 = () => {
         <div className="component-container our-work-2">
             {/* Modal */}
             <div className="our-work-modal">
-                <p>LISTEN TO</p>
+                <p className="urbanist">LISTEN TO</p>
                 <h3>Our Work</h3>
-                <p>Our repertoire spans a wide selection of music, from timeless classics to modern hits, with a focus on custom arrangements crafted for each client. Serving Vancouver weddings and corporate events, ARIETTA offers refined live music experiences, including elegant string quartets and professional piano performances.</p>
+                <p className="urbanist">Our repertoire spans a wide selection of music, from timeless classics to modern hits, with a focus on custom arrangements crafted for each client. Serving Vancouver weddings and corporate events, ARIETTA offers refined live music experiences, including elegant string quartets and professional piano performances.</p>
             </div>
 
             {/* Video grid wrapper */}
@@ -26,8 +26,8 @@ const OurWork2 = () => {
                 <div className="our-work-group">
                     {groupA.map((video, index) => (
                         <div key={index} className="our-work-video-container">
-                            <p>{video.title}</p>
-                            <a href={video.link} className="see-more-link">See More Videos</a>
+                            <p className="urbanist">{video.title}</p>
+                            <a href={video.link} className="urbanist see-more-link">See More Videos</a>
                         </div>
                     ))}
                 </div>
@@ -36,8 +36,8 @@ const OurWork2 = () => {
                 <div className="our-work-group">
                     {groupB.map((video, index) => (
                         <div key={index} className="our-work-video-container">
-                            <p>{video.title}</p>
-                            <a href={video.link} className="see-more-link">See More Videos</a>
+                            <p className="urbanist">{video.title}</p>
+                            <a href={video.link} className="urbanist see-more-link">See More Videos</a>
                         </div>
                     ))}
                 </div>

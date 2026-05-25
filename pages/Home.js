@@ -73,7 +73,7 @@ const Home = () => {
                 <em style={{fontFamily: "'The Seasons Italic', serif"}}>Elevating</em> EVENTS with <em style={{fontFamily: "'The Seasons Italic', serif"}}>timeless</em> MUSIC.
             </h2>
 
-            <div style={{color: 'white', fontSize: '0.9rem', letterSpacing: '2px', marginTop: '1rem'}}>
+            <div className="urbanist" style={{color: 'white', fontSize: '0.9rem', letterSpacing: '2px', marginTop: '1rem'}}>
                 VANCOUVER • SQUAMISH • WHISTLER • VICTORIA • VANCOUVER ISLAND • THE OKANAGAN • AND BEYOND
             </div>
         </div>
