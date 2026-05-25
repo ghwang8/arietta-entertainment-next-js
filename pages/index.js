@@ -7,10 +7,7 @@ import Home from "./Home";
 import About from "./About";
 import OurWork1 from "./OurWork1";
 import OurWork2 from "./OurWork2";
-import OtherArtists from "./OtherArtists";
-import WorkYoutube from "./WorkYoutube";
-import ServiceEvent from "./ServiceEvent";
-import Estie from "./Estie";
+import MeetTheMusicians from "./MeetTheMusicians";
 import Contact from "./Contact";
 
 /**
@@ -103,21 +100,12 @@ export default function IndexPage() {
             <OurWork1 id="work-section" />
             <OurWork2 />
 
-            {/* Other musicians: string and piano rosters */}
-            <OtherArtists id="other-artists-section" />
-
-            {/* YouTube video gallery of past performances */}
-            <WorkYoutube id="work-youtube-section" />
+            {/* Musicians: string and piano rosters */}
+            <MeetTheMusicians id="artists-section" />
 
             {/* Commented out - setlist section currently disabled */}
             {/* <ServiceSetlist id="service-setlist-section" />
           <ServiceMusicians id="service-musicians-section" /> */}
-
-            {/* Service offerings: weddings, corporate events, venues, recordings */}
-            <ServiceEvent id="service-event-section" />
-
-            {/* Featured performer biography section */}
-            <Estie id="estie-section" />
 
             {/* Contact information and booking form */}
             <Contact id="contact-section" />

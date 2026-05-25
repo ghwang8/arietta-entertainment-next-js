@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 
 /**
  * DesktopNavbar.js - Desktop Navigation Bar
@@ -7,30 +6,18 @@ import { useRouter } from "next/router";
  * Horizontal navigation menu for desktop displays
  * Provides:
  * - Navigation to all main sections
- * - Link to Twilight concert page
- * - Handles scroll-based navigation on main page
- * - Handles cross-page navigation from Twilight page
+ * - Handles smooth scroll-based navigation on main page
  */
 
 const DesktopNavbar = () => {
-  const router = useRouter();
-
   /**
    * Handle navigation to section
-   * Behavior depends on current page location:
-   * - On main page: scroll smoothly to section
-   * - On Twilight page: navigate to home with auto-scroll query
+   * Scrolls smoothly to the section on the main page
    */
   const handleNavigation = (id) => {
-    if (router.pathname === "/Twilight") {
-      // If on Twilight page, navigate home first with scroll query
-      router.push(`/?scrollTo=${id}`);
-    } else {
-      // If on main page, scroll directly to element
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 

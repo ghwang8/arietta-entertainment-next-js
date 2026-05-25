@@ -6,13 +6,9 @@ import Home from "./Home";
 import About from "./About";
 import OurWork1 from "./OurWork1";
 import OurWork2 from "./OurWork2";
-import OtherArtists from "./OtherArtists";
-import WorkYoutube from "./WorkYoutube";
+import MeetTheMusicians from "./MeetTheMusicians";
 import ServiceSetlist from "./ServiceSetlist";
 import ServiceMusicians from "./ServiceMusicians";
-import ServiceEvent from "./ServiceEvent";
-import Estie from "./Estie";
-import Twilight from "./Twilight";
 import Contact from "./Contact";
 
 import DesktopNavbar from "./DesktopNavbar";
@@ -30,12 +26,6 @@ import DesktopNavbar from "./DesktopNavbar";
  * Current behavior:
  * - This file does NOT render when you visit the site
  * - Use pages/index.js for any homepage changes
- *
- * Differences from index.js:
- * - No client-side rendering check (no isClient state)
- * - Uses "slug" query param instead of "slug" or "scrollTo"
- * - Simpler scroll logic without timeout delay
- * - Includes Twilight component (which index.js also includes)
  *
  * Recommendation:
  * - Delete this file if no longer needed, OR
@@ -69,13 +59,9 @@ export default function App() {
             <About />
             <OurWork1/>
             <OurWork2/>
-            <OtherArtists/>
-            <WorkYoutube />
+            <MeetTheMusicians/>
             <ServiceSetlist />
             <ServiceMusicians />
-            <ServiceEvent />
-            <Estie />
-            <Twilight />
             <Contact />
         </div>
     );

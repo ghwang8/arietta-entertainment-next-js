@@ -1,7 +1,7 @@
 import React from "react";
 
 /**
- * OtherArtists.js - String and Piano Musician Rosters
+ * MeetTheMusicians.js - String and Piano Musician Rosters
  *
  * Displays two artist categories:
  * - String Musicians (violins, violas, cellos, guitars, bass)
@@ -10,7 +10,7 @@ import React from "react";
  * Each category has description, image, and booking link.
  */
 
-const OtherArtists = () => {
+const MeetTheMusicians = () => {
     /**
      * Array of artist rosters
      * Each roster has: id, image, title, description, booking URL
@@ -75,9 +75,9 @@ const OtherArtists = () => {
     });
 
     return (
-        <div className="component-container" id="other-artists-section">
+        <div className="component-container" id="artists-section">
             {/* Section heading */}
-            <h2 className="card-text-title artist">Other Artists</h2>
+            <h2 className="card-text-title artist">The Musicians</h2>
 
             {/* Grid of artist roster cards */}
             <div className="artist-options-container">{artists}</div>
@@ -85,4 +85,4 @@ const OtherArtists = () => {
     );
 };
 
-export default OtherArtists;
+export default MeetTheMusicians;
