@@ -1,86 +1,71 @@
 import React from "react";
 
 /**
- * MeetTheMusicians.js - String and Piano Musician Rosters
+ * MeetTheMusicians.js - Featured Musicians Gallery
  *
- * Displays two artist categories:
- * - String Musicians (violins, violas, cellos, guitars, bass)
- * - Piano Musicians
- *
- * Each category has description, image, and booking link.
+ * Displays:
+ * - Header section with centered text (MEET, The Musicians, description)
+ * - 3x3 grid of musician photos (LOVUR_Estie.jpg)
  */
 
 const MeetTheMusicians = () => {
-    /**
-     * Array of artist rosters
-     * Each roster has: id, image, title, description, booking URL
-     */
-    const artistsArr = [
-        {
-            id: "a",
-            img: "/images/group_photo.jpg",
-            title: "STRING ROSTER",
-            description: "Our string roster represents the epitome of musical excellence. " +
-                "Featuring violinists, violists, cellists, double bassists, and guitarists, " +
-                "these accomplished artists bring a wealth of experience and unmatched artistry to the stage...",
-            url: "https://forms.gle/6DmoDgb2Y3CPDU2C6"
-        },
-        {
-            id: "b",
-            img: "/images/duo_photo.jpg",
-            title: "PIANO ROSTER",
-            description: "Our piano roster features some of the most talented and versatile pianists " +
-                "in the industry. These artists are not only graduates of leading conservatories but also " +
-                "seasoned performers who have graced the stages of prestigious venues...",
-            url: "https://forms.gle/6DmoDgb2Y3CPDU2C6"
-        }
-    ];
+    return (
+        <div className="component-container meet-the-musicians-wrapper" id="artists-section">
+            {/* Header Section - Centered Text */}
+            <div className="meet-musicians-header">
+                {/* "MEET" in Urbanist font */}
+                <p className="meet-text">MEET</p>
 
-    /**
-     * Map artist array to JSX display cards
-     * Creates a card for each roster with image, title, description
-     */
-    const artists = artistsArr.map((artist, key) => {
-        return (
-            <div key={key} className={`artist-option ${artist.id}`}>
-                {/* Artist category title */}
-                <div className="artist-option-title-container">
-                    <h3 className="artist-option-title">{artist.title}</h3>
-                </div>
+                {/* "The Musicians" in The Seasons font */}
+                <h2 className="musicians-heading">The Musicians</h2>
 
-                {/* Artist roster image */}
-                <div className={`artist-option-img-container ${artist.id}`}>
-                    <img
-                        className={`artist-option-img ${artist.id}`}
-                        src={artist.img}
-                        alt="artist"
-                    />
-                </div>
+                {/* Description in The Seasons font */}
+                <p className="musicians-description">
+                    Discover a community of exceptional live musicians who will take your next event to unparalleled heights.
+                </p>
+            </div>
 
-                {/* Artist description text */}
-                <div className="artist-option-text">
-                    <div className="artist-option-description-container">
-                        <p className="artist-option-description">{artist.description}</p>
+            {/* Image Grid Section - 3x3 Layout */}
+            <div className="musicians-grid-container">
+                {/* Row 1 */}
+                <div className="musicians-grid-row">
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 1" />
                     </div>
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 2" />
+                    </div>
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 3" />
+                    </div>
+                </div>
 
-                    {/* Commented out: Inquire button - currently not shown */}
-                    {/* <div className="artist-button-container">
-            <a href={artist.url} rel="noreferrer" target="_blank" className="button1">
-              INQUIRE
-            </a>
-          </div> */}
+                {/* Row 2 */}
+                <div className="musicians-grid-row">
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 4" />
+                    </div>
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 5" />
+                    </div>
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 6" />
+                    </div>
+                </div>
+
+                {/* Row 3 */}
+                <div className="musicians-grid-row">
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 7" />
+                    </div>
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 8" />
+                    </div>
+                    <div className="musician-image-box">
+                        <img src="/images/LOVUR_Estie.jpg" alt="musician 9" />
+                    </div>
                 </div>
             </div>
-        );
-    });
-
-    return (
-        <div className="component-container" id="artists-section">
-            {/* Section heading */}
-            <h2 className="card-text-title artist">The Musicians</h2>
-
-            {/* Grid of artist roster cards */}
-            <div className="artist-options-container">{artists}</div>
         </div>
     );
 };
