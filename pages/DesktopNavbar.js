@@ -27,27 +27,27 @@ const DesktopNavbar = () => {
         <ul className="desktop-navbar-list">
           <li>
             <button className="urbanist" onClick={() => handleNavigation("home-section")}>
-              HOME
+              <span className="navbar-text">HOME</span>
             </button>
           </li>
           <li>
             <button className="urbanist" onClick={() => handleNavigation("about-section")}>
-              ABOUT
+              <span className="navbar-text">ABOUT</span>
             </button>
           </li>
           <li>
             <button className="urbanist" onClick={() => handleNavigation("work-section")}>
-              OUR WORK
+              <span className="navbar-text">OUR WORK</span>
             </button>
           </li>
           <li>
             <button className="urbanist" onClick={() => handleNavigation("artists-section")}>
-              THE MUSICIANS
+              <span className="navbar-text">THE MUSICIANS</span>
             </button>
           </li>
           <li>
             <button className="urbanist" onClick={() => handleNavigation("contact-section")}>
-              INQUIRE
+              <span className="navbar-text">INQUIRE</span>
             </button>
           </li>
         </ul>

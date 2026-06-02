@@ -25,9 +25,14 @@ const OurWork2 = () => {
                 {/* Group A - Top row */}
                 <div className="our-work-group">
                     {groupA.map((video, index) => (
-                        <div key={index} className="our-work-video-container">
-                            <p className="urbanist">{video.title}</p>
-                            <a href={video.link} className="urbanist see-more-link">See More Videos</a>
+                        <div key={index} className="our-work-item-wrapper">
+                            <div className="our-work-video-photo">
+                                <img src="/images/LOVUR_Quartet.jpg" alt="LOVUR Quartet" />
+                            </div>
+                            <div className="our-work-video-container">
+                                <p className="urbanist">{video.title}</p>
+                                <a href={video.link} className="urbanist see-more-link">See More Videos</a>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -35,9 +40,14 @@ const OurWork2 = () => {
                 {/* Group B - Bottom row */}
                 <div className="our-work-group">
                     {groupB.map((video, index) => (
-                        <div key={index} className="our-work-video-container">
-                            <p className="urbanist">{video.title}</p>
-                            <a href={video.link} className="urbanist see-more-link">See More Videos</a>
+                        <div key={index} className="our-work-item-wrapper">
+                            <div className="our-work-video-photo">
+                                <img src="/images/LOVUR_Quartet.jpg" alt="LOVUR Quartet" />
+                            </div>
+                            <div className="our-work-video-container">
+                                <p className="urbanist">{video.title}</p>
+                                <a href={video.link} className="urbanist see-more-link">See More Videos</a>
+                            </div>
                         </div>
                     ))}
                 </div>

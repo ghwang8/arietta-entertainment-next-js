@@ -20,7 +20,9 @@ const About = () => {
         {/* Text column - displays information */}
         <div className="about-content-column">
           {/* Section heading */}
-          <h2 className="about-heading">About Us</h2>
+          <h2 className="about-heading">
+            <span className="about-heading-text">About Us</span>
+          </h2>
 
           {/* Main content paragraphs */}
           <div className="about-description">

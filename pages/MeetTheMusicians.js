@@ -5,10 +5,29 @@ import React from "react";
  *
  * Displays:
  * - Header section with centered text (MEET, The Musicians, description)
- * - 3x3 grid of musician photos (LOVUR_Estie.jpg)
+ * - 3x3 grid of musician photos with name and instrument overlay
  */
 
 const MeetTheMusicians = () => {
+    // Array of musicians with their names and instruments
+    const musicians = [
+        { name: "ESTHER", instrument: "violin" },
+        { name: "DAVID", instrument: "violin" },
+        { name: "LUCI", instrument: "viola" },
+        { name: "ALLEN", instrument: "cello" },
+        { name: "SAMANTHA", instrument: "violin" },
+        { name: "ANGELA", instrument: "viola" },
+        { name: "JOHNATHAN", instrument: "violin" },
+        { name: "TERESA", instrument: "piano" },
+        { name: "ASLAN", instrument: "piano" }
+    ];
+
+    // Create rows of 3 musicians each
+    const rows = [];
+    for (let i = 0; i < musicians.length; i += 3) {
+        rows.push(musicians.slice(i, i + 3));
+    }
+
     return (
         <div className="component-container meet-the-musicians-wrapper" id="artists-section">
             {/* Header Section - Centered Text */}
@@ -27,44 +46,20 @@ const MeetTheMusicians = () => {
 
             {/* Image Grid Section - 3x3 Layout */}
             <div className="musicians-grid-container">
-                {/* Row 1 */}
-                <div className="musicians-grid-row">
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 1" />
+                {rows.map((row, rowIndex) => (
+                    <div key={rowIndex} className="musicians-grid-row">
+                        {row.map((musician, index) => (
+                            <div key={index} className="musician-image-box">
+                                <img src="/images/LOVUR_Estie.jpg" alt={musician.name} />
+                                {/* Overlay with musician info */}
+                                <div className="musician-overlay">
+                                    <p className="musician-name">{musician.name}</p>
+                                    <p className="musician-instrument">{musician.instrument}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 2" />
-                    </div>
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 3" />
-                    </div>
-                </div>
-
-                {/* Row 2 */}
-                <div className="musicians-grid-row">
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 4" />
-                    </div>
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 5" />
-                    </div>
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 6" />
-                    </div>
-                </div>
-
-                {/* Row 3 */}
-                <div className="musicians-grid-row">
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 7" />
-                    </div>
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 8" />
-                    </div>
-                    <div className="musician-image-box">
-                        <img src="/images/LOVUR_Estie.jpg" alt="musician 9" />
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );
