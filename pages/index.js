@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import MobileNavbar from "./MobileNavbar";
-import DesktopNavbar from "./DesktopNavbar";
 import Home from "./Home";
 import About from "./About";
 import OurWork1 from "./OurWork1";
@@ -87,9 +86,6 @@ export default function IndexPage() {
         <div className="App">
             {/* Mobile hamburger menu (shown on small screens) */}
             <MobileNavbar />
-
-            {/* Desktop navigation bar (shown on large screens) */}
-            <DesktopNavbar />
 
             {/* Hero section with logo and tagline */}
             <Home id="home-section" />

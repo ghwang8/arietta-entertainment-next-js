@@ -30,7 +30,7 @@ const OurWork2 = () => {
                                 <img src="/images/LOVUR_Quartet.jpg" alt="LOVUR Quartet" />
                             </div>
                             <div className="our-work-video-container">
-                                <p className="urbanist">{video.title}</p>
+                                <p className="urbanist our-work-title">{video.title}</p>
                                 <a href={video.link} className="urbanist see-more-link">See More Videos</a>
                             </div>
                         </div>
@@ -45,7 +45,7 @@ const OurWork2 = () => {
                                 <img src="/images/LOVUR_Quartet.jpg" alt="LOVUR Quartet" />
                             </div>
                             <div className="our-work-video-container">
-                                <p className="urbanist">{video.title}</p>
+                                <p className="urbanist our-work-title">{video.title}</p>
                                 <a href={video.link} className="urbanist see-more-link">See More Videos</a>
                             </div>
                         </div>

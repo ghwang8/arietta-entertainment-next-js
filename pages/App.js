@@ -11,8 +11,6 @@ import ServiceSetlist from "./ServiceSetlist";
 import ServiceMusicians from "./ServiceMusicians";
 import Contact from "./Contact";
 
-import DesktopNavbar from "./DesktopNavbar";
-
 /**
  * App.js - LEGACY/ALTERNATE ROUTE (Not currently used)
  *
@@ -54,7 +52,6 @@ export default function App() {
     return (
         <div className="App">
             <MobileNavbar />
-            <DesktopNavbar />
             <Home />
             <About />
             <OurWork1/>

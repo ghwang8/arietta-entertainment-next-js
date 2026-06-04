@@ -57,27 +57,27 @@ const MobileNavbar = () => {
             <ul className="mobile-navbar-list">
               <li>
                 <button className="urbanist" onClick={() => handleNavigation("home-section")}>
-                  HOME
+                  <span className="mobile-navbar-text">HOME</span>
                 </button>
               </li>
               <li>
                 <button className="urbanist" onClick={() => handleNavigation("about-section")}>
-                  ABOUT
+                  <span className="mobile-navbar-text">ABOUT</span>
                 </button>
               </li>
               <li>
                 <button className="urbanist" onClick={() => handleNavigation("work-section")}>
-                  OUR WORK
+                  <span className="mobile-navbar-text">OUR WORK</span>
                 </button>
               </li>
               <li>
                 <button className="urbanist" onClick={() => handleNavigation("artists-section")}>
-                  THE MUSICIANS
+                  <span className="mobile-navbar-text">THE MUSICIANS</span>
                 </button>
               </li>
               <li>
                 <button className="urbanist" onClick={() => handleNavigation("contact-section")}>
-                  INQUIRE
+                  <span className="mobile-navbar-text">INQUIRE</span>
                 </button>
               </li>
             </ul>

@@ -163,7 +163,7 @@ html {
 
 .our-work-video-container {
   background-color: var(--cream);
-  width: 300px;
+  width: 350px;
   height: 175px;
   display: flex;
   flex-direction: column;
@@ -176,8 +176,8 @@ html {
 }
 
 .our-work-video-photo {
-  width: 300px;
-  height: 200px;
+  width: 350px;
+  height: 215px;
   overflow: hidden;
 }
 
@@ -186,6 +186,11 @@ html {
   height: 100%;
   object-fit: cover;
 }
+
+.our-work-title {
+  font-weight: bold;
+}
+
 
 .our-work-video-container p {
   font-size: 18px;
@@ -204,6 +209,7 @@ html {
     color: var(--black);
     margin-top: 0.5rem;
     display: block;
+    font-style: italic;
 }
 
 .our-work-modal p {
@@ -383,6 +389,22 @@ textarea {
   display: none;
 }
 
+.desktop-navbar-nav button {
+  transition: opacity 0.2s ease;
+}
+
+.desktop-navbar-nav button:hover {
+  opacity: 0.7;
+}
+
+.mobile-navbar-list button {
+  transition: opacity 0.2s ease;
+}
+
+.mobile-navbar-list button:hover {
+  opacity: 0.7;
+}
+
 .mobile-navbar-nav {
   position: fixed;
   top: 0;
@@ -422,7 +444,7 @@ textarea {
 }
 .navbar-toggle.open span:first-child {
   transform: translateY(0.88rem) rotate(45deg);
-  background-color: var(--black);
+  background-color: var(--white);
   box-shadow: none;
 }
 
@@ -432,7 +454,7 @@ textarea {
 
 .navbar-toggle.open span:last-child {
   transform: translateY(-0.88rem) rotate(-45deg);
-  background-color: var(--black);
+  background-color: var(--white);
   box-shadow: none;
 }
 .sliding-menu-container {
@@ -441,9 +463,13 @@ textarea {
   right: 0; /* Off-screen to the right by default */
   width: 100%;
   height: 100%;
-  background-color: var(--tan-gold);
+  background-color: var(--black);
   transition: all 0.3s ease;
   z-index: 100;
+}
+.mobile-navbar-text {
+  color: #ffffff;
+  font-size: 32px;
 }
 .sliding-menu-container.open {
   top: 0; /* Slide in from the right when open */
@@ -1496,7 +1522,6 @@ nav ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
 }
 
 .contact-booking-content h1 {
@@ -1507,20 +1532,22 @@ nav ul {
   font-size: 3rem;
   max-width: 80%;
   line-height: 1.4;
+  margin-bottom: 0;
 }
 
 .book-now-button {
   background-color: #C08C41;
   color: white;
   padding: 10px 35px;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 0.75rem;
+  font-weight: 200;
   font-family: 'Poppins', sans-serif;  /* Use system font or another available font */
   text-decoration: none;
-  border-radius: 2px;
+  border-radius: 5px;
   text-align: center;
   transition: background-color 0.3s ease;
-  margin: 1rem 0;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
 }
 
 .book-now-button:hover {
@@ -1536,6 +1563,53 @@ nav ul {
   height: auto;
   background-color: var(--tan-gold);
   padding: 2rem;
+}
+
+.footer-nav-and-social {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.footer-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer-navigation button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    font: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.footer-navigation button:hover {
+  opacity: 0.7;
+}
+
+.footer-navigation-text {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: inherit;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.footer-social-text {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: bold;
 }
 
 .footer-left {
@@ -1586,8 +1660,9 @@ nav ul {
 
 .footer-right {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
   align-items: flex-start;
 }
 
@@ -1723,15 +1798,25 @@ nav ul {
 .musicians-grid-container {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 3rem;
 }
+
+.musicians-grid-container.desktop-grid {
+  display: flex;
+}
+
+/* Mobile Grid - Hide on desktop */
+.musicians-grid-container.mobile-grid {
+  display: none;
+}
+
 
 /* Grid Row - Desktop: 3 Images per row */
 .musicians-grid-row {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 /* Individual Image Box */
@@ -1759,12 +1844,11 @@ nav ul {
   padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .musician-name {
   font-family: 'theseasons-reg', serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: black;
   margin: 0;
   text-align: left;
@@ -1778,6 +1862,7 @@ nav ul {
   margin: 0;
   text-align: left;
   font-weight: 400;
+  font-style: italic;
 }
 
 /* Smartphones that have shorter lengths (ie. iPhone SE, Pixel 5) */
@@ -1979,10 +2064,11 @@ nav ul {
       align-items: center;
       justify-content: center;
       height: 4rem;
-      padding: 0;
-      background-color: var(--white);
       margin-right: 1rem;
       background-color: transparent;
+      position: relative;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     .desktop-navbar-list {
       display: flex;
@@ -1993,6 +2079,7 @@ nav ul {
     }
   .desktop-navbar-list button {
     color: white;
+    cursor: pointer;
   }
   .navbar-text {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
@@ -2047,7 +2134,7 @@ nav ul {
     justify-content: center;
     align-content: center;
     height: 50vh;
-    padding-top: 21rem;
+    padding-top: 15rem;
   }
   .slogan-container {
     display: flex;
@@ -2813,10 +2900,17 @@ nav ul {
   }
 
   .musician-image-box {
-    width: 220px;
-    height: 270px;
+    width: 260px;
+    height: 340px;
   }
 
+}
+
+@media (max-width: 1280px) {
+  .musician-image-box {
+    width: 240px;
+    height: 340px;
+  }
 }
 
 /*Portrait viewports with small/awkward aspect ratios*/
@@ -3599,6 +3693,15 @@ html, body {
   .logo-container.home {
     margin-top: 12rem;  /* adjust this value as needed */
   }
+
+  .musician-image-box {
+    width: 200px;
+    height: 280px;
+  }
+
+  .musician-name {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 800px) {
@@ -3718,21 +3821,6 @@ html, body {
   }
 }
 
-@media (max-width: 500px) {
-  .about-image-column img {
-    width: 300px;
-    max-width: 100%;
-  }
-}
-
-/* Logo Container - 400px and below */
-@media (max-width: 400px) {
-  .logo-container img {
-    width: 20rem;
-    height: auto;
-  }
-}
-
 /* Fonts and global overrides */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 
@@ -3828,6 +3916,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 788px) {
+  .musicians-grid-container.desktop-grid {
+    display: none;
+  }
+
+  .musicians-grid-container.mobile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
   .meet-the-musicians-wrapper {
     gap: 2rem;
     padding: 2rem 1rem;
@@ -3849,9 +3946,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 2rem;
   }
 
+  .musicians-grid-row.mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .musicians-grid-row.mobile.last-row-centered {
+    justify-content: center;
+  }
+
   .musician-image-box {
     width: 200px;
-    height: 250px;
+    height: 280px;
+  }
+
+  .musician-name {
+    font-size: 1.25rem;
   }
 
   .musicians-grid-container {
@@ -3900,5 +4012,46 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .our-work-video-container {
     min-width: 150px;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-navigation {
+    display: none;
+  }
+
+  .footer-social {
+    align-items: center;
+  }
+
+  .contact-booking-content {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-image-column img {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  .musician-image-box {
+    width: 165px;
+  }
+
+  .musicians-grid-row.mobile {
+    gap: 1rem;
+  }
+}
+
+/* Logo Container - 400px and below */
+@media (max-width: 400px) {
+  .logo-container img {
+    width: 20rem;
+    height: auto;
   }
 }

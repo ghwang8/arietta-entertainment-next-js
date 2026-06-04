@@ -5,7 +5,8 @@ import React from "react";
  *
  * Displays:
  * - Header section with centered text (MEET, The Musicians, description)
- * - 3x3 grid of musician photos with name and instrument overlay
+ * - Responsive grid of musician photos with name and instrument overlay
+ * - Desktop: 3x3, Tablet: varies, Mobile: 2x5 (with last photo centered)
  */
 
 const MeetTheMusicians = () => {
@@ -22,10 +23,16 @@ const MeetTheMusicians = () => {
         { name: "ASLAN", instrument: "piano" }
     ];
 
-    // Create rows of 3 musicians each
-    const rows = [];
+    // Create rows for desktop (3 per row)
+    const desktopRows = [];
     for (let i = 0; i < musicians.length; i += 3) {
-        rows.push(musicians.slice(i, i + 3));
+        desktopRows.push(musicians.slice(i, i + 3));
+    }
+
+    // Create rows for mobile (2 per row, last one centered)
+    const mobileRows = [];
+    for (let i = 0; i < musicians.length; i += 2) {
+        mobileRows.push(musicians.slice(i, i + 2));
     }
 
     return (
@@ -44,9 +51,9 @@ const MeetTheMusicians = () => {
                 </p>
             </div>
 
-            {/* Image Grid Section - 3x3 Layout */}
-            <div className="musicians-grid-container">
-                {rows.map((row, rowIndex) => (
+            {/* Desktop Grid Container - 3x3 (hides at 788px and below) */}
+            <div className="musicians-grid-container desktop-grid">
+                {desktopRows.map((row, rowIndex) => (
                     <div key={rowIndex} className="musicians-grid-row">
                         {row.map((musician, index) => (
                             <div key={index} className="musician-image-box">
@@ -60,6 +67,25 @@ const MeetTheMusicians = () => {
                         ))}
                     </div>
                 ))}
+            </div>
+
+            {/* Mobile Grid Container - 2x5 (shows only at 788px and below) */}
+            <div className="musicians-grid-container mobile-grid">
+                {mobileRows.map((row, rowIndex) => (
+                    <div key={rowIndex} className="musicians-grid-row mobile">
+                        {row.map((musician, colIndex) => (
+                            <div key={colIndex} className="musician-image-box">
+                                <img src="/images/LOVUR_Estie.jpg" alt={musician.name} />
+                                {/* Overlay with musician info */}
+                                <div className="musician-overlay">
+                                    <p className="musician-name">{musician.name}</p>
+                                    <p className="musician-instrument">{musician.instrument}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+
             </div>
         </div>
     );

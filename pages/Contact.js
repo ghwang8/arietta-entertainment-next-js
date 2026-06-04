@@ -54,6 +54,17 @@ const Contact = () => {
   ];
 
   /**
+   * Handle navigation to a section
+   * Scrolls smoothly to the section on the main page
+   */
+  const handleNavigation = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  /**
    * Map contact array to displayable JSX elements
    * Creates a contact box for each item in the icons array
    */
@@ -92,7 +103,6 @@ const Contact = () => {
         {/* Contact information grid */}
         <div className="contact-info-background">
           <div className="contact-details-container">
-            {/* Rendered contact boxes */}
             {/* Left Side */}
             <div className="footer-left">
               {/* Top Middle - Logos */}
@@ -114,11 +124,39 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Right Side - Social Links */}
+            {/* Right Side - Navigation and Social Links */}
             <div className="footer-right">
-              <a href="https://www.youtube.com/@estiehwang" className="urbanist">YouTube</a>
-              <a href="https://www.instagram.com/arietta.entertainment/" className="urbanist">Instagram</a>
-              <a href="https://open.spotify.com/artist/0HJkJhSSyp7IVB7DPOLHj2" className="urbanist">Spotify</a>
+              {/* Footer Navigation */}
+              <div className="footer-navigation">
+                <button onClick={() => handleNavigation("home-section")}>
+                  <span className="footer-navigation-text">HOME</span>
+                </button>
+                <button onClick={() => handleNavigation("about-section")}>
+                  <span className="footer-navigation-text">ABOUT</span>
+                </button>
+                <button onClick={() => handleNavigation("work-section")}>
+                  <span className="footer-navigation-text">OUR WORK</span>
+                </button>
+                <button onClick={() => handleNavigation("artists-section")}>
+                  <span className="footer-navigation-text">THE MUSICIANS</span>
+                </button>
+                <button onClick={() => handleNavigation("contact-section")}>
+                  <span className="footer-navigation-text">INQUIRE</span>
+                </button>
+              </div>
+
+              {/* Social Media Links */}
+              <div className="footer-social">
+                <a href="https://www.youtube.com/@estiehwang" className="urbanist">
+                  <span className="footer-social-text">YouTube</span>
+                </a>
+                <a href="https://www.instagram.com/arietta.entertainment/" className="urbanist">
+                  <span className="footer-social-text">Instagram</span>
+                </a>
+                <a href="https://open.spotify.com/artist/0HJkJhSSyp7IVB7DPOLHj2" className="urbanist">
+                  <span className="footer-social-text">Spotify</span>
+                </a>
+              </div>
             </div>
 
           </div>
