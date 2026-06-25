@@ -1,7 +1,7 @@
 {
   "engines": {
     "node": "24.x",
-    "npm": "10.x"
+    "npm": ">=10.x"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
