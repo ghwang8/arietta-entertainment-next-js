@@ -10,17 +10,17 @@ import React from "react";
  */
 
 const MeetTheMusicians = () => {
-    // Array of musicians with their names and instruments
+    // Array of musicians with their names, instruments, and image sources
     const musicians = [
-        { name: "ESTHER", instrument: "violin" },
-        { name: "DAVID", instrument: "violin" },
-        { name: "LUCI", instrument: "viola" },
-        { name: "ALLEN", instrument: "cello" },
-        { name: "SAMANTHA", instrument: "violin" },
-        { name: "ANGELA", instrument: "viola" },
-        { name: "JOHNATHAN", instrument: "violin" },
-        { name: "TERESA", instrument: "piano" },
-        { name: "ASLAN", instrument: "piano" }
+        { name: "ESTHER", instrument: "violin", src: "Esther-Headshot.jpg" },
+        { name: "DAVID", instrument: "violin", src: "David-Headshot.jpg" },
+        { name: "LUCI", instrument: "viola", src: "Luci-Headshot.jpg" },
+        { name: "ALLEN", instrument: "cello", src: "Allen-ARIETTA-Headshot-Cropped-2.jpg" },
+        { name: "SAMANTHA", instrument: "violin", src: "Samantha-2.jpg" },
+        // { name: "ANGELA", instrument: "viola", src: "LOVUR_Estie.jpg" },
+        // { name: "JOHNATHAN", instrument: "violin", src: "LOVUR_Estie.jpg" },
+        // { name: "TERESA", instrument: "piano", src: "LOVUR_Estie.jpg" },
+        // { name: "ASLAN", instrument: "piano", src: "LOVUR_Estie.jpg" }
     ];
 
     // Create rows for desktop (3 per row)
@@ -57,7 +57,7 @@ const MeetTheMusicians = () => {
                     <div key={rowIndex} className="musicians-grid-row">
                         {row.map((musician, index) => (
                             <div key={index} className="musician-image-box">
-                                <img src="/images/LOVUR_Estie.jpg" alt={musician.name} />
+                                <img src={`/images/${musician.src}`} alt={musician.name} />
                                 {/* Overlay with musician info */}
                                 <div className="musician-overlay">
                                     <p className="musician-name">{musician.name}</p>
@@ -75,7 +75,7 @@ const MeetTheMusicians = () => {
                     <div key={rowIndex} className="musicians-grid-row mobile">
                         {row.map((musician, colIndex) => (
                             <div key={colIndex} className="musician-image-box">
-                                <img src="/images/LOVUR_Estie.jpg" alt={musician.name} />
+                                <img src={`/images/${musician.src}`} alt={musician.name} />
                                 {/* Overlay with musician info */}
                                 <div className="musician-overlay">
                                     <p className="musician-name">{musician.name}</p>

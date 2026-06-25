@@ -14,7 +14,7 @@ const About = () => {
       <div className="about-section-wrapper tanned-bg" id="about-section">
         {/* Image column - displays company photo */}
         <div className="about-image-column">
-          <img src="/images/about-us.jpg" alt="vibrant live violin performance" />
+          <img src="/images/about-us-2.png" alt="vibrant live violin performance" />
         </div>
 
         {/* Text column - displays information */}

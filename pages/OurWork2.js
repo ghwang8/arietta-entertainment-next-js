@@ -2,13 +2,29 @@ import React from "react";
 
 const OurWork2 = () => {
     const groupA = [
-        { title: "VIOLIN SOLO", link: "" },
-        { title: "VIOLIN & PIANO DUO", link: "" }
+        {
+            title: "VIOLIN SOLO",
+            link: "https://www.youtube.com/watch?v=DNcs_cHctUo&list=PLPSZ2Zq2cMWs",
+            image: "/images/Violin-Solo.png"
+        },
+        {
+            title: "VIOLIN & PIANO DUO",
+            link: "https://www.youtube.com/watch?v=BJItzCl8b2w&list=PLUt5J8yZ1HN8",
+            image: "/images/Duo.png"
+        }
     ];
 
     const groupB = [
-        { title: "STRING/PIANO TRIO", link: "" },
-        { title: "STRING QUARTET", link: "" }
+        {
+            title: "STRING/PIANO TRIO",
+            link: "https://www.youtube.com/watch?v=xf5SGpbgQ0A&list=PLFkeq4S5nHbY",
+            image: "/images/Trio.png"
+        },
+        {
+            title: "STRING QUARTET",
+            link: "https://www.youtube.com/watch?v=kPHBox7wZ8k&list=PLEdF8vfGwWmE",
+            image: "/images/Quartet.png"
+        }
     ];
 
     return (
@@ -27,7 +43,7 @@ const OurWork2 = () => {
                     {groupA.map((video, index) => (
                         <div key={index} className="our-work-item-wrapper">
                             <div className="our-work-video-photo">
-                                <img src="/images/LOVUR_Quartet.jpg" alt="LOVUR Quartet" />
+                                <img src={video.image} alt={`${video.title} Performance`} />
                             </div>
                             <div className="our-work-video-container">
                                 <p className="urbanist our-work-title">{video.title}</p>
@@ -42,7 +58,7 @@ const OurWork2 = () => {
                     {groupB.map((video, index) => (
                         <div key={index} className="our-work-item-wrapper">
                             <div className="our-work-video-photo">
-                                <img src="/images/LOVUR_Quartet.jpg" alt="LOVUR Quartet" />
+                                <img src={video.image} alt={`${video.title} Performance`} />
                             </div>
                             <div className="our-work-video-container">
                                 <p className="urbanist our-work-title">{video.title}</p>

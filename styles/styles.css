@@ -132,8 +132,8 @@ html {
   background-color: var(--cream);
   color: var(--black);
   width: 60%;
-  max-width: 600px;
-  min-height: 200px;  /* add this to increase height */
+  max-width: 850px;
+  min-height: 250px;  /* add this to increase height */
   padding: 3rem;
   margin: -100px auto 4rem auto;  /* use percentage of viewport height */
   text-align: center;
@@ -163,8 +163,8 @@ html {
 
 .our-work-video-container {
   background-color: var(--cream);
-  width: 350px;
-  height: 175px;
+  width: 500px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,8 +176,8 @@ html {
 }
 
 .our-work-video-photo {
-  width: 350px;
-  height: 215px;
+  width: 500px;
+  height: 305px;
   overflow: hidden;
 }
 
@@ -193,7 +193,7 @@ html {
 
 
 .our-work-video-container p {
-  font-size: 18px;
+  font-size: 24px;
   margin: 0;
 }
 
@@ -204,7 +204,7 @@ html {
 }
 
 .see-more-link {
-    font-size: 12px;
+    font-size: 14px;
     text-decoration: underline;
     color: var(--black);
     margin-top: 0.5rem;
@@ -213,7 +213,7 @@ html {
 }
 
 .our-work-modal p {
-  font-size: 12px;
+  font-size: 1rem;
   margin: 0;
   line-height: 1.6;
   height: auto;
@@ -221,13 +221,14 @@ html {
 
 .our-work-modal h3 {
   font-family: 'The Seasons', serif;
-  font-size: 40px;
+  font-size: 3.25rem;
+  letter-spacing: -0.25px;
   margin: 0.5rem 0 1rem 0;
   height: auto;
 }
 
 .our-work-modal p:first-child {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .component-container.no-snap-scroll {
@@ -2001,9 +2002,6 @@ nav ul {
   h2 {
     font-size: 2.3rem;
   }
-  .App {
-    overflow: scroll;
-  }
   .img-desktop {
     display: flex;
   }
@@ -2913,6 +2911,24 @@ nav ul {
     width: 240px;
     height: 340px;
   }
+
+  .our-work-video-photo {
+    width: 400px;
+    height: 245px;
+  }
+
+  .our-work-video-container {
+    width: 400px;
+    height: 200px;
+  }
+
+  .our-work-video-container p {
+    font-size: 20px;
+  }
+
+  .see-more-link {
+    font-size: 14px;
+  }
 }
 
 /*Portrait viewports with small/awkward aspect ratios*/
@@ -3704,6 +3720,36 @@ html, body {
   .musician-name {
     font-size: 1.5rem;
   }
+
+  .our-work-video-photo {
+    width: 350px;
+    height: 215px;
+  }
+
+  .our-work-video-container {
+    width: 350px;
+    height: 175px;
+  }
+
+  .our-work-video-container p {
+    font-size: 18px;
+  }
+
+  .see-more-link {
+    font-size: 12px;
+  }
+
+  .our-work-modal p {
+    font-size: 1.5rem;
+  }
+
+  .about-paragraph {
+    font-size: 1.5rem;
+  }
+
+  .footer-navigation-text {
+    font-size: 1.25rem;
+  }
 }
 
 @media (max-width: 800px) {
@@ -3770,6 +3816,23 @@ html, body {
 
 }
 
+@media (min-width: 789px) and (max-width: 800px) {
+  .footer-navigation-text {
+    display: none;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .footer-social {
+    align-items: center;
+  }
+}
+
 /* 1. Slogan Container - 790px-1298px width AND 926px+ height */
 @media (min-width: 790px) and (min-height: 926px) {
   .slogan-container {
@@ -3803,6 +3866,10 @@ html, body {
   .slogan-container div {
     padding: 0 1rem;  /* additional padding for the location text */
     margin-bottom: 1.5rem;
+  }
+
+  .our-work-modal p {
+    font-size: 1rem;
   }
 }
 
@@ -3869,10 +3936,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500&display=swap');
-
-::-webkit-scrollbar {
-  width: 6px;
-}
 
 ::-webkit-scrollbar-track {
   background: #f0ebe0;
