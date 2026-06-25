@@ -20,6 +20,7 @@
   --brass-brown: rgb(159, 111, 69);
   --vh: 1vh;
   --cream: #F4F0E8;
+  --dark-gray: #262626;
 }
 body,
 html {
@@ -32,6 +33,14 @@ html {
   letter-spacing: 0.02rem;
   box-sizing: border-box;
   font-size: 13px;
+}
+
+.urbanist {
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;  /* thinner weight (300 instead of 400) */
+  font-style: normal;
+  font-size: 14px;
 }
 
 /* Loading Screen */
@@ -69,7 +78,7 @@ html {
 }
 
 .App {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none;  /* changed from "y mandatory" */
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
@@ -95,6 +104,131 @@ html {
   position: relative;
   scroll-snap-align: start;
   background-color: var(--white);
+}
+
+/* OurWork1 */
+.component-container.our-work-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+}
+
+/* OurWork2 */
+.component-container.our-work-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-gray);
+  position: relative;
+  padding: 2rem;
+  height: auto;
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+.our-work-modal {
+  position: relative;  /* changed from fixed */
+  background-color: var(--cream);
+  color: var(--black);
+  width: 60%;
+  max-width: 850px;
+  min-height: 250px;  /* add this to increase height */
+  padding: 3rem;
+  margin: -100px auto 4rem auto;  /* use percentage of viewport height */
+  text-align: center;
+  border-radius: 0;
+  z-index: 10;
+}
+
+/* Grid wrapper - flex column for top/bottom grouping */
+.our-work-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1200px;
+  z-index: 5;
+  margin: 0 auto;
+}
+
+/* Each group - flex row for left/right items */
+.our-work-group {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.our-work-video-container {
+  background-color: var(--cream);
+  width: 500px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: var(--black);
+  font-weight: 600;
+}
+
+.our-work-video-photo {
+  width: 500px;
+  height: 305px;
+  overflow: hidden;
+}
+
+.our-work-video-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.our-work-title {
+  font-weight: bold;
+}
+
+
+.our-work-video-container p {
+  font-size: 24px;
+  margin: 0;
+}
+
+.our-work-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.see-more-link {
+    font-size: 14px;
+    text-decoration: underline;
+    color: var(--black);
+    margin-top: 0.5rem;
+    display: block;
+    font-style: italic;
+}
+
+.our-work-modal p {
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.6;
+  height: auto;
+}
+
+.our-work-modal h3 {
+  font-family: 'The Seasons', serif;
+  font-size: 3.25rem;
+  letter-spacing: -0.25px;
+  margin: 0.5rem 0 1rem 0;
+  height: auto;
+}
+
+.our-work-modal p:first-child {
+  margin-bottom: 0;
 }
 
 .component-container.no-snap-scroll {
@@ -256,6 +390,22 @@ textarea {
   display: none;
 }
 
+.desktop-navbar-nav button {
+  transition: opacity 0.2s ease;
+}
+
+.desktop-navbar-nav button:hover {
+  opacity: 0.7;
+}
+
+.mobile-navbar-list button {
+  transition: opacity 0.2s ease;
+}
+
+.mobile-navbar-list button:hover {
+  opacity: 0.7;
+}
+
 .mobile-navbar-nav {
   position: fixed;
   top: 0;
@@ -295,7 +445,7 @@ textarea {
 }
 .navbar-toggle.open span:first-child {
   transform: translateY(0.88rem) rotate(45deg);
-  background-color: var(--black);
+  background-color: var(--white);
   box-shadow: none;
 }
 
@@ -305,7 +455,7 @@ textarea {
 
 .navbar-toggle.open span:last-child {
   transform: translateY(-0.88rem) rotate(-45deg);
-  background-color: var(--black);
+  background-color: var(--white);
   box-shadow: none;
 }
 .sliding-menu-container {
@@ -314,9 +464,13 @@ textarea {
   right: 0; /* Off-screen to the right by default */
   width: 100%;
   height: 100%;
-  background-color: var(--tan-gold);
+  background-color: var(--black);
   transition: all 0.3s ease;
   z-index: 100;
+}
+.mobile-navbar-text {
+  color: #ffffff;
+  font-size: 32px;
 }
 .sliding-menu-container.open {
   top: 0; /* Slide in from the right when open */
@@ -460,6 +614,7 @@ nav ul {
   height: 80%;
   padding-top: 3rem;
 }
+
 .logo-container img {
   width: 28rem;
   height: auto;
@@ -472,6 +627,7 @@ nav ul {
   text-align: center;
   justify-content: center;
   align-content: center;
+  margin-top: 8rem;
 }
 
 /* Showcase */
@@ -1320,7 +1476,7 @@ nav ul {
   justify-content: center;
   width: 100%;
   height: 60vh;
-  background-image: url('/images/LOVUR_Quartet.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url('/images/LOVUR_Quartet.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1367,7 +1523,6 @@ nav ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
 }
 
 .contact-booking-content h1 {
@@ -1378,20 +1533,22 @@ nav ul {
   font-size: 3rem;
   max-width: 80%;
   line-height: 1.4;
+  margin-bottom: 0;
 }
 
 .book-now-button {
   background-color: #C08C41;
   color: white;
   padding: 10px 35px;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 0.75rem;
+  font-weight: 200;
   font-family: 'Poppins', sans-serif;  /* Use system font or another available font */
   text-decoration: none;
-  border-radius: 2px;
+  border-radius: 5px;
   text-align: center;
   transition: background-color 0.3s ease;
-  margin: 1rem 0;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
 }
 
 .book-now-button:hover {
@@ -1405,8 +1562,55 @@ nav ul {
   justify-content: space-between;
   width: 100%;
   height: auto;
-  background-color: var(--tan-gold);
+  background-color: var(--cream);
   padding: 2rem;
+}
+
+.footer-nav-and-social {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.footer-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer-navigation button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    font: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.footer-navigation button:hover {
+  opacity: 0.7;
+}
+
+.footer-navigation-text {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: inherit;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.footer-social-text {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: bold;
 }
 
 .footer-left {
@@ -1457,8 +1661,9 @@ nav ul {
 
 .footer-right {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
   align-items: flex-start;
 }
 
@@ -1466,6 +1671,201 @@ nav ul {
   color: var(--black);
   text-decoration: none;
   font-weight: 500;
+}
+
+/* About Section - Desktop Layout */
+.about-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background-color: var(--cream);
+}
+
+
+.about-image-column {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-image-column img {
+  width: 475px;
+  height: 300px;
+  object-fit: cover;
+  padding-top: 25px;
+}
+
+.about-content-column {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 700px;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.about-heading {
+  font-family: 'theseasons-reg', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 0;
+}
+
+.about-heading-text {
+  font-size: 3.5rem;
+  letter-spacing: -0.25px;
+}
+
+.about-description {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.about-paragraph {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+}
+
+.about-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.about-logo-container img {
+  width: 120px;
+  height: auto;
+}
+
+/* Meet The Musicians Section */
+.component-container.meet-the-musicians-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 3rem 2rem;
+  height: auto; /* Override the calc(var(--vh, 1vh) * 100) if needed */
+}
+
+/* Meet The Musicians Section */
+.meet-the-musicians-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 3rem 2rem;
+}
+
+/* Header Section - Centered Text */
+.meet-musicians-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.meet-text {
+  font-family: 'Urbanist', sans-serif;
+  margin: 0;
+}
+
+.musicians-heading {
+  font-family: 'theseasons-reg', serif;
+  font-size: 2.5rem;
+  margin: 0;
+  letter-spacing: -0.25px;
+}
+
+.musicians-description {
+  font-family: 'theseasons-reg', serif;
+  font-size: 1.2rem;
+  max-width: 550px;
+  line-height: 1.25;
+  margin: 0;
+  padding-top: 1rem;
+}
+
+/* Image Grid Container */
+.musicians-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.musicians-grid-container.desktop-grid {
+  display: flex;
+}
+
+/* Mobile Grid - Hide on desktop */
+.musicians-grid-container.mobile-grid {
+  display: none;
+}
+
+
+/* Grid Row - Desktop: 3 Images per row */
+.musicians-grid-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/* Individual Image Box */
+.musician-image-box {
+  position: relative;
+  width: 200px;
+  height: 250px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.musician-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Semi-transparent white overlay with musician info */
+.musician-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.musician-name {
+  font-family: 'theseasons-reg', serif;
+  font-size: 1.25rem;
+  color: black;
+  margin: 0;
+  text-align: left;
+  font-weight: normal;
+}
+
+.musician-instrument {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 0.85rem;
+  color: black;
+  margin: 0;
+  text-align: left;
+  font-weight: 400;
+  font-style: italic;
 }
 
 /* Smartphones that have shorter lengths (ie. iPhone SE, Pixel 5) */
@@ -1602,9 +2002,6 @@ nav ul {
   h2 {
     font-size: 2.3rem;
   }
-  .App {
-    overflow: scroll;
-  }
   .img-desktop {
     display: flex;
   }
@@ -1640,7 +2037,6 @@ nav ul {
     justify-content: center;
     align-content: center;
     height: calc(100vh - 4rem);
-    padding-top: 4rem;
     flex-shrink: 0;
   }
   .card-text-content.footer {
@@ -1668,17 +2064,26 @@ nav ul {
       align-items: center;
       justify-content: center;
       height: 4rem;
-      padding: 0;
-      background-color: var(--white);
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
       margin-right: 1rem;
+      background-color: transparent;
+      position: relative;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     .desktop-navbar-list {
       display: flex;
       height: 100%;
       align-content: center;
       justify-content: center;
+      gap: 5rem;
     }
+  .desktop-navbar-list button {
+    color: white;
+    cursor: pointer;
+  }
+  .navbar-text {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  }
     .desktop-navbar-list li {
       font-family: 'Playfair Display', Serif;
       padding: 0 1rem;
@@ -1729,7 +2134,7 @@ nav ul {
     justify-content: center;
     align-content: center;
     height: 50vh;
-    padding-top: 7rem;
+    padding-top: 15rem;
   }
   .slogan-container {
     display: flex;
@@ -1737,6 +2142,7 @@ nav ul {
     height: 30%;
     align-content: center;
     justify-content: center;
+    margin-top: 12rem;
   }
   .component-container.home {
     flex-direction: column;
@@ -2480,6 +2886,11 @@ nav ul {
     font-size: 1rem;
   }
 }
+/* 1406px and above */
+@media (min-width: 1406px) {
+
+}
+
 /* Hi-res Desktop */
 @media (min-width: 1281px) {
   /* Global */
@@ -2488,6 +2899,36 @@ nav ul {
     font-size: 17px;
   }
 
+  .musician-image-box {
+    width: 260px;
+    height: 340px;
+  }
+
+}
+
+@media (max-width: 1280px) {
+  .musician-image-box {
+    width: 240px;
+    height: 340px;
+  }
+
+  .our-work-video-photo {
+    width: 400px;
+    height: 245px;
+  }
+
+  .our-work-video-container {
+    width: 400px;
+    height: 200px;
+  }
+
+  .our-work-video-container p {
+    font-size: 20px;
+  }
+
+  .see-more-link {
+    font-size: 14px;
+  }
 }
 
 /*Portrait viewports with small/awkward aspect ratios*/
@@ -3262,6 +3703,55 @@ html, body {
   margin-left: 1rem;
 }
 
+@media (max-width: 960px) {
+  .slogan-container {
+    margin-top: 25rem;
+  }
+
+  .logo-container.home {
+    margin-top: 12rem;  /* adjust this value as needed */
+  }
+
+  .musician-image-box {
+    width: 200px;
+    height: 280px;
+  }
+
+  .musician-name {
+    font-size: 1.5rem;
+  }
+
+  .our-work-video-photo {
+    width: 350px;
+    height: 215px;
+  }
+
+  .our-work-video-container {
+    width: 350px;
+    height: 175px;
+  }
+
+  .our-work-video-container p {
+    font-size: 18px;
+  }
+
+  .see-more-link {
+    font-size: 12px;
+  }
+
+  .our-work-modal p {
+    font-size: 1.5rem;
+  }
+
+  .about-paragraph {
+    font-size: 1.5rem;
+  }
+
+  .footer-navigation-text {
+    font-size: 1.25rem;
+  }
+}
+
 @media (max-width: 800px) {
   .footer-logos img:last-child {
     margin-left: 0;
@@ -3323,6 +3813,96 @@ html, body {
   .contact-info-background {
     height: auto;  /* changed from 40vh */
   }
+
+}
+
+@media (min-width: 789px) and (max-width: 800px) {
+  .footer-navigation-text {
+    display: none;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .footer-social {
+    align-items: center;
+  }
+}
+
+/* 1. Slogan Container - 790px-1298px width AND 926px+ height */
+@media (min-width: 790px) and (min-height: 926px) {
+  .slogan-container {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 789px) {
+  .our-work-modal {
+    min-height: auto;
+  }
+
+  .logo-container.home {
+    margin-top: 8rem;  /* adjust this value as needed */
+  }
+
+  .slogan-container {
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .slogan-container h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .slogan-container div {
+    padding: 0 1rem;  /* additional padding for the location text */
+    margin-bottom: 1.5rem;
+  }
+
+  .our-work-modal p {
+    font-size: 1rem;
+  }
+}
+
+/* 2. Footer Layout - 789px-800px width AND 926px+ height */
+@media (min-width: 789px) and (max-width: 800px) and (min-height: 926px) {
+  .footer-navigation {
+    display: none;
+  }
+
+  .footer-social {
+    align-items: center;
+  }
+}
+
+/* 3. Footer Left - 801px-1402px width AND 926px+ height */
+@media (min-width: 801px) and (max-width: 1402px) and (min-height: 926px) {
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30vh;
+  }
+}
+
+@media (max-width: 618px) {
+  .component-container.our-work-2 {
+    height: auto;
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+
+  .our-work-modal {
+    margin: -250px auto 4rem auto;
+  }
 }
 
 @media (max-width: 589px) {
@@ -3356,10 +3936,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500&display=swap');
-
-::-webkit-scrollbar {
-  width: 6px;
-}
 
 ::-webkit-scrollbar-track {
   background: #f0ebe0;
@@ -3431,4 +4007,145 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 * {
   box-sizing: border-box;
+}
+
+@media (max-width: 788px) {
+  .musicians-grid-container.desktop-grid {
+    display: none;
+  }
+
+  .musicians-grid-container.mobile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .meet-the-musicians-wrapper {
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
+
+  .musicians-heading {
+    font-size: 2rem;
+  }
+
+  .musicians-description {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  /* Mobile: 1 Image per row (1x9 layout) */
+  .musicians-grid-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .musicians-grid-row.mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .musicians-grid-row.mobile.last-row-centered {
+    justify-content: center;
+  }
+
+  .musician-image-box {
+    width: 200px;
+    height: 280px;
+  }
+
+  .musician-name {
+    font-size: 1.25rem;
+  }
+
+  .musicians-grid-container {
+    gap: 2rem;
+  }
+
+  .about-section-wrapper {
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .about-image-column img {
+    width: 475px;
+    height: 225px;
+    padding-top: 15px;
+  }
+
+  .about-content-column {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .about-heading {
+    font-size: 1.8rem;
+  }
+
+  .about-paragraph {
+    font-size: 0.95rem;
+  }
+
+  .about-logo-container img {
+    width: 100px;
+  }
+
+  .our-work-grid-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .our-work-group {
+    flex-direction: column;  /* stack items vertically */
+    width: 100%;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .our-work-video-container {
+    min-width: 150px;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-navigation {
+    display: none;
+  }
+
+  .footer-social {
+    align-items: center;
+  }
+
+  .contact-booking-content {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-image-column img {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  .musician-image-box {
+    width: 165px;
+  }
+
+  .musicians-grid-row.mobile {
+    gap: 1rem;
+  }
+}
+
+/* Logo Container - 400px and below */
+@media (max-width: 400px) {
+  .logo-container img {
+    width: 20rem;
+    height: auto;
+  }
 }

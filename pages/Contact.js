@@ -54,6 +54,17 @@ const Contact = () => {
   ];
 
   /**
+   * Handle navigation to a section
+   * Scrolls smoothly to the section on the main page
+   */
+  const handleNavigation = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  /**
    * Map contact array to displayable JSX elements
    * Creates a contact box for each item in the icons array
    */
@@ -83,7 +94,7 @@ const Contact = () => {
         <div className="contact-link-container">
           <div className="contact-booking-content">
             <h1>READY TO <em style={{fontFamily: "'The Seasons Italic', serif"}}>elevate</em> YOUR EVENT <br /> WITH <em style={{fontFamily: "'The Seasons Italic', serif"}}>timeless</em> MUSIC?</h1>
-            <a href="/pricing" className="book-now-button">
+            <a href="/pricing" className="book-now-button urbanist">
               BOOK NOW
             </a>
           </div>
@@ -92,7 +103,6 @@ const Contact = () => {
         {/* Contact information grid */}
         <div className="contact-info-background">
           <div className="contact-details-container">
-            {/* Rendered contact boxes */}
             {/* Left Side */}
             <div className="footer-left">
               {/* Top Middle - Logos */}
@@ -104,21 +114,49 @@ const Contact = () => {
               {/* Bottom Middle - Contact Info Grid */}
               <div className="footer-contact-grid">
                 <div className="contact-item">
-                  <div className="contact-label">PHONE</div>
-                  <div className="contact-value">778 887 2018</div>
+                  <div className="contact-label urbanist">PHONE</div>
+                  <div className="contact-value urbanist">778 887 2018</div>
                 </div>
                 <div className="contact-item">
-                  <div className="contact-label">EMAIL</div>
-                  <div className="contact-value">arietta.entertainment@gmail.com</div>
+                  <div className="contact-label urbanist">EMAIL</div>
+                  <div className="contact-value urbanist">arietta.entertainment@gmail.com</div>
                 </div>
               </div>
             </div>
 
-            {/* Right Side - Social Links */}
+            {/* Right Side - Navigation and Social Links */}
             <div className="footer-right">
-              <a href="https://www.youtube.com/@estiehwang">YouTube</a>
-              <a href="https://www.instagram.com/arietta.entertainment/">Instagram</a>
-              <a href="https://open.spotify.com/artist/0HJkJhSSyp7IVB7DPOLHj2">Spotify</a>
+              {/* Footer Navigation */}
+              <div className="footer-navigation">
+                <button onClick={() => handleNavigation("home-section")}>
+                  <span className="footer-navigation-text">HOME</span>
+                </button>
+                <button onClick={() => handleNavigation("about-section")}>
+                  <span className="footer-navigation-text">ABOUT</span>
+                </button>
+                <button onClick={() => handleNavigation("work-section")}>
+                  <span className="footer-navigation-text">OUR WORK</span>
+                </button>
+                <button onClick={() => handleNavigation("artists-section")}>
+                  <span className="footer-navigation-text">THE MUSICIANS</span>
+                </button>
+                <button onClick={() => handleNavigation("contact-section")}>
+                  <span className="footer-navigation-text">INQUIRE</span>
+                </button>
+              </div>
+
+              {/* Social Media Links */}
+              <div className="footer-social">
+                <a href="https://www.youtube.com/@estiehwang" className="urbanist">
+                  <span className="footer-social-text">YouTube</span>
+                </a>
+                <a href="https://www.instagram.com/arietta.entertainment/" className="urbanist">
+                  <span className="footer-social-text">Instagram</span>
+                </a>
+                <a href="https://open.spotify.com/artist/0HJkJhSSyp7IVB7DPOLHj2" className="urbanist">
+                  <span className="footer-social-text">Spotify</span>
+                </a>
+              </div>
             </div>
 
           </div>
