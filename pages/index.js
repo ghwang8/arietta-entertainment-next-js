@@ -2,16 +2,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import MobileNavbar from "./MobileNavbar";
-import DesktopNavbar from "./DesktopNavbar";
 import Home from "./Home";
-import ShowcaseVideo from "./ShowcaseVideo";
 import About from "./About";
-import Artists from "./Artists";
-import Artists2 from "./Artists2";
-import OtherArtists from "./OtherArtists";
-import WorkYoutube from "./WorkYoutube";
-import ServiceEvent from "./ServiceEvent";
-import Estie from "./Estie";
+import OurWork1 from "./OurWork1";
+import OurWork2 from "./OurWork2";
+import MeetTheMusicians from "./MeetTheMusicians";
 import Contact from "./Contact";
 
 /**
@@ -92,39 +87,21 @@ export default function IndexPage() {
             {/* Mobile hamburger menu (shown on small screens) */}
             <MobileNavbar />
 
-            {/* Desktop navigation bar (shown on large screens) */}
-            <DesktopNavbar />
-
             {/* Hero section with logo and tagline */}
             <Home id="home-section" />
-
-            {/* Video showcase section */}
-            <ShowcaseVideo id="showcase-video-section" />
 
             {/* About the company description */}
             <About id="about-section" />
 
-            {/* LOVUR String Quartet featured artists */}
-            <Artists id="artists-section" />
+            <OurWork1 id="work-section" />
+            <OurWork2 />
 
-            {/* LOVUR Quartet detailed info and photos */}
-            <Artists2 id="artists2-section" />
-
-            {/* Other musicians: string and piano rosters */}
-            <OtherArtists id="other-artists-section" />
-
-            {/* YouTube video gallery of past performances */}
-            <WorkYoutube id="work-youtube-section" />
+            {/* Musicians: string and piano rosters */}
+            <MeetTheMusicians id="artists-section" />
 
             {/* Commented out - setlist section currently disabled */}
             {/* <ServiceSetlist id="service-setlist-section" />
           <ServiceMusicians id="service-musicians-section" /> */}
-
-            {/* Service offerings: weddings, corporate events, venues, recordings */}
-            <ServiceEvent id="service-event-section" />
-
-            {/* Featured performer biography section */}
-            <Estie id="estie-section" />
 
             {/* Contact information and booking form */}
             <Contact id="contact-section" />

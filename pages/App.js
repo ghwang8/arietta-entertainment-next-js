@@ -3,20 +3,13 @@ import { useRouter } from "next/router";
 
 import MobileNavbar from "./MobileNavbar";
 import Home from "./Home";
-import ShowcaseVideo from "./ShowcaseVideo";
 import About from "./About";
-import Artists from "./Artists";
-import Artists2 from "./Artists2";
-import OtherArtists from "./OtherArtists";
-import WorkYoutube from "./WorkYoutube";
+import OurWork1 from "./OurWork1";
+import OurWork2 from "./OurWork2";
+import MeetTheMusicians from "./MeetTheMusicians";
 import ServiceSetlist from "./ServiceSetlist";
 import ServiceMusicians from "./ServiceMusicians";
-import ServiceEvent from "./ServiceEvent";
-import Estie from "./Estie";
-import Twilight from "./Twilight";
 import Contact from "./Contact";
-
-import DesktopNavbar from "./DesktopNavbar";
 
 /**
  * App.js - LEGACY/ALTERNATE ROUTE (Not currently used)
@@ -31,12 +24,6 @@ import DesktopNavbar from "./DesktopNavbar";
  * Current behavior:
  * - This file does NOT render when you visit the site
  * - Use pages/index.js for any homepage changes
- *
- * Differences from index.js:
- * - No client-side rendering check (no isClient state)
- * - Uses "slug" query param instead of "slug" or "scrollTo"
- * - Simpler scroll logic without timeout delay
- * - Includes Twilight component (which index.js also includes)
  *
  * Recommendation:
  * - Delete this file if no longer needed, OR
@@ -65,19 +52,13 @@ export default function App() {
     return (
         <div className="App">
             <MobileNavbar />
-            <DesktopNavbar />
             <Home />
-            <ShowcaseVideo />
             <About />
-            <Artists/>
-            <Artists2/>
-            <OtherArtists/>
-            <WorkYoutube />
+            <OurWork1/>
+            <OurWork2/>
+            <MeetTheMusicians/>
             <ServiceSetlist />
             <ServiceMusicians />
-            <ServiceEvent />
-            <Estie />
-            <Twilight />
             <Contact />
         </div>
     );

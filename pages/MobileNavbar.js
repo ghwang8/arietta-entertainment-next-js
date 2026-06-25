@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 
 /**
  * MobileNavbar.js - Responsive Mobile Navigation Menu
@@ -8,7 +7,6 @@ import { useRouter } from "next/router";
  * - Hamburger menu toggle button
  * - Sliding navigation menu
  * - Smooth scrolling to page sections
- * - Navigation to Twilight concert page
  * - Auto-closes menu after selection
  */
 
@@ -16,32 +14,14 @@ const MobileNavbar = () => {
   // Track if hamburger menu is open or closed
   const [isOpen, setIsOpen] = useState(false);
 
-  // Next.js router for navigation
-  const router = useRouter();
-
   /**
    * Handle navigation to a section
-   * Performs different actions based on current page:
-   * - If on main page: scroll directly to section
-   * - If on Twilight page: navigate to home with query param, then scroll
+   * Scrolls directly to the section on the main page
    */
   const handleNavigation = (id) => {
-    if (router.pathname === "/Twilight") {
-      // Currently on Twilight page, need to go back to home first
-      // Navigate to home page with scrollTo query parameter
-      router.push(`/?scrollTo=${id}`).then(() => {
-        // After navigation completes, scroll to target
-        const targetElement = document.getElementById(id);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    } else {
-      // Already on main page, just scroll directly
-      const targetElement = document.getElementById(id);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth" });
-      }
+    const targetElement = document.getElementById(id);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
     }
 
     // Close menu after navigation
@@ -73,51 +53,35 @@ const MobileNavbar = () => {
         {/* Sliding menu container - shown/hidden based on isOpen state */}
         <div className={`sliding-menu-container ${isOpen ? "open" : ""}`}>
           <div className="mobile-navbar-content">
-          {/* Navigation menu items */}
-          <ul className="mobile-navbar-list">
-            <li>
-              <button onClick={() => handleNavigation("home-section")}>
-                Home
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("about-section")}>
-                About
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("artists-section")}>
-                Our Artists
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("work-section")}>
-                Our Work
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("event-section")}>
-                Services
-              </button>
-            </li>
-            <li>
-              {/* Navigate to separate Twilight concert page */}
-              <button onClick={() => router.push("/Twilight")}>
-                Twilight
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("estie-section")}>
-                The Founder
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleNavigation("contact-section")}>
-                Contact Us
-              </button>
-            </li>
-          </ul>
-        </div>
+            {/* Navigation menu items */}
+            <ul className="mobile-navbar-list">
+              <li>
+                <button className="urbanist" onClick={() => handleNavigation("home-section")}>
+                  <span className="mobile-navbar-text">HOME</span>
+                </button>
+              </li>
+              <li>
+                <button className="urbanist" onClick={() => handleNavigation("about-section")}>
+                  <span className="mobile-navbar-text">ABOUT</span>
+                </button>
+              </li>
+              <li>
+                <button className="urbanist" onClick={() => handleNavigation("work-section")}>
+                  <span className="mobile-navbar-text">OUR WORK</span>
+                </button>
+              </li>
+              <li>
+                <button className="urbanist" onClick={() => handleNavigation("artists-section")}>
+                  <span className="mobile-navbar-text">THE MUSICIANS</span>
+                </button>
+              </li>
+              <li>
+                <button className="urbanist" onClick={() => handleNavigation("contact-section")}>
+                  <span className="mobile-navbar-text">INQUIRE</span>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </>
   );

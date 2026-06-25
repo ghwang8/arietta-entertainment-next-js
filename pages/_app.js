@@ -38,6 +38,9 @@ export default function App({ Component, pageProps }) {
                 {/* Ensure proper rendering on mobile and desktop */}
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Combo&family=Press+Start+2P&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
                 {/* Load client-side script for browser viewport height variable (--vh) */}
                 {/* This fixes mobile browser issues with 100vh */}
                 <script src="/browser-offset.js"></script>
