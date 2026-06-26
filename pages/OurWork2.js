@@ -41,30 +41,30 @@ const OurWork2 = () => {
                 {/* Group A - Top row */}
                 <div className="our-work-group">
                     {groupA.map((video, index) => (
-                        <div key={index} className="our-work-item-wrapper">
+                        <a key={index} href={video.link} target="_blank" rel="noopener noreferrer" className="our-work-item-wrapper">
                             <div className="our-work-video-photo">
                                 <img src={video.image} alt={`${video.title} Performance`} />
                             </div>
                             <div className="our-work-video-container">
                                 <p className="urbanist our-work-title">{video.title}</p>
-                                <a href={video.link} className="urbanist see-more-link">See More Videos</a>
+                                <span className="urbanist see-more-link">See More Videos</span>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
 
                 {/* Group B - Bottom row */}
                 <div className="our-work-group">
                     {groupB.map((video, index) => (
-                        <div key={index} className="our-work-item-wrapper">
+                        <a key={index} href={video.link} target="_blank" rel="noopener noreferrer" className="our-work-item-wrapper">
                             <div className="our-work-video-photo">
                                 <img src={video.image} alt={`${video.title} Performance`} />
                             </div>
                             <div className="our-work-video-container">
                                 <p className="urbanist our-work-title">{video.title}</p>
-                                <a href={video.link} className="urbanist see-more-link">See More Videos</a>
+                                <span className="urbanist see-more-link">See More Videos</span>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
             </div>
