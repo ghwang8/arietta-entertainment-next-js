@@ -13,7 +13,7 @@ const MeetTheMusicians = () => {
     // Array of musicians with their names, instruments, and image sources
     const musicians = [
         { name: "ESTHER", instrument: "violin", src: "Esther-Headshot.jpg" },
-        { name: "DAVID", instrument: "violin", src: "David-Headshot.jpg" },
+        { name: "DAVID", instrument: "violin", src: "David-2.jpg" },
         { name: "LUCI", instrument: "viola", src: "Luci-Headshot.jpg" },
         { name: "ALLEN", instrument: "cello", src: "Allen-ARIETTA-Headshot-Cropped-2.jpg" },
         { name: "SAMANTHA", instrument: "violin", src: "Samantha-2.jpg" },
