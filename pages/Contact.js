@@ -94,7 +94,7 @@ const Contact = () => {
         <div className="contact-link-container">
           <div className="contact-booking-content">
             <h1>READY TO <em style={{fontFamily: "'The Seasons Italic', serif"}}>elevate</em> YOUR EVENT <br /> WITH <em style={{fontFamily: "'The Seasons Italic', serif"}}>timeless</em> MUSIC?</h1>
-            <a href="/pricing" className="book-now-button urbanist">
+            <a href="/inquiry" className="book-now-button urbanist">
               BOOK NOW
             </a>
           </div>

@@ -1,5 +1,5 @@
-// pages/pricing.js
+// pages/inquiry.js
 import PricingCalculator from "../components/PricingCalculator";
-export default function PricingPage() {
+export default function InquiryPage() {
     return <PricingCalculator />;
 }
