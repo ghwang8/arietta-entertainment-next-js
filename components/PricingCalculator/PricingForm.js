@@ -44,7 +44,6 @@ export default function PricingForm({
     const [expandedAddOn, setExpandedAddOn] = useState(null);
 
     useEffect(() => {
-        console.log("expandedAddOn state updated:", expandedAddOn);
     }, [expandedAddOn]);
 
     const SelectBox = ({ value, onChange, options, placeholder }) => (
@@ -279,8 +278,6 @@ export default function PricingForm({
                                         </button>
                                         <button
                                             onClick={() => {
-                                                console.log("Info button clicked for:", label);
-                                                console.log("Current expandedAddOn:", expandedAddOn);
                                                 setExpandedAddOn(expandedAddOn === label ? null : label);
                                             }}
                                             style={{

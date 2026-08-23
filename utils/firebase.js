@@ -44,10 +44,8 @@ export const saveQuoteToFirebase = async (quoteData) => {
             status: "pending", // Quote starts as pending
         });
 
-        console.log("Quote saved with ID:", docRef.id);
         return docRef.id;
     } catch (error) {
-        console.error("Error saving quote:", error);
         throw new Error("Failed to save quote to database");
     }
 };
