@@ -18,19 +18,14 @@ export default async function handler(req, res) {
 
     try {
         const { clientEmail, clientName, quoteData, lineItems, totals } = req.body;
-        console.log("📨 Received request:", { clientEmail, clientName });
 
         // Validate required fields
         if (!clientEmail || !clientName) {
-            console.log("❌ Missing required fields");
             return res.status(400).json({ error: "Missing required fields" });
         }
 
         // Format professional email
-        console.log("📝 Formatting email body...");
         const emailBody = formatQuoteEmail(quoteData, lineItems, totals);
-        console.log("✅ Email body formatted");
-        console.log("📧 Email preview:", emailBody);
 
         return res.status(200).json({
             success: true,

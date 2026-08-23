@@ -27,7 +27,6 @@ const resizeOps = () => {
   );
 
   // Log to console to verify script is running
-  console.log('offset-working');
 };
 
 // Run on initial page load
