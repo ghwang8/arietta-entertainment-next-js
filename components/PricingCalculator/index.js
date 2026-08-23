@@ -182,7 +182,6 @@ export default function PricingCalculator() {
         setSubmitError("");
 
         try {
-            console.log("📨 Sending email via EmailJS...");
 
             // Format email body
             const formattedDate = eventDate
@@ -202,45 +201,28 @@ export default function PricingCalculator() {
 
             const pricingSection = needsManualQuote || (duration === "other" && !isValidCustomHours)
                 ? `We'll review your details and get back to you shortly with a personalized quote.`
-                : `TOTAL: ${fmt(subtotal)} + GST (5%)`;
+                : `Total: ${fmt(subtotal).replace('$', 'CAD ')} + GST (5%)`;
 
 // Format custom songs section
             const customSongsSection = customSongs.length > 0
-                ? `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CUSTOM SONGS (${customSongs.length})
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-` + customSongs.map((song, idx) =>
-                `${idx + 1}. "${song.name}" by ${song.artist}`
-            ).join("\n")
+                ? `\nCustom Songs (${customSongs.length}):\n` + customSongs.map((song, idx) => `${idx + 1}. "${song.name}" by ${song.artist}`).join("\n")
                 : "";
 
             const addOnsSection = (audioSystem || micOfficiant || recording)
-                ? `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ADD-ONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${audioSystem ? "✓ Audio System\n" : ""}${micOfficiant ? "✓ Mic for Officiant\n" : ""}${recording ? "✓ Recording for Wedding Rehearsal/Video\n" : ""}`
+                ? `\nAdd-Ons:\n${audioSystem ? "- Audio System\n" : ""}${micOfficiant ? "- Mic for Officiant\n" : ""}${recording ? "- Recording for Wedding Rehearsal/Video\n" : ""}`
                 : "";
 
-            const emailBody = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CLIENT INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Event Date: ${formattedDate}
-Start Time: ${startTime || "—"}
-End Time: ${endTime || "—"}
+            const emailBody = `Event Information:
+Date: ${formattedDate}
+Time: ${startTime || "—"} to ${endTime || "—"}
 Location: ${locationDisplay}
-Venue: ${venueName || "—"}
-Setting: ${outdoorIndoor || "—"}
-Notes: ${notes || "—"}
+Venue: ${venueName || "—"} (${outdoorIndoor || "—"})
+Notes: ${notes || "None"}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-BOOKING DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Booking Details:
 Ensemble: ${ensemble || "—"}
 Duration: ${durationLabel || "—"}
-
-${customSongsSection}
-
-${addOnsSection}
-
+${customSongsSection}${addOnsSection}
 ${pricingSection}`;
 
             // Send email via EmailJS
@@ -257,10 +239,8 @@ ${pricingSection}`;
                 }
             );
 
-            console.log("✅ Email sent successfully:", response);
             setSubmitted(true);
         } catch (error) {
-            console.error("❌ Error sending email:", error);
             setSubmitError(error.message || "Something went wrong. Please try again.");
         } finally {
             setSubmitting(false);

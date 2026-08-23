@@ -1,5 +1,5 @@
 /**
- * pricing.js - All pricing data for the calculator
+ * inquiry.js - All pricing data for the calculator
  *
  * Centralized location for all pricing information.
  * This makes it easy to update prices without touching component logic.
