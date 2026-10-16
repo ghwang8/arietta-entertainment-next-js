@@ -18,7 +18,7 @@ const MeetTheMusicians = () => {
         { name: "ALLEN", instrument: "cello", src: "Allen-ARIETTA-Headshot-Cropped-2.jpg" },
         { name: "SAMANTHA", instrument: "violin", src: "Samantha-2.jpg" },
         // { name: "ANGELA", instrument: "viola", src: "LOVUR_Estie.jpg" },
-        // { name: "JOHNATHAN", instrument: "violin", src: "LOVUR_Estie.jpg" },
+        { name: "JOHNATHAN", instrument: "violin", src: "Jonathan.jpg" },
         // { name: "TERESA", instrument: "piano", src: "LOVUR_Estie.jpg" },
         // { name: "ASLAN", instrument: "piano", src: "LOVUR_Estie.jpg" }
     ];
